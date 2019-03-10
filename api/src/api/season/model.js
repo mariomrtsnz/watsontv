@@ -3,7 +3,8 @@ import mongoose, { Schema } from 'mongoose'
 const seasonSchema = new Schema({
   series: {
     type: Schema.Types.ObjectId,
-    ref: 'Series'
+    ref: 'Series',
+    required: true
   },
   number: {
     type: Number,
@@ -15,6 +16,7 @@ const seasonSchema = new Schema({
     ref: 'Episode'
   }
 }, {
+  strict: false,
   timestamps: true,
   toJSON: {
     virtuals: true,

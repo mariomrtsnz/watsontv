@@ -16,9 +16,10 @@ const episodeSchema = new Schema({
   duration: {
     type: Number,
     required: true,
-    min: [1, 'Has to be at least 1 minute'],
+    min: 1,
   }
 }, {
+  strict: false,
   timestamps: true,
   toJSON: {
     virtuals: true,
