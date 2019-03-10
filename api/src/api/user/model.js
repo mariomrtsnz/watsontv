@@ -40,23 +40,23 @@ const userSchema = new Schema({
   },
   // follows: [{
   //   type: Schema.Types.ObjectId,
-  //   ref: ''
+  //   ref: 'Series'
   // }],
-  // likes: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: ''
-  // }],
-  // watched: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: ''
-  // }],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Genre'
+  }],
+  watched: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
   collections: [{
     type: Schema.Types.ObjectId,
     ref: 'Collection'
   }],
-  // wishlist: [{
+  // watchlist: [{
   //   type: Schema.Types.ObjectId,
-  //   ref: ''
+  //   ref: 'Media'
   // }],
   dateOfBirth: {
     type: Date

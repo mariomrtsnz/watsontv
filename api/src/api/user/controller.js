@@ -23,7 +23,8 @@ export const show = ({ params }, res, next) =>
 export const showMe = ({ user }, res) =>
   res.json(user.view(true))
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
+  // TODO: Assign a 'Watchlist' and 'Favorites' by default.
   User.create(body)
     .then(user => {
       sign(user.id)
@@ -42,6 +43,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
         next(err)
       }
     })
+}
 
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)

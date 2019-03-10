@@ -1,6 +1,14 @@
 import { Router } from 'express'
 import user from './user'
 import auth from './auth'
+import movie from './movie'
+import series from './series'
+import season from './season'
+import episode from './episode'
+import genre from './genre'
+import actor from './actor'
+import collection from './collection'
+import media from './media'
 
 const router = new Router()
 
@@ -29,5 +37,13 @@ const router = new Router()
  */
 router.use('/users', user)
 router.use('/auth', auth)
+router.use('/movies', movie)
+router.use('/series', series)
+router.use('/seasons', season)
+router.use('/episodes', episode)
+router.use('/genres', genre)
+router.use('/actors', actor)
+router.use('/collections', collection)
+router.use('/media', media)
 
 export default router
