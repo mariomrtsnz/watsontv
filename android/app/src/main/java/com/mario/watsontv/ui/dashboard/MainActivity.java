@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mario.watsontv.R;
+import com.mario.watsontv.ui.auth.LoginActivity;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -96,8 +98,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.logout) {
+            finish();
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

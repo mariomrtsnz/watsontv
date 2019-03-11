@@ -7,6 +7,7 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
-
+    <dimen name="input_width">220dp</dimen>
+    <dimen name="text_padding">16dp</dimen>
+    <dimen name="unfolded_size">40sp</dimen>
 </resources>

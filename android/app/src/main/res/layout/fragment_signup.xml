@@ -2,7 +2,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_input"
+            android:id="@+id/signup_email_input"
             style="@style/Widget.TextInputLayout"
             android:layout_marginTop="48dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -25,12 +24,27 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input"
+            android:id="@+id/signup_name_input"
             style="@style/Widget.TextInputLayout"
             android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_input">
+            app:layout_constraintTop_toBottomOf="@+id/signup_email_input">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_input_edit"
+                style="@style/Widget.TextEdit"
+                android:hint="@string/name_hint"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_password_input"
+            style="@style/Widget.TextInputLayout"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_name_input">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input_edit"
@@ -40,11 +54,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_login_submit"
+            android:id="@+id/btn_signup_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
-            android:text="@string/log_in_label"
+            android:text="@string/sign_up_label"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/unfolded_size"
             android:textStyle="bold"
@@ -55,18 +69,18 @@
             app:layout_constraintVertical_bias="0.78" />
 
         <TextView
-            android:id="@+id/tv_login_goToSignup"
+            android:id="@+id/tv_go_to_LogIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:text="@string/login_goToSignup"
+            android:layout_marginStart="32dp"
+            android:text="@string/signup_goToLogin"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_submit" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_signup_submit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

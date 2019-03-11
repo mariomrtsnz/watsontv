@@ -5,4 +5,13 @@
     <color name="colorAccent">#49433f</color>
     <color name="color2">#edcd42</color>
     <color name="color3">#8c9a9a</color>
+
+    <color name="color_log_in">#93ff5555</color>
+    <color name="color_sign_up">#94418E9A</color>
+
+    <color name="white_transparent">#fafafa</color>
+
+    <color name="color_input_hint">#FFF</color>
+    <color name="color_text_highlight">#fafafa</color>
+    <color name="color_text">#FFFFFF</color>
 </resources>

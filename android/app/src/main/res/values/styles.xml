@@ -11,6 +11,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Widget" />
@@ -27,7 +28,6 @@
         <item name="android:textColorHighlight">@color/color_text_highlight</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColorHint">@color/color_input_hint</item>
-        <item name="android:background">@drawable/state</item>
         <item name="android:textColor">@color/color_text</item>
         <item name="android:padding">@dimen/text_padding</item>
     </style>

@@ -4,13 +4,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import okhttp3.Credentials;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.mario.watsontv.R;
+
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +39,11 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private LoginListener mListener;
+    private Context ctx;
+    Button btn_login;
+    TextView goToSignup;
+    TextInputLayout email_input, password_input;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -70,21 +83,48 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        email_input = getActivity().findViewById(R.id.email_input);
+        password_input = getActivity().findViewById(R.id.password_input);
+        btn_login = getActivity().findViewById(R.id.btn_login_submit);
+        goToSignup = getActivity().findViewById(R.id.tv_login_goToSignup);
+        goToSignup.setOnClickListener(v -> mListener.goToSignup());
+        btn_login.setOnClickListener( (hey) -> {
+            String username_txt = email_input.getEditText().getText().toString();
+            String password_txt = password_input.getEditText().getText().toString();
+            final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+
+            if (username_txt.equals("") || password_txt.equals("")) {
+                Toast.makeText(ctx, "Fields can't be empty!", Toast.LENGTH_LONG).show();
+            } else if (!EMAIL_REGEX.matcher(username_txt).matches()) {
+                Toast.makeText(ctx, "You need to use a correct email!", Toast.LENGTH_LONG).show();
+            } else if (password_txt.length() < 6) {
+                Toast.makeText(ctx, "Password must be at least 6 characters!", Toast.LENGTH_LONG).show();
+            } else {
+                String credentials = Credentials.basic(username_txt, password_txt);
+                onButtonPressed(credentials);
+            }
+        });
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String credentials) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onLoginSubmit(credentials);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        ctx = context;
+        if (context instanceof LoginListener) {
+            mListener = (LoginListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement LoginListener");
         }
     }
 
@@ -92,20 +132,5 @@ public class LoginFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }
