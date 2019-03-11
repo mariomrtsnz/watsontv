@@ -22,4 +22,11 @@
     <string name="signup_goToLogin"><![CDATA[< Login]]></string>
     <string name="sign_up_label">Signup</string>
     <string name="name_hint">Name</string>
+    <string name="dashboard_label">Dashboard</string>
+    <string name="movies_label">Movies</string>
+    <string name="series_label">Series</string>
+    <string name="watchlist_label">Watchlist</string>
+    <string name="collections_label">Collections</string>
+    <string name="favorites_label">Favorites</string>
+    <string name="profile_label">Profile</string>
 </resources>
