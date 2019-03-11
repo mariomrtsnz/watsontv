@@ -11,10 +11,10 @@ const seasonSchema = new Schema({
     min: 1,
     required: true
   },
-  episodes: {
+  episodes: [{
     type: Schema.Types.ObjectId,
     ref: 'Episode'
-  }
+  }]
 }, {
   strict: false,
   timestamps: true,

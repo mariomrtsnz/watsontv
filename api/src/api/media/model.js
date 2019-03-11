@@ -11,15 +11,15 @@ const mediaSchema = new Schema({
     required: true
   },
   releaseDate: {
-    type: String
+    type: Date
   },
-  rating: {
-    type: String
-  },
-  cast: {
+  rating: [{
+    type: Number
+  }],
+  cast: [{
     type: Schema.Types.ObjectId,
     ref: 'Actor'
-  },
+  }],
   coverImage: {
     type: String,
     required: true

@@ -2,7 +2,9 @@ import mongoose, { Schema } from 'mongoose'
 import { Media } from '../media';
 
 const movieSchema = new Schema({
-
+  trailer: {
+    type: String
+  }
 }, { strict: false, timestamps: true });
 
 movieSchema.methods = {

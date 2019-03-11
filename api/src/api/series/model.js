@@ -5,14 +5,14 @@ const seriesSchema = new Schema({
   broadcaster: {
     type: String
   },
-  seasons: {
+  seasons: [{
     type: Schema.Types.ObjectId,
     ref: 'Season'
-  },
+  }],
   airsDayOfWeek: {
     type: Number,
-    min: [1, 'Week starts on Monday (1)'],
-    max: [7, 'Week ends on Sunday (7)'],
+    min: 1,
+    max: 7,
     required: true
   }
 }, {

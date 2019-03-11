@@ -38,10 +38,10 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  // follows: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Series'
-  // }],
+  follows: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Series'
+  }],
   likes: [{
     type: Schema.Types.ObjectId,
     ref: 'Genre'
@@ -54,10 +54,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Collection'
   }],
-  // watchlist: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Media'
-  // }],
+  watchlist: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
   dateOfBirth: {
     type: Date
   },

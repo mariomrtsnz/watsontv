@@ -16,7 +16,12 @@ const episodeSchema = new Schema({
   duration: {
     type: Number,
     required: true,
-    min: 1,
+    min: 1
+  },
+  number: {
+    type: Number,
+    required: true,
+    min: 1
   }
 }, {
   strict: false,
@@ -36,6 +41,7 @@ episodeSchema.methods = {
       synopsis: this.synopsis,
       airTime: this.airTime,
       duration: this.duration,
+      number: this.number,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
