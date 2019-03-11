@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://entreapp.herokuapp.com',
+  masterKey: '{"access_token": "0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg"}',
+
 };
 
 /*
