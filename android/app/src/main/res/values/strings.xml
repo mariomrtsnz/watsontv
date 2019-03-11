@@ -29,4 +29,8 @@
     <string name="collections_label">Collections</string>
     <string name="favorites_label">Favorites</string>
     <string name="profile_label">Profile</string>
+    <string name="dashboard_greeting">Welcome back,</string>
+    <string name="dashboard_watch_later">Up next to watch</string>
+    <string name="dashboard_see_more"><![CDATA[See more >]]></string>
+    <string name="dashboard_upcoming_schedule">Upcoming Schedule</string>
 </resources>
