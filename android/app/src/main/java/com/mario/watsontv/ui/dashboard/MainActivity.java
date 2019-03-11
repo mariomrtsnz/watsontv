@@ -1,4 +1,4 @@
-package com.mario.watsontv;
+package com.mario.watsontv.ui.dashboard;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mario.watsontv.R;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
