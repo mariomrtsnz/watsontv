@@ -1,3 +1,14 @@
-<p>
-  signin works!
-</p>
+<div class="login container">
+  <div class="logo container">
+    <div class="login logo"></div>
+    <div class="login title">WatsonTV</div>
+  </div>
+  <div class="login form">
+    <h1>Login</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input type="text" placeholder="Username" [formControl]="form.controls['email']"/>
+        <input type="password" placeholder="Password" [formControl]="form.controls['password']"/>
+        <button mat-raised-button class="btn btn-primary btn-block btn-large" [disabled]="!form.valid">LOGIN</button>
+      </form>
+  </div>
+</div>

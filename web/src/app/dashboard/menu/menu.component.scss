@@ -1,0 +1,72 @@
+@import "../../../colors.scss";
+
+.container {
+  height: 100vh;
+  width: 100vw;
+
+  .sidenav-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  mat-sidenav {
+    width: 300px;
+    display: grid;
+
+    mat-icon {
+      margin-right: 15px;
+    }
+
+    .menu-profile {
+      background-color: var(--color-accent);
+
+      img,
+      div {
+        margin-left: 16px;
+      }
+    }
+  }
+
+  .section-container {
+    margin-left: 2em;
+    height: 100%;
+
+    .topbar-section {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .topbar-section:hover {
+      -webkit-box-shadow: inset 0px 0px 300px 200px rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: inset 0px 0px 300px 200px rgba(0, 0, 0, 0.15);
+      box-shadow: inset 0px 0px 300px 200px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .menu-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .active-link {
+    color: #795548 !important;
+  }
+
+  .app-content {
+    margin-top: 2em;
+    padding: 2em;
+  }
+
+  .circle {
+    border-radius: 50%;
+  }
+}
