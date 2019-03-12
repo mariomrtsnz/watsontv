@@ -6,7 +6,6 @@ export interface UserResponse {
     follows: OneMediaResponse[];
     likes: OneGenreResponse[];
     watched: OneMediaResponse[];
-    // collections: OneCollectionResponse[];
     watchlist: OneMediaResponse[];
     friends: UserResponse[];
     id: string;

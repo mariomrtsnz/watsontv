@@ -9,7 +9,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Collection.count(query)
-    .then(count => Collection.find(query, select, cursor)
+    .then(count => Collection.find(query, select, cursor).populate('owner', 'id name')
       .then((collections) => ({
         count,
         rows: collections.map((collection) => collection.view())
