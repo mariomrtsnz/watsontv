@@ -20,7 +20,7 @@ movieSchema.methods = {
       genre: this.genre,
       synopsis: this.synopsis,
       mediaType: this.__t,
-      trailer: this.trailer;
+      trailer: this.trailer,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
