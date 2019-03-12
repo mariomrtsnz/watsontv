@@ -1,3 +1,10 @@
-<p>
-  not-found works!
-</p>
+<div class="not-found container">
+  <h1>Not found <span>:(</span></h1>
+  <p>Sorry, but the page you were trying to view does not exist.</p>
+
+  <i>404</i>
+  <br>
+  <a [routerLink]="['/home/media']" *ngIf="authService.isAdmin()">
+    Go back Home
+  </a>
+</div>

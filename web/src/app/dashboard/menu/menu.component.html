@@ -11,13 +11,22 @@
         </div>
       </div>
       <mat-nav-list>
-        <a mat-list-item [routerLink]="['/home']">
-          <mat-icon>place</mat-icon>Home
+        <a mat-list-item [routerLink]="['/home']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>live_tv</mat-icon>Media
+        </a>
+        <a mat-list-item [routerLink]="['/home/genres']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>category</mat-icon>Genres
+        </a>
+        <a mat-list-item [routerLink]="['/home/collections']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>collections_bookmark</mat-icon>Collections
+        </a>
+        <a mat-list-item [routerLink]="['/home/actors']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>account_box</mat-icon>Actors
         </a>
         <a mat-list-item [routerLink]="['/home/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>supervisor_account</mat-icon>Users
         </a>
-        <a mat-list-item (click)="authService.logout()" [routerLink]="['/']">
+        <a mat-list-item (click)="authService.logout()" [routerLink]="['/']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>power_settings_new</mat-icon>Logout
         </a>
       </mat-nav-list>

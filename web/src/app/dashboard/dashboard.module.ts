@@ -10,6 +10,9 @@ import { DashboardRoutes } from './dashboard.routing';
 import { MenuComponent } from './menu/menu.component';
 import { UserComponent } from './user/user.component';
 import { MediaComponent } from './media/media.component';
+import { GenreComponent } from './genre/genre.component';
+import { ActorComponent } from './actor/actor.component';
+import { CollectionComponent } from './collection/collection.component';
 
 @NgModule({
   imports: [
@@ -25,7 +28,10 @@ import { MediaComponent } from './media/media.component';
     UserComponent,
     // FileSelectDirective,
     MediaComponent,
-    UserComponent
+    UserComponent,
+    GenreComponent,
+    ActorComponent,
+    CollectionComponent
   ],
 })
 
