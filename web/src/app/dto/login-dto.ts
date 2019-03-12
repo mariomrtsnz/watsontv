@@ -5,5 +5,5 @@ export class LoginDto {
     constructor(e: string, p: string) {
         this.email = e;
         this.password = p;
-}
+    }
 }

@@ -9,10 +9,24 @@ import { MaterialModule } from './material-module';
 import { routes } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { DialogGenreComponent } from './dialogs/dialog-genre/dialog-genre.component';
+import { DialogActorComponent } from './dialogs/dialog-actor/dialog-actor.component';
+import { DialogCollectionComponent } from './dialogs/dialog-collection/dialog-collection.component';
+import { DialogDeleteGenreComponent } from './dialogs/dialog-delete-genre/dialog-delete-genre.component';
+import { DialogDeleteActorComponent } from './dialogs/dialog-delete-actor/dialog-delete-actor.component';
+import { DialogDeleteCollectionComponent } from './dialogs/dialog-delete-collection/dialog-delete-collection.component';
+import { DialogDeleteMediaComponent } from './dialogs/dialog-delete-media/dialog-delete-media.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogGenreComponent,
+    DialogActorComponent,
+    DialogCollectionComponent,
+    DialogDeleteGenreComponent,
+    DialogDeleteActorComponent,
+    DialogDeleteCollectionComponent,
+    DialogDeleteMediaComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +37,13 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
+  entryComponents: [DialogGenreComponent,
+    DialogActorComponent,
+    DialogCollectionComponent,
+    DialogDeleteGenreComponent,
+    DialogDeleteActorComponent,
+    DialogDeleteCollectionComponent,
+    DialogDeleteMediaComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
