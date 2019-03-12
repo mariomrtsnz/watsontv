@@ -21,7 +21,7 @@ export class DialogGenreComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    if (this.data.genre) {
+    if (this.data) {
       this.edit = true;
       this.genreId = this.data.genre.id;
     } else {

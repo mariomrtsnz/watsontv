@@ -22,7 +22,7 @@ export class DialogActorComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    if (this.data.actor) {
+    if (this.data) {
       this.edit = true;
       this.actorId = this.data.actor.id;
     } else {

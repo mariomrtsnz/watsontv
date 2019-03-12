@@ -25,7 +25,7 @@ export class DialogUserComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    if (this.data.user) {
+    if (this.data) {
       this.edit = true;
       this.userId = this.data.user.id;
     } else {
