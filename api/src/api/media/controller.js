@@ -9,7 +9,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Media.count(query)
-    .then(count => Media.find(query, select, cursor)
+    .then(count => Media.find(query, select, cursor).populate('genre')
       .then((media) => ({
         count,
         rows: media.map((media) => media.view())

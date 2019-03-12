@@ -1,3 +1,30 @@
-<p>
-  media works!
-</p>
+<div fxLayout="row wrap">
+  <mat-card *ngFor="let m of media" class="poi-card">
+    <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu" *ngIf="authService.isAdmin()">
+      <mat-icon>more_horiz</mat-icon>
+    </a>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openEditMedia(m)">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="openDialogDeleteMedia(m)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+    <mat-card-header [style.background-image]="'url(' + m.coverImage + ')'" (click)="openMediaDetails(m)">
+      <mat-card-title>{{m.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <mat-chip-list>
+        <mat-chip>{{m.genre.name}}</mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
+  </mat-card>
+
+  <button mat-fab id="addFloatingButton" (click)="openNewMedia()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

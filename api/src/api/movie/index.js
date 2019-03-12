@@ -7,7 +7,7 @@ import { schema } from './model'
 export Movie, { schema } from './model'
 
 const router = new Router()
-const { title, releaseDate, rating, cast, coverImage, genre, synopsis } = schema.tree
+const { title, releaseDate, rating, cast, coverImage, genre, synopsis, trailer } = schema.tree
 
 /**
  * @api {post} /movies Create movie
@@ -22,7 +22,7 @@ const { title, releaseDate, rating, cast, coverImage, genre, synopsis } = schema
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ title, releaseDate, coverImage, genre, synopsis }),
+  body({ title, releaseDate, coverImage, genre, synopsis, trailer }),
   create)
 
 /**
