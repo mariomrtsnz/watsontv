@@ -2,7 +2,7 @@ import { ActorDto } from './../dto/actor-dto';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './authentication.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseContainer } from '../interfaces/response-container';
 import { OneActorResponse } from '../interfaces/one-actor-response';
@@ -36,5 +36,21 @@ export class ActorService {
 
   edit(id: string, resource: ActorDto): Observable<OneActorResponse> {
     return this.http.put<OneActorResponse>(`${actorUrl}/${id}${this.token}`, resource);
+  }
+
+  uploadPicture(file: File): Observable<HttpEvent<any>> {
+
+    const formData = new FormData();
+    formData.append('upload', file);
+
+    const params = new HttpParams();
+
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', `${actorUrl}/picture${this.token}`, formData, options);
+    return this.http.request(req);
   }
 }

@@ -39,3 +39,7 @@ export const destroy = ({ params }, res, next) =>
     .then((actor) => actor ? actor.remove() : null)
     .then(success(res, 204))
     .catch(next)
+
+exposrt const uploadImage = (req, res, next) => {
+  uploadService.uploadFromBinary(req.file.buffer).then(success(res, 201)
+}

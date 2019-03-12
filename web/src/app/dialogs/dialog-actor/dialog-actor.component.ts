@@ -1,8 +1,14 @@
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ActorDto } from './../../dto/actor-dto';
 import { ActorService } from './../../services/actor.service';
 import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+
+const URL = `${environment.apiUrl}/actors/picture`;
 
 @Component({
   selector: 'app-dialog-actor',
@@ -16,9 +22,10 @@ export class DialogActorComponent implements OnInit {
   picture: string;
   actorId: string;
   form: FormGroup;
+  urlImage: string;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private actorService: ActorService, public dialogRef: MatDialogRef<DialogActorComponent>) { }
+  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private actorService: ActorService, public dialogRef: MatDialogRef<DialogActorComponent>) {}
 
   ngOnInit() {
     this.createForm();
@@ -58,6 +65,33 @@ export class DialogActorComponent implements OnInit {
       });
       this.form = newForm;
     }
+  }
+
+  upload(event) {
+    const files = event.target.files;
+    if (files.length === 0) {
+      console.log('No file selected!');
+      return;
+
+    }
+    const file: File = files[0];
+
+    this.actorService.uploadPicture(file)
+      .subscribe(
+        uploadEvent => {
+          if (uploadEvent.type === HttpEventType.UploadProgress) {
+            const percentDone = Math.round(100 * uploadEvent.loaded / uploadEvent.total);
+            console.log(`File is ${percentDone}% loaded.`);
+          } else if (uploadEvent instanceof HttpResponse) {
+            console.log('File is completely loaded!');
+          }
+        },
+        (err) => {
+          console.log('Upload Error:', err);
+        }, () => {
+          console.log('Upload done');
+        }
+      );
   }
 
   addGenre() {

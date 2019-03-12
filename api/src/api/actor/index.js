@@ -2,12 +2,15 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, uploadImage } from './controller'
 import { schema } from './model'
 export Actor, { schema } from './model'
 
 const router = new Router()
 const { name, picture } = schema.tree
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({storage: storage})
 
 /**
  * @api {post} /actors Create actor
@@ -50,6 +53,12 @@ router.get('/',
  */
 router.get('/:id',
   show)
+
+router.post('/picture',
+  token({ required: true, roles: ['admin'] }),
+  upload.single('avatar'),
+  uploadImage
+)
 
 /**
  * @api {put} /actors/:id Update actor
