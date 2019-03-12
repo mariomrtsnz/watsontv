@@ -34,9 +34,9 @@
         <input matInput placeholder="Email" type="email" [formControl]="form.controls['email']" required>
       </mat-form-field>
     </div>
-    <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around" *ngIf="false">
       <mat-form-field class="w-100">
-        <input matInput placeholder="Password" type="password" [formControl]="form.controls['password']" required>
+        <input matInput placeholder="Password" type="text" readonly [formControl]="form.controls['picture']" required>
       </mat-form-field>
     </div>
     <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">

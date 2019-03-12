@@ -16,6 +16,7 @@ export class DialogUserComponent implements OnInit {
   name: string;
   email: string;
   password: string;
+  picture: string;
   userId: string;
   form: FormGroup;
 
@@ -50,14 +51,14 @@ export class DialogUserComponent implements OnInit {
     if (this.data) {
       const editForm: FormGroup = this.fb.group({
         name: [this.data.user.name, Validators.compose([Validators.required])],
-        email: [this.data.user.email, Validators.compose([Validators.required])],
-        password: [this.data.user.password, Validators.compose([Validators.required])]
+        email: [this.data.user.email, Validators.compose([Validators.required, Validators.email])],
+        picture: [this.data.user.picture, Validators.compose([Validators.required])]
       });
       this.form = editForm;
     } else {
       const newForm: FormGroup = this.fb.group({
         name: [null, Validators.compose([Validators.required])],
-        email: [null, Validators.compose([Validators.required])],
+        email: [null, Validators.compose([Validators.required, Validators.email])],
         password: [null, Validators.compose([Validators.required])]
       });
       this.form = newForm;
@@ -74,7 +75,7 @@ export class DialogUserComponent implements OnInit {
   }
 
   editUser() {
-    const userEditDto = new UserUpdateDto(this.email, this.name);
+    const userEditDto = new UserUpdateDto(this.email, this.name, this.picture);
     this.userService.edit(this.userId, userEditDto).subscribe(
       genre => {
         this.dialogRef.close('confirm');

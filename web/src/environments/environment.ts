@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://watsontv.herokuapp.com',
   masterKey: '{"access_token": "0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg"}',
-  masterKeyCreate: '{"access_token": "0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg"}',
+  masterKeyCreate: '0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg',
 };
 
 /*

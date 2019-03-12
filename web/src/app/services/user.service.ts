@@ -54,7 +54,7 @@ export class UserService {
   }
 
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
-    return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
+    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, resource);
   }
 
   editMyProfile(user: UserResponse, id: string): Observable<UserResponse> {
