@@ -1,0 +1,1191 @@
+{
+	"info": {
+		"_postman_id": "ccd25990-7179-4b6a-b428-c6bba3904a50",
+		"name": "watsonTV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "Actors - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Seth MacFarlane\",\n\t\"picture\": \"https://s1.ibtimes.com/sites/www.ibtimes.com/files/styles/full/public/2016/12/02/seth-macfarlane.jpg\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actors - Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Seth MacFarlane\",\n\t\"picture\": \"https://s1.ibtimes.com/sites/www.ibtimes.com/files/styles/full/public/2016/12/02/seth-macfarlane.jpg\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actors - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Seth MacFarlane\",\n\t\"picture\": \"https://s1.ibtimes.com/sites/www.ibtimes.com/files/styles/full/public/2016/12/02/seth-macfarlane.jpg\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/actors/5c854edac07fb217e3db6f18",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors",
+								"5c854edac07fb217e3db6f18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actors - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/actors/5c854edac07fb217e3db6f18",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors",
+								"5c854edac07fb217e3db6f18"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth - Login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/auth",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"0VcvzlGDoLJBOsQMuregAKAFiU9JHpqg\",\n\t\"email\":\"admin@admin.com\",\n\t\"password\":\"123456\",\n\t\"name\":\"admin\",\n\t\"role\":\"admin\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Collections",
+			"item": [
+				{
+					"name": "Collections - Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Favorites\",\n\t\"description\":\"TV Shows, Documentaries and Movies that I love.\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Favorites\",\n\t\"description\":\"TV Shows, Documentaries and Movies that I love.\",\n\t\"owner\":\"5c7fa7c695b92319379ed27b\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Favorites\",\n\t\"description\":\"TV Shows, Documentaries and Movies that I love.\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections/5c8566ab97ea531e965104f7",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections",
+								"5c8566ab97ea531e965104f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections/5c8566ab97ea531e965104f7",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections",
+								"5c8566ab97ea531e965104f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - All User Collections",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections/mine",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections",
+								"mine"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Episodes",
+			"item": [
+				{
+					"name": "Episodes - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Minimum Viable Product\",\n\t\"synopsis\": \"Attending an elaborate launch party, Richard and his computer programmer friends - Big Head, Dinesh and Gilfoyle - dream of making it big. Instead, they're living in the communal Hacker Hostel owned by former programmer Erlich, who gets to claim ten percent of anything they invent there. When it becomes clear that Richard has developed a powerful compression algorithm for his website, Pied Piper, he finds himself courted by Gavin Belson, his egomaniacal corporate boss, who offers a $10 million buyout by his firm, Hooli. But Richard holds back when well-known investor Peter Gregory makes a counteroffer.\",\n\t\"airTime\": \"April 7, 2014\",\n\t\"duration\": 29,\n\t\"number\": 1\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episodes - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes/5c858377952a8f23b46a0980",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes",
+								"5c858377952a8f23b46a0980"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episodes - Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Minimum Viable Product\",\n\t\"synopsis\": \"Attending an elaborate launch party, Richard and his computer programmer friends - Big Head, Dinesh and Gilfoyle - dream of making it big. Instead, they're living in the communal Hacker Hostel owned by former programmer Erlich, who gets to claim ten percent of anything they invent there. When it becomes clear that Richard has developed a powerful compression algorithm for his website, Pied Piper, he finds himself courted by Gavin Belson, his egomaniacal corporate boss, who offers a $10 million buyout by his firm, Hooli. But Richard holds back when well-known investor Peter Gregory makes a counteroffer.\",\n\t\"airTime\": \"April 7, 2014\",\n\t\"duration\": 29\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episodes - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Minimum Viable Product\",\n\t\"synopsis\": \"Attending an elaborate launch party, Richard and his computer programmer friends - Big Head, Dinesh and Gilfoyle - dream of making it big. Instead, they're living in the communal Hacker Hostel owned by former programmer Erlich, who gets to claim ten percent of anything they invent there. When it becomes clear that Richard has developed a powerful compression algorithm for his website, Pied Piper, he finds himself courted by Gavin Belson, his egomaniacal corporate boss, who offers a $10 million buyout by his firm, Hooli. But Richard holds back when well-known investor Peter Gregory makes a counteroffer.\",\n\t\"airTime\": \"April 7, 2014\",\n\t\"duration\": 29\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes/5c858377952a8f23b46a0980",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes",
+								"5c858377952a8f23b46a0980"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"item": [
+				{
+					"name": "Genres - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Comedy\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/genres",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Genres - Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Comedy\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/genres",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Genres - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Comedy\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/genres/5c85600b017f4c1daab7ada3",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"genres",
+								"5c85600b017f4c1daab7ada3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Genres - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/genres/5c85600b017f4c1daab7ada3",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"genres",
+								"5c85600b017f4c1daab7ada3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seasons",
+			"item": [
+				{
+					"name": "Seasons - Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/seasons",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seasons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seasons - Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/seasons/5c856da4bf9a1f21610528a8",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seasons",
+								"5c856da4bf9a1f21610528a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seasons - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"series\": \"5c855e9c017f4c1daab7ad9e\",\n\t\"number\": 1\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/seasons",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seasons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seasons - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/seasons/5c856da4bf9a1f21610528a8",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seasons",
+								"5c856da4bf9a1f21610528a8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Series",
+			"item": [
+				{
+					"name": "Series - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"Silicon Valley\",\n\t\"coverImage\": \"http://olivierhanna.club/wp-content/uploads/2018/02/silicon-valley-online-free-architecture-photography-books.jpg\",\n\t\"genre\": \"5c8548a5ea901816f22d7209\",\n\t\"synopsis\": \"In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.\",\n\t\"broadcaster\": \"HBO\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/series",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"series"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Series - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/series/5c85494d2f0583174e755139",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"series",
+								"5c85494d2f0583174e755139"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Series - Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/series",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"series"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Series - Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/series/5c855c6b8cc1461cab5495d6",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"series",
+								"5c855c6b8cc1461cab5495d6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Media",
+			"item": [
+				{
+					"name": "Media - Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/media/5c855c6b8cc1461cab5495d6",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"media",
+								"5c855c6b8cc1461cab5495d6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Media - Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/media",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"media"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Movies - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"Christopher Robin\",\n\t\"releaseDate\": \"August 3, 2018\",\n\t\"coverImage\": \"https://buzz.tt/media/posters/2093/posters_1_1500.jpg\",\n\t\"genre\": \"5c85600b017f4c1daab7ada3\",\n\t\"synopsis\": \"Christopher Robin, the boy who had countless adventures in the Hundred Acre Wood, has grown up and lost his way. Now it’s up to his spirited and loveable stuffed animals, Winnie The Pooh, Tigger, Piglet, and the rest of the gang, to rekindle their friendship and remind him of endless days of childlike wonder and make-believe, when doing nothing was the very best something.\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movies - Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movies - Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/movies/5c85625697ea531e965104f6",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies",
+								"5c85625697ea531e965104f6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Movies - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/movies/5c85625697ea531e965104f6",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies",
+								"5c85625697ea531e965104f6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Users - Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c7fa7c695b92319379ed27b",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c7fa7c695b92319379ed27b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Get All And Friended",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/allAndFriended",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"allAndFriended"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
