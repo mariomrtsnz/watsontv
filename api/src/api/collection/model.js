@@ -9,9 +9,14 @@ const collectionSchema = new Schema({
     type: String,
     required: true
   },
-  collected: {
+  collected: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'
+  }],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true,
@@ -29,6 +34,7 @@ collectionSchema.methods = {
       name: this.name,
       description: this.description,
       collected: this.collected,
+      owner: this.owner,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }

@@ -18,6 +18,10 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 
+export const userCollections = ({ params, user }, res, next) => {
+  Collection.find({"owner": user.id}).then(success(res)).catch(next);
+}
+
 export const show = ({ params }, res, next) =>
   Collection.findById(params.id)
     .then(notFound(res))

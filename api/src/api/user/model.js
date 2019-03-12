@@ -50,10 +50,6 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media'
   }],
-  collections: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Collection'
-  }],
   watchlist: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'

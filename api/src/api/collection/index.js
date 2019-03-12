@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, userCollections } from './controller'
 import { schema } from './model'
+import { token } from '../../services/passport'
 export Collection, { schema } from './model'
 
 const router = new Router()
-const { name, description, collected } = schema.tree
+const { name, description, collected, owner } = schema.tree
 
 /**
  * @api {post} /collections Create collection
@@ -20,7 +21,7 @@ const { name, description, collected } = schema.tree
  * @apiError 404 Collection not found.
  */
 router.post('/',
-  body({ name, description, collected }),
+  body({ name, description, collected, owner }),
   create)
 
 /**
@@ -35,6 +36,10 @@ router.post('/',
 router.get('/',
   query(),
   index)
+
+router.get('/mine',
+  token({ required: true }),
+  userCollections)
 
 /**
  * @api {get} /collections/:id Retrieve collection
