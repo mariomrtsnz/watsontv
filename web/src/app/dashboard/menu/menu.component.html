@@ -26,7 +26,7 @@
         <a mat-list-item [routerLink]="['/home/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>supervisor_account</mat-icon>Users
         </a>
-        <a mat-list-item (click)="authService.logout()" [routerLink]="['/']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item (click)="authService.logout()" [routerLink]="['/']" *ngIf="authService.isAdmin()">
           <mat-icon>power_settings_new</mat-icon>Logout
         </a>
       </mat-nav-list>
