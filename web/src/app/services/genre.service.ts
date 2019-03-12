@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { ResponseContainer } from '../interfaces/response-container';
 import { OneMediaResponse } from '../interfaces/one-media-response';
+import { OneGenreResponse } from '../interfaces/one-genre-response';
 
 const genreUrl = `${environment.apiUrl}/genres`;
 
@@ -19,22 +20,22 @@ export class GenreService {
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAll() {
-    return this.http.get<ResponseContainer<OneMediaResponse>>(`${genreUrl}${this.token}`);
+    return this.http.get<ResponseContainer<OneGenreResponse>>(`${genreUrl}${this.token}`);
   }
 
   getOne(id: number) {
-    return this.http.get<OneMediaResponse>(`${genreUrl}/${id}${this.token}`);
+    return this.http.get<OneGenreResponse>(`${genreUrl}/${id}${this.token}`);
   }
 
-  create(resource: GenreDto): Observable<OneMediaResponse> {
-    return this.http.post<OneMediaResponse>(`${genreUrl}${this.token}`, resource);
+  create(resource: GenreDto): Observable<OneGenreResponse> {
+    return this.http.post<OneGenreResponse>(`${genreUrl}${this.token}`, resource);
   }
 
-  remove(id: string): Observable<ResponseContainer<OneMediaResponse>> {
-    return this.http.delete<ResponseContainer<OneMediaResponse>>(`${genreUrl}/${id}${this.token}`);
+  remove(id: string): Observable<ResponseContainer<OneGenreResponse>> {
+    return this.http.delete<ResponseContainer<OneGenreResponse>>(`${genreUrl}/${id}${this.token}`);
   }
 
-  edit(id: string, resource: GenreDto): Observable<OneMediaResponse> {
-    return this.http.put<OneMediaResponse>(`${genreUrl}/${id}${this.token}`, resource);
-}
+  edit(id: string, resource: GenreDto): Observable<OneGenreResponse> {
+    return this.http.put<OneGenreResponse>(`${genreUrl}/${id}${this.token}`, resource);
+  }
 }

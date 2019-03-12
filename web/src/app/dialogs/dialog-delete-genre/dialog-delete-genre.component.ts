@@ -36,6 +36,6 @@ export class DialogDeleteGenreComponent implements OnInit {
   delete() {
     this.genreService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
-    }, error => this.snackBar.open('There was an error when trying to delete this route.', 'Close', {duration: 3000}));
+    }, error => this.snackBar.open('There was an error when trying to delete this genre.', 'Close', {duration: 3000}));
   }
 }

@@ -66,7 +66,7 @@ export class DialogGenreComponent implements OnInit {
     );
   }
 
-  editBadge() {
+  editGenre() {
     const genreEditDto = new GenreDto(this.name);
     this.genreService.edit(this.genreId, genreEditDto).subscribe(
       genre => {
