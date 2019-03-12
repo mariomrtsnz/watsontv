@@ -90,6 +90,7 @@ export class DialogActorComponent implements OnInit {
           console.log('Upload Error:', err);
         }, () => {
           console.log('Upload done');
+          // this.urlImage = success.link;
         }
       );
   }

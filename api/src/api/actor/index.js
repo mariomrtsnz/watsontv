@@ -56,7 +56,7 @@ router.get('/:id',
 
 router.post('/picture',
   token({ required: true, roles: ['admin'] }),
-  upload.single('avatar'),
+  upload.single('actorPicture'),
   uploadImage
 )
 

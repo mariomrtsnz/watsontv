@@ -41,7 +41,7 @@ export class ActorService {
   uploadPicture(file: File): Observable<HttpEvent<any>> {
 
     const formData = new FormData();
-    formData.append('upload', file);
+    formData.append('actorPicture', file);
 
     const params = new HttpParams();
 

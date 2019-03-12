@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { Actor } from '.'
+const uploadService = require('../../services/upload/')
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Actor.create(body)
@@ -40,6 +41,4 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-exposrt const uploadImage = (req, res, next) => {
-  uploadService.uploadFromBinary(req.file.buffer).then(success(res, 201)
-}
+export const uploadImage = (req, res, next) => uploadService.uploadFromBinary(req.file.buffer).then(success(res, 201))
