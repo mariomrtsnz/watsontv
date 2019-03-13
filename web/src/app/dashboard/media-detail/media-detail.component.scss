@@ -12,6 +12,10 @@
     }
 }
 
+#container {
+    margin-bottom: 2em;
+}
+
 .mat-fab-bottom-right {
     top: auto;
     right: 20px;
@@ -47,4 +51,14 @@
     position: relative;
     width: 100%;
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+mat-card-header {
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    opacity: 0.8;
+    
+    &:hover {
+        opacity: 1;
+    }
 }

@@ -15,6 +15,7 @@ import { ActorComponent } from './actor/actor.component';
 import { CollectionComponent } from './collection/collection.component';
 import { MediaDetailComponent } from './media-detail/media-detail.component';
 import { MediaFormComponent } from './media-form/media-form.component';
+import { EpisodesComponent } from './episodes/episodes.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { MediaFormComponent } from './media-form/media-form.component';
     ActorComponent,
     CollectionComponent,
     MediaDetailComponent,
-    MediaFormComponent
+    MediaFormComponent,
+    EpisodesComponent
   ],
 })
 

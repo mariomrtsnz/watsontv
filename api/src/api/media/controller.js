@@ -19,7 +19,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Media.findById(params.id).populate('genre')
+  Media.findById(params.id).populate('genre').populate('seasons', 'id number episodes')
     .then(notFound(res))
     .then((media) => media ? media.view() : null)
     .then(success(res))
