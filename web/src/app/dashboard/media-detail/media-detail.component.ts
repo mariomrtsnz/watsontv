@@ -10,6 +10,7 @@ import { SeriesDto } from 'src/app/dto/series-dto';
 import { MovieDto } from 'src/app/dto/movie-dto';
 import { OneGenreResponse } from 'src/app/interfaces/one-genre-response';
 import { OneMediaResponse } from 'src/app/interfaces/one-media-response';
+import { OneSeasonResponse } from 'src/app/interfaces/one-season-response';
 
 @Component({
   selector: 'app-media-detail',
@@ -21,11 +22,15 @@ export class MediaDetailComponent implements OnInit {
   allGenres: OneGenreResponse[];
   media: OneMediaResponse;
   coverImage: string;
+  mediaSeasons: OneSeasonResponse[];
 
   constructor(private mediaService: MediaService, private genreService: GenreService,
     public router: Router, public snackBar: MatSnackBar, private titleService: Title, public dialog: MatDialog) { }
 
   ngOnInit() {
+    if (!this.mediaService.selectedMedia) {
+      this.router.navigate(['/home']);
+    }
     this.getData();
     this.getGenres();
     this.titleService.setTitle('Media - Detail');
@@ -41,6 +46,18 @@ export class MediaDetailComponent implements OnInit {
         this.media = m;
         this.coverImage = m.coverImage;
       });
+  }
+
+  openSeasonDetails(s: OneSeasonResponse) {
+
+  }
+
+  openEditSeason(s: OneSeasonResponse) {
+
+  }
+
+  openDialogDeleteSeason(s: OneSeasonResponse) {
+
   }
 
   openEditMedia() {

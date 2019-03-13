@@ -22,6 +22,11 @@ const episodeSchema = new Schema({
     type: Number,
     required: true,
     min: 1
+  },
+  season: {
+    type: Schema.Types.ObjectId,
+    ref: 'Season',
+    required: true
   }
 }, {
   strict: false,

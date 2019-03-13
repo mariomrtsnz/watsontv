@@ -1,11 +1,20 @@
 import { success, notFound } from '../../services/response/'
 import { Season } from '.'
+import { Series } from '../series'
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
   Season.create(body)
-    .then((season) => season.view(true))
+  .then((season) => {
+    season.view(true);
+    Series.findByIdAndUpdate(
+      { _id: season.series },
+      { $push: {seasons: season } },
+      {new: true})
+      .then(success(res, 200)).catch(next);
+  })
     .then(success(res, 201))
     .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Season.count(query)
@@ -36,6 +45,13 @@ export const update = ({ bodymen: { body }, params }, res, next) =>
 export const destroy = ({ params }, res, next) =>
   Season.findById(params.id)
     .then(notFound(res))
-    .then((season) => season ? season.remove() : null)
+    .then((season) => {
+      Series.findByIdAndUpdate(
+        { _id: season.series },
+        { $pull: {seasons: season._id } },
+        { new: true })
+        .then(success(res, 200)).catch(next);
+        season ? season.remove() : null
+    })
     .then(success(res, 204))
     .catch(next)

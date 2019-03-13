@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { Series } from '.'
+import { Season } from '../season'
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Series.create(body)
@@ -36,6 +37,9 @@ export const update = ({ bodymen: { body }, params }, res, next) =>
 export const destroy = ({ params }, res, next) =>
   Series.findById(params.id)
     .then(notFound(res))
-    .then((series) => series ? series.remove() : null)
+    .then((series) => {
+      series ? series.remove() : null
+      // Season.remove({series: series._id}).then(success(res, 204)).catch(next)
+    })
     .then(success(res, 204))
     .catch(next)

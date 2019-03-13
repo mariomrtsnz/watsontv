@@ -1,35 +1,53 @@
 <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="media">
-    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
-      <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
-        <div fxLayout="row" fxLayoutGap="5px">
-          <div fxFlex="80">
-            <div #myCoverImage id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
-          </div>
+  <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex="100">
+    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxFlex="90">
+          <div #myCoverImage id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
         </div>
       </div>
-      <div fxFlex.gt-md="50" fxFlex="100">
-        <h1>{{ media.title }}</h1>
-        <hr>
-        <mat-chip-list>
-            <mat-chip>{{ media.mediaType }}</mat-chip>
-          <mat-chip>{{ media.genre.name }}</mat-chip>
-        </mat-chip-list>
-        <div>{{ media.synopsis }}</div>
-      </div>
-  
+    </div>
+    <div fxFlex.gt-md="50" fxFlex="100">
+      <h1>{{ media.title }}</h1>
+      <hr>
+      <mat-chip-list>
+        <mat-chip>{{ media.mediaType }}</mat-chip>
+        <mat-chip>{{ media.genre.name }}</mat-chip>
+      </mat-chip-list>
+      <div>{{ media.synopsis }}</div>
+    </div>
+  </mat-card>
+  <div *ngIf="media.mediaType.toLowerCase() == 'series'">
+    <mat-card *ngFor="let s of media.seasons" class="poi-card">
+      <mat-card-header (click)="openSeasonDetails(s)">
+        <mat-card-title>{{s.number}}</mat-card-title>
+        <mat-card-subtitle>{{s.episodes.length}} episodes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content></mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="openEditSeason(s)">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-button (click)="openDialogDeleteSeason(s)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
-  
-  <a mat-fab id="addFloatingButton" [matMenuTriggerFor]="menu">
-    <mat-icon>more_horiz</mat-icon>
-  </a>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="openEditMedia()">
-      <mat-icon>edit</mat-icon>
-      <span>Edit</span>
-    </button>
-    <button mat-menu-item (click)="openDialogDeleteMedia()">
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-  </mat-menu>
+</div>
+
+<a mat-fab id="addFloatingButton" [matMenuTriggerFor]="menu">
+  <mat-icon>more_horiz</mat-icon>
+</a>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openEditMedia()">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
+  </button>
+  <button mat-menu-item (click)="openDialogDeleteMedia()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>

@@ -1,9 +1,17 @@
 import { success, notFound } from '../../services/response/'
 import { Episode } from '.'
+import { Season } from '../season'
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Episode.create(body)
-    .then((episode) => episode.view(true))
+  .then((episode) => {
+    episode.view(true);
+    Season.findByIdAndUpdate(
+      { _id: episode.season },
+      { $push: {episodes: episode } },
+      {new: true})
+      .then(success(res, 200)).catch(next);
+  })
     .then(success(res, 201))
     .catch(next)
 
@@ -36,6 +44,13 @@ export const update = ({ bodymen: { body }, params }, res, next) =>
 export const destroy = ({ params }, res, next) =>
   Episode.findById(params.id)
     .then(notFound(res))
-    .then((episode) => episode ? episode.remove() : null)
+    .then((episode) => {
+      Season.findByIdAndUpdate(
+        { _id: episode.season },
+        { $pull: {episodes: episode._id } },
+        { new: true })
+        .then(success(res, 200)).catch(next);
+        episode ? episode.remove() : null
+    })
     .then(success(res, 204))
     .catch(next)
