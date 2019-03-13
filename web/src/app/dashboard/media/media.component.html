@@ -6,9 +6,12 @@
     </mat-card-header>
     <div mat-card-image [style.background-image]="'url(' + m.coverImage + ')'"></div>
     <mat-card-content>
-      <mat-chip>{{m.genre.name}}</mat-chip>
+      <mat-chip-list>
+        <mat-chip>{{m.genre.name}}</mat-chip>
+      </mat-chip-list>
       <p>
-        {{m.synopsis}}
+        <span *ngIf="m.synopsis.length > 200; else fullSynopsis"> {{m.synopsis.substring(0, 200)}}...</span>
+        <ng-template #fullSynopsis>{{m.synopsis}}</ng-template>
       </p>
     </mat-card-content>
     <mat-card-actions>

@@ -106,8 +106,11 @@
           <div fxFlex.gt-md="50" fxFlex="100">
             <h1>{{ media.title }}</h1>
             <hr>
-            <mat-chip>{{media.genre.name}}</mat-chip>
-            <div [innerHtml]="media.synopsis"></div>
+            <mat-chip-list>
+                <mat-chip>{{ media.mediaType }}</mat-chip>
+              <mat-chip>{{ media.genre.name }}</mat-chip>
+            </mat-chip-list>
+            <div>{{ media.synopsis }}</div>
           </div>
       
         </mat-card>
