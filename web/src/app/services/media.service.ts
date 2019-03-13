@@ -19,6 +19,7 @@ export class MediaService {
 
   token = `?access_token=${this.authService.getToken()}`;
   public selectedMedia: OneMediaResponse;
+  public mediaType: string;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 

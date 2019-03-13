@@ -24,13 +24,11 @@ export class MediaComponent implements OnInit {
     this.getAll('Success retrieving items');
   }
 
-  /** Get the list of all POIs from API */
   getAll(alerMsg: string) {
     this.mediaService.getAll().subscribe(receivedMedia => this.media = receivedMedia.rows,
       err => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
 
-  /** Go to PoiCreate view */
   openNewMedia() {
     this.router.navigate(['home/media/create']);
   }
@@ -52,7 +50,6 @@ export class MediaComponent implements OnInit {
     });
   }
 
-  /** Go to POIDetails view */
   openMediaDetails(m: OneMediaResponse) {
     this.mediaService.selectedMedia = m;
     this.router.navigate(['home/media/details']);
