@@ -15,9 +15,9 @@ import { OneSeasonResponse } from 'src/app/interfaces/one-season-response';
   styleUrls: ['./episodes.component.scss']
 })
 export class EpisodesComponent implements OnInit {
-  displayedColumns: string[] = ['picture', 'name', 'actions'];
+  displayedColumns: string[] = ['number', 'name', 'synopsis', 'airTime', 'duration', 'actions'];
   dataSource;
-  actors: any[] = [];
+  episodes: any[] = [];
   alertMsg: string;
   selectedSeason: OneSeasonResponse;
 
@@ -27,10 +27,13 @@ export class EpisodesComponent implements OnInit {
     private episodeService: EpisodeService, private router: Router, public dialog: MatDialog, private seasonService: SeasonService) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Episodes');
-    console.log(this.seasonService.selectedSeason);
-    this.selectedSeason = this.seasonService.selectedSeason;
-    this.getAllEpisodes('Success retrieving items.');
+    if (!this.seasonService.selectedSeason) {
+      this.router.navigate(['/home']);
+    } else {
+      this.titleService.setTitle('Episodes');
+      this.selectedSeason = this.seasonService.selectedSeason;
+      this.getAllEpisodes('Success retrieving items.');
+    }
   }
 
   getAllEpisodes(message: string) {

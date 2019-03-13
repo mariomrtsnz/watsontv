@@ -21,6 +21,8 @@ import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-d
 import { DialogMediaTypeComponent } from './dialogs/dialog-media-type/dialog-media-type.component';
 import { DialogEpisodeComponent } from './dialogs/dialog-episode/dialog-episode.component';
 import { DialogDeleteEpisodeComponent } from './dialogs/dialog-delete-episode/dialog-delete-episode.component';
+import { DialogSeasonComponent } from './dialogs/dialog-season/dialog-season.component';
+import { DialogDeleteSeasonComponent } from './dialogs/dialog-delete-season/dialog-delete-season.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { DialogDeleteEpisodeComponent } from './dialogs/dialog-delete-episode/di
     DialogDeleteUserComponent,
     DialogMediaTypeComponent,
     DialogEpisodeComponent,
-    DialogDeleteEpisodeComponent
+    DialogDeleteEpisodeComponent,
+    DialogSeasonComponent,
+    DialogDeleteSeasonComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +60,11 @@ import { DialogDeleteEpisodeComponent } from './dialogs/dialog-delete-episode/di
     DialogDeleteMediaComponent,
     DialogUserComponent,
     DialogDeleteUserComponent,
-    DialogMediaTypeComponent],
+    DialogMediaTypeComponent,
+    DialogEpisodeComponent,
+    DialogDeleteEpisodeComponent,
+    DialogSeasonComponent,
+    DialogDeleteSeasonComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

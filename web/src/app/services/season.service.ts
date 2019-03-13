@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { OneSeasonResponse } from '../interfaces/one-season-response';
 import { ResponseContainer } from '../interfaces/response-container';

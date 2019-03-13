@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, showEpisodes } from './controller'
 import { schema } from './model'
 export Season, { schema } from './model'
 
@@ -50,6 +50,9 @@ router.get('/',
  */
 router.get('/:id',
   show)
+
+router.get('/:id/episodes',
+  showEpisodes)
 
 /**
  * @api {put} /seasons/:id Update season

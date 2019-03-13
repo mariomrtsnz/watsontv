@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import { Season } from '.'
 import { Series } from '../series'
+import { Episode } from '../episode'
 
 export const create = ({ bodymen: { body } }, res, next) => {
   Season.create(body)
@@ -54,4 +55,10 @@ export const destroy = ({ params }, res, next) =>
         season ? season.remove() : null
     })
     .then(success(res, 204))
+    .catch(next)
+
+export const showEpisodes = ({ params }, res, next) =>
+  Episode.find({"season": params.id})
+    .then(notFound(res))
+    .then(success(res))
     .catch(next)

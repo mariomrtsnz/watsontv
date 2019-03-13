@@ -1,3 +1,4 @@
+import { DialogDeleteSeasonComponent } from './../../dialogs/dialog-delete-season/dialog-delete-season.component';
 import { DialogDeleteMediaComponent } from 'src/app/dialogs/dialog-delete-media/dialog-delete-media.component';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatDialog } from '@angular/material';
@@ -60,7 +61,14 @@ export class MediaDetailComponent implements OnInit {
   }
 
   openDialogDeleteSeason(s: OneSeasonResponse) {
+    const deleteSeasonDialog = this.dialog.open(DialogDeleteSeasonComponent,
+      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title } });
 
+      deleteSeasonDialog.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.router.navigate(['home']);
+      }
+    });
   }
 
   openEditMedia() {
