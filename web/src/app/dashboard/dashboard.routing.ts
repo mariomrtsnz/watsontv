@@ -1,3 +1,4 @@
+import { MediaDetailComponent } from './media-detail/media-detail.component';
 import { CollectionComponent } from './collection/collection.component';
 import { GenreComponent } from './genre/genre.component';
 import { ActorComponent } from './actor/actor.component';
@@ -17,7 +18,10 @@ export const DashboardRoutes: Routes = [
       { path: 'users', component: UserComponent, canActivate: [AuthGuard] },
       { path: 'genres', component: GenreComponent, canActivate: [AuthGuard] },
       { path: 'actors', component: ActorComponent, canActivate: [AuthGuard] },
-      { path: 'collections', component: CollectionComponent, canActivate: [AuthGuard] }
+      { path: 'collections', component: CollectionComponent, canActivate: [AuthGuard] },
+      { path: 'media/details', component: MediaDetailComponent, canActivate: [AuthGuard] },
+      { path: 'media/create', component: MediaDetailComponent, canActivate: [AuthGuard] },
+      { path: 'media/edit', component: MediaDetailComponent, canActivate: [AuthGuard] }
     ]
   }
 ];

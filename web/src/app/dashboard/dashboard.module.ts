@@ -13,6 +13,7 @@ import { MediaComponent } from './media/media.component';
 import { GenreComponent } from './genre/genre.component';
 import { ActorComponent } from './actor/actor.component';
 import { CollectionComponent } from './collection/collection.component';
+import { MediaDetailComponent } from './media-detail/media-detail.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { CollectionComponent } from './collection/collection.component';
     UserComponent,
     GenreComponent,
     ActorComponent,
-    CollectionComponent
+    CollectionComponent,
+    MediaDetailComponent
   ],
 })
 

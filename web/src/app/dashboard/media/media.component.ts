@@ -14,41 +14,48 @@ import { DialogDeleteMediaComponent } from 'src/app/dialogs/dialog-delete-media/
 })
 export class MediaComponent implements OnInit {
   media: OneMediaResponse[];
+  alertMsg: string;
 
   constructor(private mediaService: MediaService, public dialog: MatDialog,
     public router: Router, public snackBar: MatSnackBar, private titleService: Title, public authService: AuthenticationService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Media');
-    this.getAll();
+    this.getAll('Success retrieving items');
   }
 
   /** Get the list of all POIs from API */
-  getAll() {
+  getAll(alerMsg: string) {
     this.mediaService.getAll().subscribe(receivedMedia => this.media = receivedMedia.rows,
       err => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
 
   /** Go to PoiCreate view */
   openNewMedia() {
-    this.router.navigate(['home/create']);
+    this.router.navigate(['home/media/create']);
   }
 
   openEditMedia(m: OneMediaResponse) {
     this.mediaService.selectedMedia = m;
-    this.router.navigate(['home/edit']);
+    this.router.navigate(['home/media/edit']);
   }
 
   openDialogDeleteMedia(m: OneMediaResponse) {
-    const dialogDeletePoi = this.dialog.open(DialogDeleteMediaComponent, { data: { media: m } });
-    dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
-      err => this.snackBar.open('There was an error when we were deleting this Media.', 'Close', { duration: 3000 }));
+    const deleteMediaDialog = this.dialog.open(DialogDeleteMediaComponent,
+      { panelClass: 'delete-dialog', data: { mediaId: m.id, mediaTitle: m.title } });
+
+      deleteMediaDialog.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.alertMsg = 'Genre deleted';
+        this.getAll(this.alertMsg);
+      }
+    });
   }
 
   /** Go to POIDetails view */
   openMediaDetails(m: OneMediaResponse) {
     this.mediaService.selectedMedia = m;
-    this.router.navigate(['home/details']);
+    this.router.navigate(['home/media/details']);
   }
 
 }
