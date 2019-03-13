@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { OneMediaResponse } from 'src/app/interfaces/one-media-response';
 import { MediaService } from 'src/app/services/media.service';
 import { DialogDeleteMediaComponent } from 'src/app/dialogs/dialog-delete-media/dialog-delete-media.component';
+import { DialogMediaTypeComponent } from 'src/app/dialogs/dialog-media-type/dialog-media-type.component';
 
 @Component({
   selector: 'app-media',
@@ -30,7 +31,13 @@ export class MediaComponent implements OnInit {
   }
 
   openNewMedia() {
-    this.router.navigate(['home/media/create']);
+    const createMediaTypeDialog = this.dialog.open(DialogMediaTypeComponent,
+      { panelClass: 'delete-dialog' });
+
+      createMediaTypeDialog.afterClosed().subscribe(result => {
+        this.mediaService.mediaType = result;
+        this.router.navigate(['home/media/create']);
+      });
   }
 
   openEditMedia(m: OneMediaResponse) {
@@ -43,11 +50,11 @@ export class MediaComponent implements OnInit {
       { panelClass: 'delete-dialog', data: { mediaId: m.id, mediaTitle: m.title } });
 
       deleteMediaDialog.afterClosed().subscribe(result => {
-      if (result === 'confirm') {
-        this.alertMsg = 'Genre deleted';
-        this.getAll(this.alertMsg);
-      }
-    });
+        if (result === 'confirm') {
+          this.alertMsg = 'Genre deleted';
+          this.getAll(this.alertMsg);
+        }
+      });
   }
 
   openMediaDetails(m: OneMediaResponse) {

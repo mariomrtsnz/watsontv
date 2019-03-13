@@ -24,21 +24,31 @@ export class MediaFormComponent implements OnInit {
   form: FormGroup;
   allGenres: OneGenreResponse[];
   allMediaTypes: ['Series', 'Movie'];
+  urlImage: string;
 
   constructor(private fb: FormBuilder, private mediaService: MediaService, private genreService: GenreService,
     public router: Router, public snackBar: MatSnackBar, private titleService: Title, public dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.router.url.indexOf('/home/media/create') > -1) {
+      if (!this.mediaService.mediaType) {
+        this.router.navigate(['/home']);
+      }
       this.isCreate = true;
+      this.mediaType = this.mediaService.mediaType;
       this.titleService.setTitle('Create - Media');
+      this.createCreateForm();
     } else if (this.router.url.indexOf('/home/media/edit') > -1) {
       this.isEdit = true;
+      if (!this.mediaService.selectedMedia) {
+        this.router.navigate(['/home']);
+      }
       this.media = this.mediaService.selectedMedia;
       this.createEditForm();
       this.titleService.setTitle('Edit - Media');
       this.getData();
     }
+    this.getGenres();
   }
 
   createCreateForm() {
@@ -65,17 +75,17 @@ export class MediaFormComponent implements OnInit {
     if (this.media.mediaType.toLowerCase() === 'series') {
       this.form = this.fb.group({
         title: [this.media.title, Validators.compose([Validators.required])],
-        coverImage: [null, Validators.compose([Validators.required])],
-        genre: [null, Validators.compose([Validators.required])],
-        synopsis: [null, Validators.compose([Validators.required])],
-        broadcaster: [null, Validators.compose([Validators.required])],
+        coverImage: [this.media.coverImage, Validators.compose([Validators.required])],
+        genre: [this.media.genre, Validators.compose([Validators.required])],
+        synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
+        broadcaster: [this.media.broadcaster, Validators.compose([Validators.required])],
       });
     } else {
       this.form = this.fb.group({
-        title: [null, Validators.compose([Validators.required])],
-        coverImage: [null, Validators.compose([Validators.required])],
-        genre: [null, Validators.compose([Validators.required])],
-        synopsis: [null, Validators.compose([Validators.required])],
+        title: [this.media.title, Validators.compose([Validators.required])],
+        coverImage: [this.media.coverImage, Validators.compose([Validators.required])],
+        genre: [this.media.genre, Validators.compose([Validators.required])],
+        synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
         trailer: [null, Validators.compose([Validators.required])],
       });
     }
@@ -124,6 +134,10 @@ export class MediaFormComponent implements OnInit {
         });
       }
     }
+  }
+
+  imageUpload() {
+
   }
 
 }

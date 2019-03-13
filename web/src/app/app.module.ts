@@ -18,6 +18,7 @@ import { DialogDeleteCollectionComponent } from './dialogs/dialog-delete-collect
 import { DialogDeleteMediaComponent } from './dialogs/dialog-delete-media/dialog-delete-media.component';
 import { DialogUserComponent } from './dialogs/dialog-user/dialog-user.component';
 import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
+import { DialogMediaTypeComponent } from './dialogs/dialog-media-type/dialog-media-type.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-d
     DialogDeleteCollectionComponent,
     DialogDeleteMediaComponent,
     DialogUserComponent,
-    DialogDeleteUserComponent
+    DialogDeleteUserComponent,
+    DialogMediaTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-d
     DialogDeleteCollectionComponent,
     DialogDeleteMediaComponent,
     DialogUserComponent,
-    DialogDeleteUserComponent],
+    DialogDeleteUserComponent,
+    DialogMediaTypeComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
