@@ -47,6 +47,7 @@ episodeSchema.methods = {
       airTime: this.airTime,
       duration: this.duration,
       number: this.number,
+      season: this.season,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
