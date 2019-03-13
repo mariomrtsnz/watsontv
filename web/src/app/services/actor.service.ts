@@ -22,7 +22,7 @@ export class ActorService {
     return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}${this.token}`);
   }
 
-  getOne(id: number) {
+  getOne(id: string) {
     return this.http.get<OneActorResponse>(`${actorUrl}/${id}${this.token}`);
   }
 

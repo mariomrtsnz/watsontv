@@ -23,7 +23,7 @@ export class GenreService {
     return this.http.get<ResponseContainer<OneGenreResponse>>(`${genreUrl}${this.token}`);
   }
 
-  getOne(id: number) {
+  getOne(id: string) {
     return this.http.get<OneGenreResponse>(`${genreUrl}/${id}${this.token}`);
   }
 

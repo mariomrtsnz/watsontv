@@ -11,6 +11,7 @@ import { MovieDto } from 'src/app/dto/movie-dto';
 import { OneGenreResponse } from 'src/app/interfaces/one-genre-response';
 import { OneMediaResponse } from 'src/app/interfaces/one-media-response';
 import { OneSeasonResponse } from 'src/app/interfaces/one-season-response';
+import { SeasonService } from 'src/app/services/season.service';
 
 @Component({
   selector: 'app-media-detail',
@@ -25,7 +26,8 @@ export class MediaDetailComponent implements OnInit {
   mediaSeasons: OneSeasonResponse[];
 
   constructor(private mediaService: MediaService, private genreService: GenreService,
-    public router: Router, public snackBar: MatSnackBar, private titleService: Title, public dialog: MatDialog) { }
+    // tslint:disable-next-line:max-line-length
+    public router: Router, public snackBar: MatSnackBar, private titleService: Title, public dialog: MatDialog, private seasonService: SeasonService) { }
 
   ngOnInit() {
     if (!this.mediaService.selectedMedia) {
@@ -49,7 +51,8 @@ export class MediaDetailComponent implements OnInit {
   }
 
   openSeasonDetails(s: OneSeasonResponse) {
-
+    this.seasonService.selectedSeason = s;
+    this.router.navigate(['/home/season/episodes']);
   }
 
   openEditSeason(s: OneSeasonResponse) {

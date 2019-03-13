@@ -23,7 +23,7 @@ export class UserService {
     return this.http.get<ResponseContainer<UserResponse>>(`${userUrl}${this.token}`);
   }
 
-  getOne(id: String): Observable<UserResponse> {
+  getOne(id: string): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${userUrl}/${id}${this.token}`);
   }
 

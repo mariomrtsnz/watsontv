@@ -22,7 +22,7 @@ export class CollectionService {
     return this.http.get<ResponseContainer<OneCollectionResponse>>(`${genreUrl}${this.token}`);
   }
 
-  getOne(id: number) {
+  getOne(id: string) {
     return this.http.get<OneCollectionResponse>(`${genreUrl}/${id}${this.token}`);
   }
 
