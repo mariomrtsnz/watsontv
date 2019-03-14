@@ -26,7 +26,6 @@ export class DialogEpisodeComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private episodeService: EpisodeService, public dialogRef: MatDialogRef<DialogEpisodeComponent>, private seasonService: SeasonService) { }
 
   ngOnInit() {
-    console.log(this.seasonService.selectedSeason.id);
     this.season = this.seasonService.selectedSeason.id;
     this.createForm();
     if (this.data) {
