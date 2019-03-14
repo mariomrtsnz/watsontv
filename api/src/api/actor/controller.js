@@ -41,4 +41,8 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-export const uploadImage = (req, res, next) => uploadService.uploadFromBinary(req.file.buffer).then(success(res, 201))
+export const uploadImage = (req, res, next) => uploadService.uploadFromBinary(req.file.buffer)
+.then((json) => {
+  link: json.data.link
+})
+.then(success(res, 201))

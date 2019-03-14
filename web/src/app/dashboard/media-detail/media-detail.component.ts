@@ -1,3 +1,4 @@
+import { DialogSeasonComponent } from './../../dialogs/dialog-season/dialog-season.component';
 import { DialogDeleteSeasonComponent } from './../../dialogs/dialog-delete-season/dialog-delete-season.component';
 import { DialogDeleteMediaComponent } from 'src/app/dialogs/dialog-delete-media/dialog-delete-media.component';
 import { Title } from '@angular/platform-browser';
@@ -56,17 +57,33 @@ export class MediaDetailComponent implements OnInit {
     this.router.navigate(['/home/season/episodes']);
   }
 
-  openEditSeason(s: OneSeasonResponse) {
+  openDialogCreateSeason(s: OneSeasonResponse) {
+    const createSeasonDialog = this.dialog.open(DialogSeasonComponent, { panelClass: 'add-dialog' });
 
+    createSeasonDialog.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.getData();
+      }
+    });
+  }
+
+  openEditSeason(s: OneSeasonResponse) {
+    const updateSeasonDialog = this.dialog.open(DialogSeasonComponent, { panelClass: 'add-dialog', data: { season: s } });
+
+    updateSeasonDialog.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.getData();
+      }
+    });
   }
 
   openDialogDeleteSeason(s: OneSeasonResponse) {
     const deleteSeasonDialog = this.dialog.open(DialogDeleteSeasonComponent,
-      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title } });
+      { panelClass: 'delete-dialog', data: { seasonId: s.id, seasonNumber: s.number } });
 
       deleteSeasonDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {
-        this.router.navigate(['home']);
+        this.getData();
       }
     });
   }

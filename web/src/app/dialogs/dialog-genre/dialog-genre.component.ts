@@ -34,12 +34,12 @@ export class DialogGenreComponent implements OnInit {
       const editedGenre: GenreDto = <GenreDto>this.form.value;
       this.genreService.edit(this.genreId, editedGenre).subscribe(result => {
         this.dialogRef.close('confirm');
-      }, error => this.snackBar.open('There was an error when were trying to edit this genre.', 'Close', { duration: 3000 }));
+      }, error => this.snackBar.open('There was an error when were trying to edit this Genre.', 'Close', { duration: 3000 }));
     } else {
       const newGenre: GenreDto = <GenreDto>this.form.value;
       this.genreService.create(newGenre).subscribe(result => {
         this.dialogRef.close('confirm');
-      }, error => this.snackBar.open('There was an error when were trying to create this genre.', 'Close', { duration: 3000 }));
+      }, error => this.snackBar.open('There was an error when were trying to create this Genre.', 'Close', { duration: 3000 }));
     }
   }
 
@@ -55,24 +55,6 @@ export class DialogGenreComponent implements OnInit {
       });
       this.form = newForm;
     }
-  }
-
-  addGenre() {
-    const genreCreateDto = new GenreDto(this.name);
-    this.genreService.create(genreCreateDto).subscribe(
-      genre => {
-        this.dialogRef.close('confirm');
-      }
-    );
-  }
-
-  editGenre() {
-    const genreEditDto = new GenreDto(this.name);
-    this.genreService.edit(this.genreId, genreEditDto).subscribe(
-      genre => {
-        this.dialogRef.close('confirm');
-      }
-    );
   }
 
 }

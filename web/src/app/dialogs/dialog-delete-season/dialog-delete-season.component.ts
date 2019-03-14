@@ -18,8 +18,8 @@ export class DialogDeleteSeasonComponent implements OnInit {
   private seasonService: SeasonService, public dialogRef: MatDialogRef<DialogDeleteSeasonComponent>) { }
 
   ngOnInit() {
-    this.elementId = this.data.mediaId;
-    this.elementName = this.data.mediaTitle;
+    this.elementId = this.data.seasonId;
+    this.elementName = this.data.seasonNumber;
   }
 
   captcha() {
