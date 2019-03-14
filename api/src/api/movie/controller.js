@@ -1,11 +1,21 @@
 import { success, notFound } from '../../services/response/'
 import { Movie } from '.'
+const fetch = require('node-fetch');
 
 export const create = ({ body }, res, next) =>
-  Movie.create(body)
+fetch(`http://www.omdbapi.com/?s=${body.title}&apikey=d29a85f5`)
+  .then(
+    response => {
+        return response.json();
+    }
+  ).then(json => {
+    let result = JSON.parse(JSON.stringify(json));
+    body.coverImage = result.Search[0].Poster;
+    Movie.create(body)
     .then((movie) => movie.view(true))
     .then(success(res, 201))
     .catch(next)
+  })
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Movie.count(query)

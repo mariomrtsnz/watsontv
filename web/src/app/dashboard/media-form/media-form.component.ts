@@ -44,6 +44,7 @@ export class MediaFormComponent implements OnInit {
         this.router.navigate(['/home']);
       }
       this.media = this.mediaService.selectedMedia;
+      this.mediaType = this.mediaService.mediaType;
       this.createEditForm();
       this.titleService.setTitle('Edit - Media');
       this.getData();
@@ -86,7 +87,7 @@ export class MediaFormComponent implements OnInit {
         coverImage: [this.media.coverImage, Validators.compose([Validators.required])],
         genre: [this.media.genre, Validators.compose([Validators.required])],
         synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
-        trailer: [null, Validators.compose([Validators.required])],
+        trailer: [this.media.trailer, Validators.compose([Validators.required])],
       });
     }
   }

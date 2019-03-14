@@ -42,6 +42,7 @@ export class MediaComponent implements OnInit {
 
   openEditMedia(m: OneMediaResponse) {
     this.mediaService.selectedMedia = m;
+    this.mediaService.mediaType = m.mediaType;
     this.router.navigate(['home/media/edit']);
   }
 

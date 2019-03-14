@@ -14,4 +14,5 @@ export interface OneMediaResponse {
     mediaType: string;
     broadcaster: string;
     seasons: OneSeasonResponse[];
+    trailer: string;
 }

@@ -21,8 +21,7 @@ const mediaSchema = new Schema({
     ref: 'Actor'
   }],
   coverImage: {
-    type: String,
-    required: true
+    type: String
   },
   genre: {
     type: Schema.Types.ObjectId,

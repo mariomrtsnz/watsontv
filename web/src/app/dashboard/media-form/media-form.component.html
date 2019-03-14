@@ -1,45 +1,92 @@
-<form [formGroup]="form" [formGroup]="coordinatesForm" [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
-  (ngSubmit)="onSubmit()" *ngIf="isCreate;else edit">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="isCreate;else edit">
   <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
-    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex="100" fxLayoutGap="2%">
       <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
-      <div>
-        <div id="uploadContent" class="w-100">
-          <input type="file" name="photo" (change)="imageUpload($event)" accept="image/*" />
-          <p>Drag your images here or click in this area.</p>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
-          <div>
-            <input type="radio" class="radio-item" [value]="i" name="item" id="radio{{urlImage.indexOf(i)}}"
-              [formControl]="form.controls['coverImage']">
-            <label class="label_item" for="radio{{urlImage.indexOf(i)}}" [style.background-image]="'url(' + i + ')'"></label>
+        <div>
+          <div id="uploadContent" class="w-100">
+            <input type="file" name="photo" (change)="imageUpload($event)" accept="image/*" />
+            <p>Drag your images here or click in this area.</p>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
+            <div>
+              <!-- <input type="radio" class="radio-item" [value]="i" name="item" id="radio{{urlImage.indexOf(i)}}"
+                [formControl]="form.controls['coverImage']">
+              <label class="label_item" for="radio{{urlImage.indexOf(i)}}" [style.background-image]="'url(' + i + ')'"></label> -->
+            </div>
           </div>
         </div>
-      </div>
       </div>
       <div fxFlex.gt-md="50" fxFlex="100">
         <mat-form-field class="w-100">
           <input matInput placeholder="Title" type="text" [formControl]="form.controls['title']" required>
         </mat-form-field>
-        <hr>
         <mat-form-field class="w-100">
           <mat-select placeholder="Genres" [formControl]="form.controls['genre']">
             <mat-option *ngFor="let g of allGenres" [value]="g.id">{{g.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="w-100">
-            <textarea matInput placeholder="Synopsis" type="text" [formControl]="form.controls['synopsis']" required></textarea>
+          <textarea matInput placeholder="Synopsis" type="text" [formControl]="form.controls['synopsis']" required></textarea>
         </mat-form-field>
-        <mat-form-field class="w-50">
+        <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else trailer">
           <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']">
         </mat-form-field>
+        <ng-template #trailer>
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Trailer" type="text" [formControl]="form.controls['trailer']">
+          </mat-form-field>
+        </ng-template>
       </div>
     </mat-card>
   </div>
-  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid ||!coordinatesForm.valid || !audioguidesForm.valid">
+  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid">
     <mat-icon>send</mat-icon>
   </button>
 </form>
 <ng-template #edit>
-  Hola
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+      <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+        <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
+          <div>
+            <div id="uploadContent" class="w-100">
+              <input type="file" name="photo" (change)="imageUpload($event)" accept="image/*" />
+              <p>Drag your images here or click in this area.</p>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
+              <div>
+                <!-- <input type="radio" class="radio-item" [value]="i" name="item" id="radio{{urlImage.indexOf(i)}}"
+                  [formControl]="form.controls['coverImage']">
+                <label class="label_item" for="radio{{urlImage.indexOf(i)}}" [style.background-image]="'url(' + i + ')'"></label> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex.gt-md="50" fxFlex="100">
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Title" type="text" [formControl]="form.controls['title']" required>
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-select placeholder="Genres" [formControl]="form.controls['genre']">
+              <mat-option *ngFor="let g of allGenres" [value]="g.id">{{g.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <textarea matInput placeholder="Synopsis" type="text" [formControl]="form.controls['synopsis']" required></textarea>
+          </mat-form-field>
+          <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else trailer">
+            <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']">
+          </mat-form-field>
+          <ng-template #trailer>
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Trailer" type="text" [formControl]="form.controls['trailer']">
+            </mat-form-field>
+          </ng-template>
+        </div>
+      </mat-card>
+    </div>
+    <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid">
+      <mat-icon>send</mat-icon>
+    </button>
+  </form>
 </ng-template>

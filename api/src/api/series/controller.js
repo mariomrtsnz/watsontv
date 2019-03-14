@@ -1,12 +1,23 @@
 import { success, notFound } from '../../services/response/'
 import { Series } from '.'
 import { Season } from '../season'
+const fetch = require('node-fetch');
 
-export const create = ({ bodymen: { body } }, res, next) =>
-  Series.create(body)
-    .then((series) => series.view(true))
-    .then(success(res, 201))
-    .catch(next)
+export const create = ({ bodymen: { body } }, res, next) => {
+  fetch(`http://www.omdbapi.com/?s=${body.title}&apikey=d29a85f5`)
+  .then(
+    response => {
+        return response.json();
+    }
+  ).then(json => {
+    let result = JSON.parse(JSON.stringify(json));
+    body.coverImage = result.Search[0].Poster;
+    Series.create(body)
+      .then((series) => series.view(true))
+      .then(success(res, 201))
+      .catch(next)
+  })
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Series.count(query)
