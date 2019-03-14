@@ -56,15 +56,14 @@ export class MediaFormComponent implements OnInit {
     if (this.mediaType.toLowerCase() === 'series') {
       this.form = this.fb.group({
         title: [null, Validators.compose([Validators.required])],
-        coverImage: [null, Validators.compose([Validators.required])],
         genre: [null, Validators.compose([Validators.required])],
         synopsis: [null, Validators.compose([Validators.required])],
         broadcaster: [null, Validators.compose([Validators.required])],
+        airsDayOfWeek: [null, Validators.compose([Validators.required])]
       });
     } else {
       this.form = this.fb.group({
         title: [null, Validators.compose([Validators.required])],
-        coverImage: [null, Validators.compose([Validators.required])],
         genre: [null, Validators.compose([Validators.required])],
         synopsis: [null, Validators.compose([Validators.required])],
         trailer: [null, Validators.compose([Validators.required])],
@@ -76,15 +75,14 @@ export class MediaFormComponent implements OnInit {
     if (this.media.mediaType.toLowerCase() === 'series') {
       this.form = this.fb.group({
         title: [this.media.title, Validators.compose([Validators.required])],
-        coverImage: [this.media.coverImage, Validators.compose([Validators.required])],
         genre: [this.media.genre, Validators.compose([Validators.required])],
         synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
         broadcaster: [this.media.broadcaster, Validators.compose([Validators.required])],
+        airsDayOfWeek: [this.media.airsDayOfWeek, Validators.compose([Validators.required])]
       });
     } else {
       this.form = this.fb.group({
         title: [this.media.title, Validators.compose([Validators.required])],
-        coverImage: [this.media.coverImage, Validators.compose([Validators.required])],
         genre: [this.media.genre, Validators.compose([Validators.required])],
         synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
         trailer: [this.media.trailer, Validators.compose([Validators.required])],

@@ -1,15 +1,15 @@
 export class SeriesDto {
     title: string;
-    coverImage: string;
     genre: string;
     synopsis: string;
     broadcaster: string;
+    airsDayOfWeek: number;
 
-    constructor(t: string, cI: string, g: string, s: string, b: string) {
+    constructor(t: string, g: string, s: string, b: string, airsDOW: number) {
         this.title = t;
-        this.coverImage = cI;
         this.genre = g;
         this.synopsis = s;
         this.broadcaster = b;
+        this.airsDayOfWeek = airsDOW;
     }
 }
