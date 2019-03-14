@@ -39,8 +39,12 @@ export class MediaService {
     return this.http.post<OneMediaResponse>(`${movieUrl}${this.token}`, resource);
   }
 
-  remove(id: string): Observable<OneMediaResponse[]> {
-    return this.http.delete<OneMediaResponse[]>(`${mediaUrl}/${id}${this.token}`);
+  removeSeries(id: string): Observable<OneMediaResponse[]> {
+    return this.http.delete<OneMediaResponse[]>(`${seriesUrl}/${id}${this.token}`);
+  }
+
+  removeMovie(id: string): Observable<OneMediaResponse[]> {
+    return this.http.delete<OneMediaResponse[]>(`${movieUrl}/${id}${this.token}`);
   }
 
   editMovie(id: string, resource: MovieDto): Observable<OneMediaResponse> {

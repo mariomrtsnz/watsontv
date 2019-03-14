@@ -17,7 +17,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Episode.count(query)
-    .then(count => Episode.find(query, select, cursor)
+    .then(count => Episode.find(query, select, cursor).populate('season', 'id number')
       .then((episodes) => ({
         count,
         rows: episodes.map((episode) => episode.view())
@@ -27,7 +27,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Episode.findById(params.id)
+  Episode.findById(params.id).populate('season', 'id number')
     .then(notFound(res))
     .then((episode) => episode ? episode.view() : null)
     .then(success(res))

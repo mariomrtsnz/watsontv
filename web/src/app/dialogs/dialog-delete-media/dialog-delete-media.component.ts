@@ -35,9 +35,15 @@ export class DialogDeleteMediaComponent implements OnInit {
   }
 
   delete() {
-    this.mediaService.remove(this.elementId).subscribe(result => {
-      this.dialogRef.close('confirm');
-    }, error => this.snackBar.open('There was an error when trying to delete this media.', 'Close', {duration: 3000}));
+    if (this.mediaService.mediaType.toLowerCase() === 'series') {
+      this.mediaService.removeSeries(this.elementId).subscribe(result => {
+        this.dialogRef.close('confirm');
+      }, error => this.snackBar.open('There was an error when trying to delete this Series.', 'Close', {duration: 3000}));
+    } else {
+      this.mediaService.removeMovie(this.elementId).subscribe(result => {
+        this.dialogRef.close('confirm');
+      }, error => this.snackBar.open('There was an error when trying to delete this Movie.', 'Close', {duration: 3000}));
+    }
   }
 
 }
