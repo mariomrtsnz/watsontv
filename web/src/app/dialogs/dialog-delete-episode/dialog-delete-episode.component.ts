@@ -18,8 +18,8 @@ export class DialogDeleteEpisodeComponent implements OnInit {
   private episodeService: EpisodeService, public dialogRef: MatDialogRef<DialogDeleteEpisodeComponent>) { }
 
   ngOnInit() {
-    this.elementId = this.data.actorId;
-    this.elementName = this.data.actorName;
+    this.elementId = this.data.episodeId;
+    this.elementName = this.data.episodeName;
   }
 
   captcha() {

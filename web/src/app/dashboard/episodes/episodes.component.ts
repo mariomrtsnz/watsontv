@@ -60,9 +60,9 @@ export class EpisodesComponent implements OnInit {
     });
   }
 
-  openDialogDeleteEpisode(actor: OneEpisodeResponse) {
+  openDialogDeleteEpisode(episode: OneEpisodeResponse) {
     const deleteEpisodeDialog = this.dialog.open(DialogDeleteEpisodeComponent,
-      { panelClass: 'delete-dialog', data: { actorId: actor.id, actorName: actor.name } });
+      { panelClass: 'delete-dialog', data: { episodeId: episode.id, episodeName: episode.name } });
 
       deleteEpisodeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {
@@ -73,8 +73,8 @@ export class EpisodesComponent implements OnInit {
 
   }
 
-  openDialogEditEpisode(actor: OneEpisodeResponse) {
-    const updateEpisodeDialog = this.dialog.open(DialogEpisodeComponent, { panelClass: 'add-dialog', data: { actor: actor } });
+  openDialogEditEpisode(episode: OneEpisodeResponse) {
+    const updateEpisodeDialog = this.dialog.open(DialogEpisodeComponent, { panelClass: 'add-dialog', data: { episode: episode } });
 
     updateEpisodeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

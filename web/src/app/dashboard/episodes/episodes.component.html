@@ -1,6 +1,6 @@
 <div fxLayout="column" id="container">
   <div fxGap="100px">
-    <h4 fxFlex="100px" id="titleTable">Actors</h4>
+    <h4 fxFlex="100px" id="titleTable">Episodes</h4>
     <mat-form-field fxFlex="300px" fxFlex.lt-md="150px">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search genre.">
     </mat-form-field>
@@ -19,21 +19,22 @@
         {{element.name}}
       </td>
     </ng-container>
-    <ng-container matColumnDef="synopsis">
-      <th mat-header-cell *matHeaderCellDef>Synopsis</th>
-      <td mat-cell *matCellDef="let element">
-        {{element.synopsis}}
+    <ng-container matColumnDef="synopsis" fxShow.lt-md="false">
+      <th mat-header-cell *matHeaderCellDef fxShow.lt-md="false">Synopsis</th>
+      <td mat-cell *matCellDef="let element" fxShow.lt-md="false">
+        <span *ngIf="element.synopsis.length > 100; else fullSynopsis"> {{element.synopsis.substring(0, 100)}}...</span>
+        <ng-template #fullSynopsis>{{element.synopsis}}</ng-template>
       </td>
     </ng-container>
     <ng-container matColumnDef="airTime">
       <th mat-header-cell *matHeaderCellDef>Air Time</th>
       <td mat-cell *matCellDef="let element">
-        {{element.airTime}}
+        {{element.airTime.substr(0, 10)}}
       </td>
     </ng-container>
-    <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef>Duration</th>
-      <td mat-cell *matCellDef="let element">
+    <ng-container matColumnDef="duration" fxShow.lt-md="false">
+      <th mat-header-cell *matHeaderCellDef fxShow.lt-md="false">Duration</th>
+      <td mat-cell *matCellDef="let element" fxShow.lt-md="false">
         {{element.duration}} mins
       </td>
     </ng-container>
