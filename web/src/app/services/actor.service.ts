@@ -22,6 +22,10 @@ export class ActorService {
     return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}${this.token}`);
   }
 
+  getAllSortedByName() {
+    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?sort=name${this.token}`);
+  }
+
   getOne(id: string) {
     return this.http.get<OneActorResponse>(`${actorUrl}/${id}${this.token}`);
   }

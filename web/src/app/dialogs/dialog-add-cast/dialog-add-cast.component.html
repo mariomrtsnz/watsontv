@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>
+  Select Actor
+</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    <mat-form-field>
+      <mat-select placeholder="Actors" [formControl]="form.controls['actor']">
+        <mat-option *ngFor="let actor of actors" [value]="actor.id">{{actor.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Add</button>
+  </div>
+</form>

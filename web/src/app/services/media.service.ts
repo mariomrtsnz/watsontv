@@ -27,6 +27,11 @@ export class MediaService {
     return this.http.get<ResponseContainer<OneMediaResponse>>(`${mediaUrl}${this.token}`);
   }
 
+  addCastMember(actorId: string): any {
+    const cast = {'cast': actorId};
+    return this.http.put<OneMediaResponse>(`${mediaUrl}/${this.selectedMedia.id}/addCast${this.token}`, cast);
+  }
+
   getOne(id: string): Observable<OneMediaResponse> {
     return this.http.get<OneMediaResponse>(`${mediaUrl}/${id}${this.token}`);
   }

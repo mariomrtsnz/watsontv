@@ -23,6 +23,7 @@ import { DialogEpisodeComponent } from './dialogs/dialog-episode/dialog-episode.
 import { DialogDeleteEpisodeComponent } from './dialogs/dialog-delete-episode/dialog-delete-episode.component';
 import { DialogSeasonComponent } from './dialogs/dialog-season/dialog-season.component';
 import { DialogDeleteSeasonComponent } from './dialogs/dialog-delete-season/dialog-delete-season.component';
+import { DialogAddCastComponent } from './dialogs/dialog-add-cast/dialog-add-cast.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DialogDeleteSeasonComponent } from './dialogs/dialog-delete-season/dial
     DialogEpisodeComponent,
     DialogDeleteEpisodeComponent,
     DialogSeasonComponent,
-    DialogDeleteSeasonComponent
+    DialogDeleteSeasonComponent,
+    DialogAddCastComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { DialogDeleteSeasonComponent } from './dialogs/dialog-delete-season/dial
     DialogEpisodeComponent,
     DialogDeleteEpisodeComponent,
     DialogSeasonComponent,
-    DialogDeleteSeasonComponent],
+    DialogDeleteSeasonComponent,
+    DialogAddCastComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

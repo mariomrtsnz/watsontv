@@ -39,3 +39,10 @@ export const destroy = ({ params }, res, next) =>
     .then((media) => media ? media.remove() : null)
     .then(success(res, 204))
     .catch(next)
+
+export const addCastMember = ({ bodymen: { body }, params }, res, next) =>
+  Media.findByIdAndUpdate(params.id, { $push: {cast: body.cast } },
+    {new: true})
+    .then(notFound(res))
+    .then(success(res))
+    .catch(next)

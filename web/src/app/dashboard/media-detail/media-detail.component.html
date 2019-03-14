@@ -17,6 +17,19 @@
       <div>{{ media.synopsis }}</div>
     </div>
   </mat-card>
+  <div fxLayout="column" *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+    <mat-card>
+      <p>Broadcaster: {{media.broadcaster}}</p>
+      <p>Airs on {{airsDayOfWeek()}}</p>
+    </mat-card>
+    <mat-card>
+      <h3>Cast</h3>
+      <button mat-button (click)="openAddCast()">
+        <mat-icon>Add</mat-icon>
+      </button>
+      <img src="https://via.placeholder.com/150" alt="">
+    </mat-card>
+  </div>
 </div>
 <div *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
   <mat-card *ngFor="let s of media.seasons" class="poi-card">
