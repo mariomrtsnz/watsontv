@@ -89,6 +89,7 @@ export class MediaDetailComponent implements OnInit {
   }
 
   openEditMedia() {
+    this.mediaService.mediaType = this.media.mediaType;
     this.router.navigate(['home/media/edit']);
   }
 

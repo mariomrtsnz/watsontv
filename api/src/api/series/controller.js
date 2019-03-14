@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import { Series } from '.'
 import { Season } from '../season'
+import { Episode } from '../episode';
 const fetch = require('node-fetch');
 
 export const create = ({ bodymen: { body } }, res, next) => {
@@ -50,7 +51,7 @@ export const destroy = ({ params }, res, next) =>
     .then(notFound(res))
     .then((series) => {
       series ? series.remove() : null
-      // Season.remove({series: series._id}).then(success(res, 204)).catch(next)
+      Season.deleteMany({series: params.id}).then(success(res, 204)).catch(next)
     })
     .then(success(res, 204))
     .catch(next)

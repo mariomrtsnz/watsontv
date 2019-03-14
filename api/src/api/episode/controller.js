@@ -47,10 +47,10 @@ export const destroy = ({ params }, res, next) =>
     .then((episode) => {
       Season.findByIdAndUpdate(
         { _id: episode.season },
-        { $pull: {episodes: episode._id } },
+        { $pull: {episodes: params.id } },
         { new: true })
         .then(success(res, 200)).catch(next);
-        episode ? episode.remove() : null
+      episode ? episode.remove() : null
     })
     .then(success(res, 204))
     .catch(next)
