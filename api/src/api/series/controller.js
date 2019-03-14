@@ -17,7 +17,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
       .then((series) => series.view(true))
       .then(success(res, 201))
       .catch(next)
-  })
+  }).catch(next);
 }
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
