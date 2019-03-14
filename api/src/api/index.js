@@ -9,6 +9,7 @@ import genre from './genre'
 import actor from './actor'
 import collection from './collection'
 import media from './media'
+import photo from './photo'
 
 const router = new Router()
 
@@ -45,5 +46,6 @@ router.use('/genres', genre)
 router.use('/actors', actor)
 router.use('/collections', collection)
 router.use('/media', media)
+router.use('/photos', photo)
 
 export default router
