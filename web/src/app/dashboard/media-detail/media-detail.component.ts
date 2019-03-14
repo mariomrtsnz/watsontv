@@ -136,7 +136,7 @@ export class MediaDetailComponent implements OnInit {
 
   openDialogDeleteMedia() {
     const deleteMediaDialog = this.dialog.open(DialogDeleteMediaComponent,
-      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title } });
+      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title, mediaType: this.media.mediaType } });
 
       deleteMediaDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

@@ -57,8 +57,6 @@ router.get('/:id',
  * @apiGroup Series
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
- * @apiParam broadcaster Series's broadcaster.
- * @apiParam seasons Series's seasons.
  * @apiSuccess {Object} series Series's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Series not found.
@@ -66,7 +64,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
-  body({ broadcaster, seasons }),
+  body({ title, coverImage, genre, synopsis, broadcaster, airsDayOfWeek }),
   update)
 
 /**

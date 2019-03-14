@@ -9,7 +9,6 @@
     </div>
     <div fxFlex.gt-md="50" fxFlex="100">
       <h1>{{ media.title }}</h1>
-      <hr>
       <mat-chip-list>
         <mat-chip>{{ media.mediaType }}</mat-chip>
         <mat-chip>{{ media.genre.name }}</mat-chip>
@@ -17,19 +16,33 @@
       <div>{{ media.synopsis }}</div>
     </div>
   </mat-card>
-  <div fxLayout="column" *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+  <div fxLayout="column" *ngIf="media.mediaType.toLowerCase() == 'series'; else movieCast" fxLayoutGap="5%"
+    fxFlex.gt-sm="20" fxFlex="100">
     <mat-card>
       <p>Broadcaster: {{media.broadcaster}}</p>
       <p>Airs on {{airsDayOfWeek()}}</p>
     </mat-card>
     <mat-card>
       <h3>Cast</h3>
-      <button mat-button (click)="openAddCast()">
-        <mat-icon>Add</mat-icon>
+      <button mat-raised-button (click)="openAddCast()">
+        <mat-icon>add</mat-icon>
       </button>
-      <img src="https://via.placeholder.com/150" alt="">
+      <li *ngFor="let castMember of media.cast"><img src="{{castMember.picture}}" width="24px" alt="CastMember Image">
+        {{castMember.name}}</li>
     </mat-card>
   </div>
+  <ng-template #movieCast>
+    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+      <mat-card>
+        <h3>Cast</h3>
+        <button mat-raised-button (click)="openAddCast()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <li *ngFor="let castMember of media.cast"><img src="{{castMember.picture}}" width="24px" alt="CastMember Image">
+          {{castMember.name}}</li>
+      </mat-card>
+    </div>
+  </ng-template>
 </div>
 <div *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
   <mat-card *ngFor="let s of media.seasons" class="poi-card">

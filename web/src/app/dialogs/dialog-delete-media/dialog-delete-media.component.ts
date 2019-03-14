@@ -11,6 +11,7 @@ export class DialogDeleteMediaComponent implements OnInit {
 
   elementId: string;
   elementName: string;
+  elementMediaType: string;
   checkedRobot: boolean;
 
   // tslint:disable-next-line:max-line-length
@@ -20,6 +21,8 @@ export class DialogDeleteMediaComponent implements OnInit {
   ngOnInit() {
     this.elementId = this.data.mediaId;
     this.elementName = this.data.mediaTitle;
+    this.elementMediaType = this.data.mediaType;
+    console.log(this.elementMediaType);
   }
 
   captcha() {
@@ -35,7 +38,7 @@ export class DialogDeleteMediaComponent implements OnInit {
   }
 
   delete() {
-    if (this.mediaService.mediaType.toLowerCase() === 'series') {
+    if (this.elementMediaType.toLowerCase() === 'series') {
       this.mediaService.removeSeries(this.elementId).subscribe(result => {
         this.dialogRef.close('confirm');
       }, error => this.snackBar.open('There was an error when trying to delete this Series.', 'Close', {duration: 3000}));
