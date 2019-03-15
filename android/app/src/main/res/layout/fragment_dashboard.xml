@@ -248,23 +248,77 @@
                 app:layout_rowWeight="1"
                 app:cardElevation="8dp"
                 app:cardCornerRadius="8dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                     <ImageView
-                        android:src="@drawable/ic_watsontv_logo"
+                        android:id="@+id/dashboard_iv_first_up_next"
+                        android:layout_width="0dp"
+                        android:layout_height="133dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:src="@drawable/ic_watsontv_logo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/shadow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
-                        android:text="Me"
-                        android:textAlignment="center"
+                        android:id="@+id/dashboard_tv_first_up_next"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@android:color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dashboard_iv_first_up_next">
+
+                        <ImageButton
+                            android:id="@+id/dashboard_ib_first_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@android:color/black"
+                            android:src="@drawable/ic_check_white_24dp" />
+
+                        <ImageButton
+                            android:id="@+id/dashboard_ib_first_collect"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@android:color/black"
+                            android:src="@drawable/ic_bookmark_border_black_24dp" />
+
+                        <ImageButton
+                            android:id="@+id/dashboard_ib_first_watchlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@android:color/black"
+                            android:src="@drawable/ic_remove_red_eye_black_24dp"
+                            android:tint="@android:color/white" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
@@ -302,7 +356,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/dashboard_tv_second_up_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -323,7 +377,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/dashboard_iv_second_up_next">
 
                         <ImageButton
-                            android:id="@+id/imageButton"
+                            android:id="@+id/dashboard_ib_second_check"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -331,7 +385,7 @@
                             android:src="@drawable/ic_check_white_24dp" />
 
                         <ImageButton
-                            android:id="@+id/imageButton2"
+                            android:id="@+id/dashboard_ib_second_collect"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -339,7 +393,7 @@
                             android:src="@drawable/ic_bookmark_border_black_24dp" />
 
                         <ImageButton
-                            android:id="@+id/imageButton3"
+                            android:id="@+id/dashboard_ib_second_watchlist"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
