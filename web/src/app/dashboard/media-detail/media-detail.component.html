@@ -27,8 +27,15 @@
       <button mat-raised-button (click)="openAddCast()">
         <mat-icon>add</mat-icon>
       </button>
-      <li *ngFor="let castMember of media.cast"><img src="{{castMember.picture}}" width="24px" alt="CastMember Image">
-        {{castMember.name}}</li>
+      <li *ngFor="let castMember of media.cast">
+        <div class="castMember">
+          <img src="{{castMember.picture}}" width="24px" alt="CastMember Image">
+          {{castMember.name}}
+          <button mat-button (click)="deleteCastMember(castMember)" class="removeCastMember">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </li>
     </mat-card>
   </div>
   <ng-template #movieCast>

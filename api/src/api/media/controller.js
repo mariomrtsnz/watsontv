@@ -41,8 +41,13 @@ export const destroy = ({ params }, res, next) =>
     .catch(next)
 
 export const addCastMember = ({ bodymen: { body }, params }, res, next) =>
-  Media.findByIdAndUpdate(params.id, { $push: {cast: body.cast } },
-    {new: true})
+  Media.findByIdAndUpdate(params.id, { $push: {cast: body.cast } }, {new: true})
+    .then(notFound(res))
+    .then(success(res))
+    .catch(next)
+
+export const removeCastMember = ({ bodymen: { body }, params }, res, next) =>
+  Media.findByIdAndUpdate(params.id, { $pull: {cast: body.cast } }, {new: true})
     .then(notFound(res))
     .then(success(res))
     .catch(next)

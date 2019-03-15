@@ -15,6 +15,7 @@ import { OneGenreResponse } from 'src/app/interfaces/one-genre-response';
 import { OneMediaResponse } from 'src/app/interfaces/one-media-response';
 import { OneSeasonResponse } from 'src/app/interfaces/one-season-response';
 import { SeasonService } from 'src/app/services/season.service';
+import { OneActorResponse } from 'src/app/interfaces/one-actor-response';
 
 @Component({
   selector: 'app-media-detail',
@@ -95,6 +96,15 @@ export class MediaDetailComponent implements OnInit {
       if (result === 'confirm') {
         this.getData();
       }
+    });
+  }
+
+  deleteCastMember(c: OneActorResponse) {
+    this.mediaService.removeCastMember(c.id).subscribe(result => {
+      this.getData();
+    },
+    error => {
+      this.snackBar.open('There was an error when were trying to edit this actor.', 'Close', { duration: 3000 });
     });
   }
 

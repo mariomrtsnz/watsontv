@@ -14,32 +14,32 @@ const actorUrl = `${environment.apiUrl}/actors`;
 })
 export class ActorService {
 
-  token = `?access_token=${this.authService.getToken()}`;
+  token = `access_token=${this.authService.getToken()}`;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAll() {
-    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}${this.token}`);
+    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?${this.token}`);
   }
 
   getAllSortedByName() {
-    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?sort=name${this.token}`);
+    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?sort=name&${this.token}`);
   }
 
   getOne(id: string) {
-    return this.http.get<OneActorResponse>(`${actorUrl}/${id}${this.token}`);
+    return this.http.get<OneActorResponse>(`${actorUrl}/${id}?${this.token}`);
   }
 
   create(resource: ActorDto): Observable<OneActorResponse> {
-    return this.http.post<OneActorResponse>(`${actorUrl}${this.token}`, resource);
+    return this.http.post<OneActorResponse>(`${actorUrl}?${this.token}`, resource);
   }
 
   remove(id: string): Observable<ResponseContainer<OneActorResponse>> {
-    return this.http.delete<ResponseContainer<OneActorResponse>>(`${actorUrl}/${id}${this.token}`);
+    return this.http.delete<ResponseContainer<OneActorResponse>>(`${actorUrl}/${id}?${this.token}`);
   }
 
   edit(id: string, resource: ActorDto): Observable<OneActorResponse> {
-    return this.http.put<OneActorResponse>(`${actorUrl}/${id}${this.token}`, resource);
+    return this.http.put<OneActorResponse>(`${actorUrl}/${id}?${this.token}`, resource);
   }
 
   uploadPicture(file: File): Observable<HttpEvent<any>> {
@@ -54,7 +54,7 @@ export class ActorService {
       reportProgress: true,
     };
 
-    const req = new HttpRequest('POST', `${actorUrl}/picture${this.token}`, formData, options);
+    const req = new HttpRequest('POST', `${actorUrl}/picture?${this.token}`, formData, options);
     return this.http.request(req);
   }
 }

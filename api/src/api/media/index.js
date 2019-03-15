@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, addCastMember } from './controller'
+import { create, index, show, update, destroy, addCastMember, removeCastMember } from './controller'
 import { schema } from './model'
 export Media, { schema } from './model'
 
@@ -83,6 +83,12 @@ router.put('/:id/addCast',
   token({ required: true, roles: ['admin'] }),
   body({ cast }),
   addCastMember)
+
+
+router.put('/:id/removeCast',
+  token({ required: true, roles: ['admin'] }),
+  body({ cast }),
+  removeCastMember)
 
 /**
  * @api {delete} /media/:id Delete media
