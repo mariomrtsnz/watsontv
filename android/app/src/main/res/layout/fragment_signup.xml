@@ -57,6 +57,7 @@
             android:id="@+id/btn_signup_submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/colorAccent"
             android:text="@string/sign_up_label"
             android:textColor="#FFFFFF"

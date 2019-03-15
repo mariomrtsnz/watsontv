@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose'
 
 const genreSchema = new Schema({
   name: {
-    type: String
+    type: String,
+    unique: true
   }
 }, {
   timestamps: true,

@@ -37,6 +37,8 @@ const episodeSchema = new Schema({
   }
 })
 
+episodeSchema.index({ number: 1, season: 1 }, { unique: true });
+
 episodeSchema.methods = {
   view (full) {
     const view = {

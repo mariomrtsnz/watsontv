@@ -24,6 +24,8 @@ const seasonSchema = new Schema({
   }
 })
 
+seasonSchema.index({ number: 1, series: 1 }, { unique: true });
+
 seasonSchema.methods = {
   view (full) {
     const view = {
