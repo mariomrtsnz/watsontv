@@ -1,12 +1,19 @@
 package com.mario.watsontv.retrofit.services;
 
+import com.mario.watsontv.responses.GenreResponse;
+import com.mario.watsontv.responses.ResponseContainer;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
 public interface GenreService {
 
     String BASE_URL = "/genres";
 
-//    @GET(BASE_URL)
-//    Call<ResponseContainer<GenreResponse>> listGenres();
-//
-//    @GET(BASE_URL + "/{id}")
-//    Call<GenreResponse> getCategory(@Path("id") String id);
+    @GET(BASE_URL)
+    Call<ResponseContainer<GenreResponse>> getAllGenres();
+
+    @GET(BASE_URL + "/{id}")
+    Call<GenreResponse> getOneCategory(@Path("id") String id);
 }
