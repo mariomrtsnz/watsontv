@@ -1,5 +1,10 @@
 package com.mario.watsontv.responses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MediaResponse {
     String id;
     String title;
@@ -9,10 +14,12 @@ public class MediaResponse {
     GenreResponse genre;
     String synopsis;
     String mediaType;
+    String releaseDate;
     String broadcaster;
     String[] seasons;
     int airsDayOfWeek;
     String trailer;
+    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
     public String getId() {
         return id;
@@ -108,5 +115,16 @@ public class MediaResponse {
 
     public void setTrailer(String trailer) {
         this.trailer = trailer;
+    }
+
+    public Calendar getReleaseDate() throws ParseException {
+        Date date = myFormat.parse(releaseDate);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

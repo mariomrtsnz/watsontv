@@ -13,6 +13,10 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardFragment;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardListener;
+import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
+import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListListener;
+import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
+import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -29,7 +33,7 @@ import android.view.MenuItem;
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener {
 
     FragmentTransaction fragmentChanger;
 
@@ -89,21 +93,25 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         switch (id) {
             case R.id.nav_dashboard:
                 DashboardFragment dashboardFragment = new DashboardFragment();
                 fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, dashboardFragment);
                 fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_series:
-//                SeriesFragment seriesFragment = new SeriesFragment();
-//                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, seriesFragment);
+                SeriesListFragment seriesFragment = new SeriesListFragment();
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, seriesFragment);
                 fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_movies:
-//                MoviesFragment moviesFragment = new MoviesFragment();
-//                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, moviesFragment);
+                MovieListFragment moviesFragment = new MovieListFragment();
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, moviesFragment);
                 fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_collections:
 //                CollectionsFragment collectionsFragment = new CollectionsFragment();
@@ -124,8 +132,6 @@ public class MainActivity extends AppCompatActivity
                 logout();
                 return true;
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
