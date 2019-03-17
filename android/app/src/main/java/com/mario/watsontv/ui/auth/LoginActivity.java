@@ -53,7 +53,8 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
                 } else {
                     // exito
                     UtilToken.setToken(getApplicationContext(), response.body().getToken());
-                    UtilToken.setId(getApplicationContext(), response.body().getUser().get_id());
+                    System.out.println(response.body().getUser().getId());
+                    UtilToken.setId(getApplicationContext(), response.body().getUser().getId());
                     UtilToken.setUserLoggedData(getApplicationContext(), response.body().getUser());
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
                     Toast.makeText(getApplicationContext(), "Error trying to register", Toast.LENGTH_SHORT).show();
                 } else {
                     UtilToken.setToken(getApplicationContext(), response.body().getToken());
-                    UtilToken.setId(getApplicationContext(), response.body().getUser().get_id());
+                    UtilToken.setId(getApplicationContext(), response.body().getUser().getId());
                     UtilToken.setUserLoggedData(getApplicationContext(), response.body().getUser());
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }

@@ -14,6 +14,8 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardFragment;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardListener;
+import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
+import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListListener;
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListListener;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
@@ -38,7 +40,7 @@ import android.widget.TextView;
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener, ProfileListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener, ProfileListener, CollectionListListener {
 
     FragmentTransaction fragmentChanger;
     TextView name, email;
@@ -128,9 +130,11 @@ public class MainActivity extends AppCompatActivity
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_collections:
-//                CollectionsFragment collectionsFragment = new CollectionsFragment();
-//                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, collectionsFragment);
+                CollectionListFragment collectionListFragment = new CollectionListFragment();
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, collectionListFragment);
                 fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
+
                 return true;
             case R.id.nav_watchlist:
 //                WatchlistFragment watchlistFragment = new WatchlistFragment();
