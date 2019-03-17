@@ -66,7 +66,7 @@ export class MediaFormComponent implements OnInit {
         title: [null, Validators.compose([Validators.required])],
         genre: [null, Validators.compose([Validators.required])],
         synopsis: [null, Validators.compose([Validators.required])],
-        trailer: [null, Validators.compose([Validators.required])],
+        runtime: [null, Validators.compose([Validators.required])],
       });
     }
   }
@@ -85,7 +85,7 @@ export class MediaFormComponent implements OnInit {
         title: [this.media.title, Validators.compose([Validators.required])],
         genre: [this.media.genre.id, Validators.compose([Validators.required])],
         synopsis: [this.media.synopsis, Validators.compose([Validators.required])],
-        trailer: [this.media.trailer, Validators.compose([Validators.required])],
+        runtime: [this.media.runtime, Validators.compose([Validators.required])],
       });
     }
   }

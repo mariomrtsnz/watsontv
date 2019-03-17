@@ -22,7 +22,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Series.count(query)
-    .then(count => Series.find(query, select, cursor)
+    .then(count => Series.find(query, select, cursor).populate('genre')
       .then((series) => ({
         count,
         rows: series.map((series) => series.view())

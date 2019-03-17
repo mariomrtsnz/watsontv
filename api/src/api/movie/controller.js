@@ -12,14 +12,14 @@ fetch(`http://www.omdbapi.com/?s=${body.title}&apikey=d29a85f5`)
     let result = JSON.parse(JSON.stringify(json));
     body.coverImage = result.Search[0].Poster;
     Movie.create(body)
-    .then((movie) => movie.view(true))
-    .then(success(res, 201))
-    .catch(next)
-  })
+      .then((movie) => movie.view(true))
+      .then(success(res, 201))
+      .catch(next) 
+  }).catch(next)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Movie.count(query)
-    .then(count => Movie.find(query, select, cursor)
+    .then(count => Movie.find(query, select, cursor).populate('genre')
       .then((movies) => ({
         count,
         rows: movies.map((movie) => movie.view())

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { middleware as query } from 'querymen'
+import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
@@ -7,7 +7,13 @@ import { schema } from './model'
 export Movie, { schema } from './model'
 
 const router = new Router()
-const { title, releaseDate, rating, cast, coverImage, genre, synopsis, trailer } = schema.tree
+const { title, releaseDate, rating, cast, coverImage, genre, synopsis, runtime } = schema.tree
+const genreSchema = new Schema({
+  genre: {
+    type: String,
+    paths: ['genre']
+  }
+})
 
 /**
  * @api {post} /movies Create movie
@@ -22,7 +28,7 @@ const { title, releaseDate, rating, cast, coverImage, genre, synopsis, trailer }
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ title, releaseDate, coverImage, genre, synopsis, trailer }),
+  body({ title, releaseDate, coverImage, genre, synopsis, runtime }),
   create)
 
 /**
@@ -35,7 +41,7 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.get('/',
-  query(),
+  query(genreSchema),
   index)
 
 /**

@@ -7,7 +7,8 @@ export const create = ({ bodymen: { body } }, res, next) =>
     .then(success(res, 201))
     .catch(next)
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
+export const index = ({ querymen: { query, select, cursor } }, res, next) => {
+  console.log(query);
   Media.count(query)
     .then(count => Media.find(query, select, cursor).populate('genre')
       .then((media) => ({
@@ -17,6 +18,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+}
 
 export const show = ({ params }, res, next) =>
   Media.findById(params.id).populate('genre').populate('seasons', 'id number episodes').populate('cast', 'id name picture')

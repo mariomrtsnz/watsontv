@@ -2,8 +2,9 @@ import mongoose, { Schema } from 'mongoose'
 import { Media } from '../media';
 
 const movieSchema = new Schema({
-  trailer: {
-    type: String
+  runtime: {
+    type: Number,
+    min: 30
   }
 }, { strict: false, timestamps: true });
 
@@ -19,8 +20,8 @@ movieSchema.methods = {
       coverImage: this.coverImage,
       genre: this.genre,
       synopsis: this.synopsis,
+      runtime: this.runtime,
       mediaType: this.__t,
-      trailer: this.trailer,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }

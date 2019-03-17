@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { middleware as query } from 'querymen'
+import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
@@ -8,6 +8,12 @@ export Series, { schema } from './model'
 
 const router = new Router()
 const { title, releaseDate, rating, cast, coverImage, genre, synopsis, broadcaster, seasons, airsDayOfWeek } = schema.tree
+const genreSchema = new Schema({
+  genre: {
+    type: String,
+    paths: ['genre']
+  }
+})
 
 /**
  * @api {post} /series Create series
@@ -37,7 +43,7 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.get('/',
-  query(),
+  query(genreSchema),
   index)
 
 /**

@@ -13,15 +13,15 @@
         <mat-form-field class="w-100">
           <textarea matInput placeholder="Synopsis" type="text" [formControl]="form.controls['synopsis']" required></textarea>
         </mat-form-field>
-        <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else trailer">
-          <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']">
+        <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else runtime">
+          <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']" required>
         </mat-form-field>
         <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'">
-          <input matInput placeholder="Airs Day of Week (1 = Monday, 7 = Sunday)" type="number" min="1" [formControl]="form.controls['airsDayOfWeek']">
+          <input matInput placeholder="Airs Day of Week (1 = Monday, 7 = Sunday)" type="number" min="1" [formControl]="form.controls['airsDayOfWeek']" required>
         </mat-form-field>
-        <ng-template #trailer>
+        <ng-template #runtime>
           <mat-form-field class="w-100">
-            <input matInput placeholder="Trailer" type="text" [formControl]="form.controls['trailer']">
+            <input matInput placeholder="Runtime" type="number" min="30" [formControl]="form.controls['runtime']" required>
           </mat-form-field>
         </ng-template>
       </div>
@@ -47,15 +47,15 @@
           <mat-form-field class="w-100">
             <textarea matInput placeholder="Synopsis" type="text" [formControl]="form.controls['synopsis']" required></textarea>
           </mat-form-field>
-          <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else trailer">
-            <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']">
+          <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'; else runtime">
+            <input matInput placeholder="Broadcaster" type="text" [formControl]="form.controls['broadcaster']" required>
           </mat-form-field>
           <mat-form-field class="w-100" *ngIf="this.mediaType.toLowerCase() === 'series'">
-            <input matInput placeholder="Airs Day of Week (1 = Monday, 7 = Sunday)" type="number" min="1" [formControl]="form.controls['airsDayOfWeek']">
+            <input matInput placeholder="Airs Day of Week (1 = Monday, 7 = Sunday)" type="number" min="1" [formControl]="form.controls['airsDayOfWeek']" required>
           </mat-form-field>
-          <ng-template #trailer>
+          <ng-template #runtime>
             <mat-form-field class="w-100">
-              <input matInput placeholder="Trailer" type="text" [formControl]="form.controls['trailer']">
+              <input matInput placeholder="Runtime" type="number" min="30" [formControl]="form.controls['runtime']" required>
             </mat-form-field>
           </ng-template>
         </div>
