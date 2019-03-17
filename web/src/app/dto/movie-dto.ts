@@ -2,12 +2,12 @@ export class MovieDto {
     title: string;
     genre: string;
     synopsis: string;
-    trailer: string;
+    runtime: number;
 
-    constructor(t: string, g: string, s: string, tr: string) {
+    constructor(t: string, g: string, s: string, rt: number) {
         this.title = t;
         this.genre = g;
         this.synopsis = s;
-        this.trailer = tr;
+        this.runtime = rt;
     }
 }

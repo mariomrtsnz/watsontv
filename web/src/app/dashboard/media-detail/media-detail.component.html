@@ -16,12 +16,17 @@
       <div>{{ media.synopsis }}</div>
     </div>
   </mat-card>
-  <div fxLayout="column" *ngIf="media.mediaType.toLowerCase() == 'series'; else movieCast" fxLayoutGap="5%"
+  <div fxLayout="column" fxLayoutGap="5%"
     fxFlex.gt-sm="20" fxFlex="100">
-    <mat-card>
+    <mat-card *ngIf="media.mediaType.toLowerCase() == 'series'; else movieDetails">
       <p>Broadcaster: {{media.broadcaster}}</p>
       <p>Airs on {{airsDayOfWeek()}}</p>
     </mat-card>
+    <ng-template #movieDetails>
+      <mat-card>
+        <p>Runtime: {{media.runtime}}</p>
+      </mat-card>
+    </ng-template>
     <mat-card>
       <h3>Cast</h3>
       <button mat-raised-button (click)="openAddCast()">
@@ -38,18 +43,6 @@
       </li>
     </mat-card>
   </div>
-  <ng-template #movieCast>
-    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
-      <mat-card>
-        <h3>Cast</h3>
-        <button mat-raised-button (click)="openAddCast()">
-          <mat-icon>add</mat-icon>
-        </button>
-        <li *ngFor="let castMember of media.cast"><img src="{{castMember.picture}}" width="24px" alt="CastMember Image">
-          {{castMember.name}}</li>
-      </mat-card>
-    </div>
-  </ng-template>
 </div>
 <div *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
   <mat-card *ngFor="let s of media.seasons" class="poi-card">
