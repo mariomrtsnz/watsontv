@@ -18,6 +18,8 @@ import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListListener;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListListener;
+import com.mario.watsontv.ui.dashboard.user.profile.ProfileFragment;
+import com.mario.watsontv.ui.dashboard.user.profile.ProfileListener;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -36,7 +38,7 @@ import android.widget.TextView;
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener, ProfileListener {
 
     FragmentTransaction fragmentChanger;
     TextView name, email;
@@ -139,6 +141,12 @@ public class MainActivity extends AppCompatActivity
 //                FavoritestFragment favoritesFragment = new FavoritestFragment();
 //                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, favoritesFragment);
                 fragmentChanger.commit();
+                return true;
+            case R.id.nav_profile:
+                ProfileFragment profileFragment = new ProfileFragment();
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, profileFragment);
+                fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_logout:
                 logout();
