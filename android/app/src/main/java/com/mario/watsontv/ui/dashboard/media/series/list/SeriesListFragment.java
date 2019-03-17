@@ -28,6 +28,7 @@ import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,6 +80,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Objects.requireNonNull(getActivity()).setTitle("Series");
         inflater.inflate(R.menu.fragment_media_menu, menu);
         MenuItem item = menu.findItem(R.id.spinner);
         spinner = (Spinner) item.getActionView();

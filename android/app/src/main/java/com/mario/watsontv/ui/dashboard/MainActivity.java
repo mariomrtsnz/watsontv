@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         name.setText(UtilToken.getName(this));
         email.setText(UtilToken.getEmail(this));
         DashboardFragment dashboardFragment = new DashboardFragment();
-        fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, dashboardFragment);
+        fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, dashboardFragment);
         fragmentChanger.commit();
     }
 

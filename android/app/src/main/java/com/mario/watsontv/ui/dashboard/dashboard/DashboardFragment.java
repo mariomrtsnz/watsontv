@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.mario.watsontv.R;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -68,6 +70,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(getActivity()).setTitle("WatsonTV");
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 

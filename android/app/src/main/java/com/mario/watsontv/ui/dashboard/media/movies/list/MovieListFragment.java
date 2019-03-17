@@ -28,6 +28,7 @@ import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +79,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Objects.requireNonNull(getActivity()).setTitle("Movies");
         inflater.inflate(R.menu.fragment_media_menu, menu);
         MenuItem item = menu.findItem(R.id.spinner);
         spinner = (Spinner) item.getActionView();
