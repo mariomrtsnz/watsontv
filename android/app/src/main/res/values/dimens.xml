@@ -10,4 +10,5 @@
     <dimen name="input_width">220dp</dimen>
     <dimen name="text_padding">16dp</dimen>
     <dimen name="unfolded_size">40sp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

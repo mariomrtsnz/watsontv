@@ -259,11 +259,11 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/dashboard_tv_first_up_next"
+                        android:id="@+id/item_media_card_tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
@@ -273,11 +273,11 @@
                         android:id="@+id/dashboard_tv_first_episode_up_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@android:color/white"
-                        app:layout_constraintStart_toStartOf="@+id/dashboard_tv_first_up_next"
-                        app:layout_constraintTop_toBottomOf="@+id/dashboard_tv_first_up_next" />
+                        app:layout_constraintStart_toStartOf="@+id/item_media_card_tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/item_media_card_tv_title" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
@@ -356,8 +356,8 @@
                         android:id="@+id/dashboard_tv_second_up_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
@@ -367,7 +367,7 @@
                         android:id="@+id/dashboard_tv_second_episode_up_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="@+id/dashboard_tv_second_up_next"

@@ -49,9 +49,11 @@ public class UtilToken {
         if (loggedUser != null) {
             editor.putString(mContext.getString(R.string.userName), loggedUser.getName());
             editor.putString(mContext.getString(R.string.userEmail), loggedUser.getEmail());
+            editor.putString(mContext.getString(R.string.profilePic), loggedUser.getPicture());
         } else {
             editor.putString(mContext.getString(R.string.userName), "");
             editor.putString(mContext.getString(R.string.userEmail), "");
+            editor.putString(mContext.getString(R.string.profilePic), "");
         }
         editor.commit();
     }
@@ -78,6 +80,18 @@ public class UtilToken {
                 .getString(mContext.getString(R.string.userName), null);
 
         return userName;
+    }
+
+    public static String getProfilePic(Context mContext) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(
+                mContext.getString(R.string.sharedpreferences_filename),
+                Context.MODE_PRIVATE
+        );
+
+        String profilePic = sharedPreferences
+                .getString(mContext.getString(R.string.profilePic), null);
+
+        return profilePic;
     }
 
     public static String getToken(Context mContext) {

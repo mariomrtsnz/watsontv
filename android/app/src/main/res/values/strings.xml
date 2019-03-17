@@ -33,4 +33,10 @@
     <string name="dashboard_watch_later">Up next to watch</string>
     <string name="dashboard_see_more">See more</string>
     <string name="dashboard_upcoming_schedule">Upcoming Schedule</string>
+    <string name="profilePic" />
+    <string name="profile_menu_lists">Lists</string>
+    <string name="profile_menu_stats">Stats</string>
+    <string name="profile_menu_settings">Settings</string>
+    <string name="profile_menu_friends">Friends</string>
+    <string name="go_details"><![CDATA[>]]></string>
 </resources>
