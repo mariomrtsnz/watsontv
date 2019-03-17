@@ -33,4 +33,5 @@
     <string name="dashboard_watch_later">Up next to watch</string>
     <string name="dashboard_see_more">See more</string>
     <string name="dashboard_upcoming_schedule">Upcoming Schedule</string>
+    <string name="profilePic" />
 </resources>

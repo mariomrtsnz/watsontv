@@ -59,7 +59,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         else
             viewHolder.title.setText(data.get(i).getTitle());
         try {
-            viewHolder.releaseDate.setText(data.get(i).getReleaseDate().get(Calendar.YEAR));
+            viewHolder.releaseDate.setText(String.valueOf(data.get(i).getReleaseDate().get(Calendar.YEAR)));
         } catch (ParseException e) {
             e.printStackTrace();
         }

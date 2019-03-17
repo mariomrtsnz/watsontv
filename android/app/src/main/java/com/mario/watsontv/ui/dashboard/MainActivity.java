@@ -3,6 +3,7 @@ package com.mario.watsontv.ui.dashboard;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,6 +30,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import static java.security.AccessController.getContext;
 
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener {
 
     FragmentTransaction fragmentChanger;
+    TextView name, email;
+    ImageView profilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        profilePic = headerView.findViewById(R.id.nav_header_profilePic);
+        Glide.with(this).load(UtilToken.getProfilePic(this)).into(profilePic);
+        name = headerView.findViewById(R.id.nav_header_name);
+        email = headerView.findViewById(R.id.nav_header_email);
+        name.setText(UtilToken.getName(this));
+        email.setText(UtilToken.getEmail(this));
         DashboardFragment dashboardFragment = new DashboardFragment();
         fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, dashboardFragment);
         fragmentChanger.commit();
