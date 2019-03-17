@@ -118,9 +118,8 @@ public class MediaResponse {
     }
 
     public Calendar getReleaseDate() throws ParseException {
-        Date date = myFormat.parse(releaseDate);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(myFormat.parse(releaseDate));
         return cal;
     }
 

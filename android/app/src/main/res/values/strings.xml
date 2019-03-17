@@ -39,4 +39,10 @@
     <string name="profile_menu_settings">Settings</string>
     <string name="profile_menu_friends">Friends</string>
     <string name="go_details"><![CDATA[>]]></string>
+    <string name="stats_label">Profile - Stats</string>
+    <string name="profile_stats_series_label">Watched Series</string>
+    <string name="profile_stats_series_lw_label">LAST WEEK</string>
+    <string name="profile_stats_series_at_label">ALL TIME</string>
+    <string name="profile_stats_movies_label">Watched Movies</string>
+    <string name="profile_stats_genres_label">Favorite Genres</string>
 </resources>

@@ -24,6 +24,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.util.EndlessRecyclerViewScrollListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -66,8 +67,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
         setHasOptionsMenu(true);
     }
 
-    public SeriesListFragment() {
-    }
+    public SeriesListFragment() {}
 
     // TODO: Rename and change types and number of parameters
     public static SeriesListFragment newInstance(int columnCount) {
