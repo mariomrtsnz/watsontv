@@ -17,10 +17,10 @@ public interface MediaService {
     Call<ResponseContainer<MediaResponse>> getAllMedia(@Query("genre") String genre);
 
     @GET(SERIES_URL)
-    Call<ResponseContainer<MediaResponse>> getAllSeries(@Query("genre") String genre);
+    Call<ResponseContainer<MediaResponse>> getAllSeries(@Query("genre") String genre, @Query("page") int page);
 
     @GET(MOVIES_URL)
-    Call<ResponseContainer<MediaResponse>> getAllMovies(@Query("genre") String genre);
+    Call<ResponseContainer<MediaResponse>> getAllMovies(@Query("genre") String genre, @Query("page") int page);
 
     @GET(BASE_URL + "/{id}")
     Call<MediaResponse> getOneMedia(@Path("id") String id);

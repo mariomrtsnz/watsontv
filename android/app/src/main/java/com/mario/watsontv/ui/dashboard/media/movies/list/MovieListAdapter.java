@@ -65,8 +65,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             e.printStackTrace();
         }
         viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
+        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
         viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId(), viewHolder.mItem.isWatchlisted()));
-//        viewHolder.mView.setOnClickListener(v -> mListener.onPropertyClick(v, viewHolder.mItem));
     }
 
     void updateFav(ViewHolder v, MediaResponse p) {
