@@ -44,6 +44,10 @@
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/ic_settings_black_24dp"
                     android:title="@string/profile_label" />
+                <item
+                    android:id="@+id/nav_users"
+                    android:icon="@drawable/ic_supervisor_account_black_24dp"
+                    android:title="@string/users_label" />
             </group>
                 <item
                     android:id="@+id/nav_logout"

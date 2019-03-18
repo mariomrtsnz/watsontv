@@ -50,6 +50,12 @@ public interface UserService {
 //    Call<MyProfileResponse> uploadPictureProfile(@Part MultipartBody.Part avatar,
 //                                                 @Part("id") RequestBody id);
 
-    @PUT(BASE_URL + "/changeWatched/{id}")
-    Call<UserResponse> ChangeMediaWatched(@Path("id") String id);
+    @PUT(BASE_URL + "/updateWatched/{id}")
+    Call<UserResponse> updateWatched(@Path("id") String id);
+
+    @PUT(BASE_URL + "/updateWatchlisted/{id}")
+    Call<UserResponse> updateWatchlisted(@Path("id") String id);
+
+    @PUT(BASE_URL + "/updateFriended/{id}")
+    Call<UserResponse> updateFriended(@Path("id") String id);
 }

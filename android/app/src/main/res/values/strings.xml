@@ -45,4 +45,5 @@
     <string name="profile_stats_movies_label">Watched Movies</string>
     <string name="profile_stats_genres_label">Favorite Genres</string>
     <string name="profile_menu_collections">Collections</string>
+    <string name="users_label">Users</string>
 </resources>

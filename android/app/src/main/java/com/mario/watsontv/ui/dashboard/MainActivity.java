@@ -16,6 +16,7 @@ import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFrag
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.user.profile.ProfileFragment;
+import com.mario.watsontv.ui.dashboard.user.profile.friends.FriendsFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -143,6 +143,14 @@ public class MainActivity extends AppCompatActivity
                 fragmentChanger.commit();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.nav_users:
+                FriendsFragment friendsFragment = new FriendsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("allUsers", true);
+                friendsFragment.setArguments(bundle);
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, friendsFragment);
+                fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
             case R.id.nav_logout:
                 logout();
                 return true;

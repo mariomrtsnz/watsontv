@@ -63,9 +63,9 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
             viewHolder.title.setText(data.get(i).getTitle().substring(0, 15) + "...");
         else
             viewHolder.title.setText(data.get(i).getTitle());
-        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId(), viewHolder.mItem.isWatchlisted()));
+        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId()));
+        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId()));
+        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId()));
     }
 
     void updateFav(ViewHolder v, MediaResponse p) {

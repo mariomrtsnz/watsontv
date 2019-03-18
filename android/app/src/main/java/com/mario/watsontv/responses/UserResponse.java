@@ -9,6 +9,10 @@ public class UserResponse {
     private String name;
     private String role;
     private String picture;
+    private List<String> watchlist;
+    private List<String> watched;
+    private List<String> likes;
+    private List<String> friends;
 
     public String getId() {
         return id;

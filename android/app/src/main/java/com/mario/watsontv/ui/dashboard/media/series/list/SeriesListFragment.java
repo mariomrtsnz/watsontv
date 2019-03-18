@@ -126,7 +126,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     totalItems = (int) response.body().getCount();
-                    maxPage = (int) (response.body().getCount()/maxItemsInPage);
+                    maxPage = totalItems/maxItemsInPage;
                     pgDialog.dismiss();
                     if (page == 1) {
                         items.clear();
@@ -202,7 +202,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             pgDialog.show();
             adapter = new SeriesListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
-            recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
@@ -214,9 +214,6 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
 
-                    System.out.println(gridLayoutManager.findFirstVisibleItemPosition());
-                    System.out.println(items.size());
-                    System.out.println(totalItems);
                     if (isScrolling && currentPage <= maxPage && gridLayoutManager.findFirstVisibleItemPosition() + items.size() >= totalItems) {
                         currentPage++;
                         isScrolling = false;
@@ -251,17 +248,17 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     }
 
     @Override
-    public void updateWatched(String id, boolean watched) {
+    public void updateWatched(String id) {
 
     }
 
     @Override
-    public void updateWatchlisted(String id, boolean watchlisted) {
+    public void updateWatchlisted(String id) {
 
     }
 
     @Override
-    public void updateCollected(String id, boolean collected) {
+    public void updateCollected(String id) {
 
     }
 }

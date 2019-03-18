@@ -2,7 +2,6 @@ package com.mario.watsontv.ui.dashboard.user.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -18,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.mario.watsontv.R;
 import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
+import com.mario.watsontv.ui.dashboard.user.profile.friends.FriendsFragment;
+import com.mario.watsontv.ui.dashboard.user.profile.settings.SettingsFragment;
 import com.mario.watsontv.ui.dashboard.user.profile.stats.StatsActivity;
 import com.mario.watsontv.util.UtilToken;
 
@@ -70,7 +71,7 @@ public class ProfileFragment extends Fragment implements ProfileListener{
         // Inflate the layout for this fragment
         Objects.requireNonNull(getActivity()).setTitle("Profile");
         View layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        profilePic = layout.findViewById(R.id.profile_profilePic);
+        profilePic = layout.findViewById(R.id.item_user_card_profilePic);
         username = layout.findViewById(R.id.profile_username);
         Glide.with(this).load(UtilToken.getProfilePic(ctx)).into(profilePic);
         username.setText(UtilToken.getName(ctx));
@@ -112,12 +113,12 @@ public class ProfileFragment extends Fragment implements ProfileListener{
 
     @Override
     public void goToSettings() {
-
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, new SettingsFragment()).commit();
     }
 
     @Override
     public void goToFriends() {
-
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, new FriendsFragment()).commit();
     }
 
     @Override
