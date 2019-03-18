@@ -1,5 +1,8 @@
+import _ from 'lodash';
+
 import { success, notFound } from '../../services/response/'
 import { Media } from '.'
+import { Collection } from 'mongoose';
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Media.create(body)
@@ -8,7 +11,6 @@ export const create = ({ bodymen: { body } }, res, next) =>
     .catch(next)
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
-  console.log(query);
   Media.count(query)
     .then(count => Media.find(query, select, cursor).populate('genre')
       .then((media) => ({
@@ -53,3 +55,39 @@ export const removeCastMember = ({ bodymen: { body }, params }, res, next) =>
     .then(notFound(res))
     .then(success(res))
     .catch(next)
+
+export const allMediaAndAttributes = ({ querymen: { query, select, cursor }, user }, res, next) => {
+  console.log(user);
+  // Collection.find(ownerId: user.id).then(collections => {
+
+  // })
+  Media.count(query)
+  .then(count => Media.find(query, select, cursor).populate('genre')
+    .then((media) => ({
+      count,
+      rows: media.map(foundMedia => {
+        if (user.watched.length != 0) {
+          user.watched.forEach(userWatchedMedia => {
+            if (_.isEqual(userWatchedMedia.toString(), foundMedia.id))
+              foundMedia.set('watched', true)
+            else
+              foundMedia.set('watched', false)
+          });
+        } else
+            foundMedia.set('watched', false)
+        if (user.watchlist.length != 0) {
+          user.watchlist.forEach(userWatchlistedMedia => {
+            if (_.isEqual(userWatchlistedMedia.toString(), foundMedia.id))
+              foundMedia.set('watchlisted', true)
+            else
+              foundMedia.set('watchlisted', false)
+          });
+        } else
+            foundMedia.set('watchlisted', false)
+        return foundMedia;
+      })
+    }))
+  )
+  .then(success(res))
+  .catch(next)
+}

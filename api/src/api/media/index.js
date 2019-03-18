@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, addCastMember, removeCastMember } from './controller'
+import { create, index, show, update, destroy, addCastMember, removeCastMember, allMediaAndAttributes } from './controller'
 import { schema } from './model'
 export Media, { schema } from './model'
 
@@ -50,6 +50,11 @@ router.post('/',
 router.get('/',
   query(genreSchema),
   index)
+
+router.get('/user',
+  token({ required: true }),
+  query(genreSchema),
+  allMediaAndAttributes)
 
 /**
  * @api {get} /media/:id Retrieve media

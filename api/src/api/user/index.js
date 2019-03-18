@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, editUserFriends, allUsersAndFriended } from './controller'
+import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, allUsersAndFriended, updateWatched, updateWatchlisted, editFriended} from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
@@ -122,5 +122,17 @@ router.delete('/:id',
   token({ required: true, roles: ['admin'] }),
   destroy)
 
+
+router.put('/updateWatched/:id',
+  token({required: true}),
+  updateWatched)
+
+router.put('/updateWatchlisted/:id',
+  token({required: true}),
+  updateWatchlisted)
+
+router.put('/updateFriended/:id',
+  token({ required: true }),
+  editFriended)
 
 export default router
