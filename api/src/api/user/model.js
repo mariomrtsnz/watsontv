@@ -38,10 +38,6 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  follows: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Series'
-  }],
   likes: [{
     type: Schema.Types.ObjectId,
     ref: 'Genre'

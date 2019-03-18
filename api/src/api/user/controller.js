@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { sign } from '../../services/jwt'
@@ -105,7 +107,54 @@ export const getTotalWatchedTime = ({ params }, res, next) => {
     .catch(next)
 }
 
-export const editUserFriends = ({ params, user }, res, next) => {
+export const allUsersAndFriended = ({ params, user }, res, next) => {
+  User.find().populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
+    return new Promise(function (res, rej) {
+      users.map((foundUser) => {
+        if (user.friends.length != 0) {
+          user.friends.forEach(userFriend => {
+            if (_.isEqual(userFriend.toString(), foundUser.id))
+              foundUser.set('friended', true)
+            else
+              foundUser.set('friended', false)
+          });
+        } else
+            foundUser.set('friended', false)
+      });
+      res(users);
+    });
+  }).then(success(res)).catch(next);
+}
+
+export const updateWatched = ({params, user}, res, next) => {
+  const found = user.watched.indexOf(params.id);
+  const foundInWatchlisted = user.watchlist.indexOf(params.id);
+  if (found != -1)
+    user.watched.splice(found, 1);
+  else {
+    if (foundInWatchlisted != -1) {
+      user.watchlist.splice(foundInWatchlisted, 1);
+    }
+    user.watched.push(params.id);
+  }
+
+  user.save()
+  .then(success(res))
+  .catch(next)
+}
+
+export const updateWatchlisted = ({params, user}, res, next) => {
+  const found = user.watchlist.indexOf(params.id);
+  if (found != -1)
+    user.watchlist.splice(found, 1);
+  else
+    user.watchlist.push(params.id);
+  user.save()
+  .then(success(res))
+  .catch(next)
+}
+
+export const editFriended = ({ params, user }, res, next) => {
   const found = user.friends.indexOf(params.id);
   if (found != -1)
     user.friends.splice(found, 1);
@@ -114,24 +163,4 @@ export const editUserFriends = ({ params, user }, res, next) => {
   user.save()
     .then(success(res))
     .catch(next);
-}
-
-export const allUsersAndFriended = ({ params, user }, res, next) => {
-  User.find().populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
-    return new Promise(function (res, rej) {
-      users.map((foundUser) => {
-        if (user.friends.length != 0) {
-          user.friends.forEach(userFriend => {
-            if (_.isEqual(userFriend.toString(), foundUser.id))
-            foundUser.set('friended', true)
-            else
-            foundUser.set('friended', false)
-          });
-        } else {
-          foundUser.set('friended', false)
-        }
-      });
-      res(users);
-    });
-  }).then(success(res)).catch(next);
 }

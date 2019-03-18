@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, allSeriesAndAttributes } from './controller'
 import { schema } from './model'
 export Series, { schema } from './model'
 
@@ -45,6 +45,11 @@ router.post('/',
 router.get('/',
   query(genreSchema),
   index)
+
+router.get('/user',
+  token({ required: true }),
+  query(genreSchema),
+  allSeriesAndAttributes)
 
 /**
  * @api {get} /series/:id Retrieve series
