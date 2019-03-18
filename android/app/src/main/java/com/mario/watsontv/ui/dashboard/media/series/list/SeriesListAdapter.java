@@ -19,6 +19,7 @@ import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.List;
@@ -30,7 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.ViewHolder>{
-    private final SeriesListListener mListener;
+    private final MediaListListener mListener;
     UserResponse user;
     private List<MediaResponse> data;
     private Context context;
@@ -38,7 +39,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
     private MediaService mediaService;
     private String jwt;
 
-    public SeriesListAdapter(Context ctx, List<MediaResponse> data, SeriesListListener mListener) {
+    public SeriesListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;

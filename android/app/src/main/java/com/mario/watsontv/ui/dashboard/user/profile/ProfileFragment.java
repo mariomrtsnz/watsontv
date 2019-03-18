@@ -16,13 +16,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mario.watsontv.R;
+import com.mario.watsontv.ui.auth.LoginActivity;
+import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
 import com.mario.watsontv.ui.dashboard.user.profile.stats.StatsActivity;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.Objects;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +38,7 @@ public class ProfileFragment extends Fragment {
     private ImageView profilePic;
     private TextView username;
     private Context ctx;
-    private CardView stats;
+    private CardView stats, collections, settings, friends, logout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mListener = this;
     }
 
     @Override
@@ -71,11 +74,16 @@ public class ProfileFragment extends Fragment {
         username = layout.findViewById(R.id.profile_username);
         Glide.with(this).load(UtilToken.getProfilePic(ctx)).into(profilePic);
         username.setText(UtilToken.getName(ctx));
+        collections = layout.findViewById(R.id.profile_card_collections);
+        collections.setOnClickListener(v -> goToCollections());
         stats = layout.findViewById(R.id.profile_card_stats);
-        stats.setOnClickListener(v -> {
-            Intent i = new Intent(ctx, StatsActivity.class);
-            startActivity(i);
-        });
+        stats.setOnClickListener(v -> goToStats());
+        settings = layout.findViewById(R.id.profile_card_settings);
+        settings.setOnClickListener(v -> goToSettings());
+        friends = layout.findViewById(R.id.profile_card_friends);
+        friends.setOnClickListener(v -> goToFriends());
+        logout = layout.findViewById(R.id.profile_card_logout);
+        logout.setOnClickListener(v -> logout());
         return layout;
     }
 
@@ -83,12 +91,6 @@ public class ProfileFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof ProfileListener) {
-            mListener = (ProfileListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement ProfileListener");
-        }
     }
 
     @Override
@@ -97,4 +99,35 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void goToStats() {
+        Intent i = new Intent(ctx, StatsActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    public void goToCollections() {
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, new CollectionListFragment()).commit();
+    }
+
+    @Override
+    public void goToSettings() {
+
+    }
+
+    @Override
+    public void goToFriends() {
+
+    }
+
+    @Override
+    public void logout() {
+        UtilToken.setId(ctx, null);
+        UtilToken.setToken(ctx, null);
+        UtilToken.setUserLoggedData(ctx, null);
+        getActivity().finish();
+        Intent logoutIntent = new Intent(getActivity(), LoginActivity.class);
+        logoutIntent.putExtra("isLogin", true);
+        startActivity(logoutIntent);
+    }
 }

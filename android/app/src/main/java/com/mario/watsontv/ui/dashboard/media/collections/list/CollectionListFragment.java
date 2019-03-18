@@ -1,7 +1,9 @@
 package com.mario.watsontv.ui.dashboard.media.collections.list;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -36,11 +38,12 @@ import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
 import com.mario.watsontv.util.UtilToken;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CollectionListFragment extends Fragment {
+public class CollectionListFragment extends Fragment implements CollectionListListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,6 +85,31 @@ public class CollectionListFragment extends Fragment {
         return fragment;
     }
 
+    public void deleteOne(String id) {
+        service = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
+        Call<CollectionResponse> call = service.delete(id);
+        call.enqueue(new Callback<CollectionResponse>() {
+            @Override
+            public void onResponse(Call<CollectionResponse> call, Response<CollectionResponse> response) {
+                if (response.code() != 204) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    pgDialog.dismiss();
+                    listMyCollections();
+                    Toast.makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    adapter = new CollectionListAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectionResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void listMyCollections() {
         service = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
         Call<List<CollectionResponse>> call = service.getUserCollections(UtilToken.getId(ctx));
@@ -120,6 +148,7 @@ public class CollectionListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         jwt = UtilToken.getToken(getContext());
+        mListener = this;
     }
 
     @Override
@@ -154,31 +183,41 @@ public class CollectionListFragment extends Fragment {
             });
         }
         fab = layout.findViewById(R.id.collection_list_fab_create);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateCollectionDialog createCollectionDialog = new CreateCollectionDialog();
-                createCollectionDialog.show(getFragmentManager(), "create dialog");
-            }
+        fab.setOnClickListener(v -> {
+            CreateCollectionDialog createCollectionDialog = new CreateCollectionDialog();
+            createCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+            createCollectionDialog.show(getFragmentManager(), "create dialog");
         });
         return layout;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            listMyCollections();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof CollectionListListener) {
-            mListener = (CollectionListListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement CollectionListListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void delete(String collectionId) {
+        deleteOne(collectionId);
+    }
+
+    @Override
+    public void goToDetails(String collectionId) {
+        Toast.makeText(ctx, "Adios", Toast.LENGTH_LONG).show();
     }
 }

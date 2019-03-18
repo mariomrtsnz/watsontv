@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mario.watsontv.R;
@@ -58,6 +59,8 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
             viewHolder.description.setText(data.get(i).getDescription());
 //        viewHolder.fav.setOnClickListener(v -> updateFav(viewHolder, data.get(i)));
 //        viewHolder.mView.setOnClickListener(v -> mListener.onPropertyClick(v, viewHolder.mItem));
+        viewHolder.delete.setOnClickListener(v -> mListener.delete(data.get(i).getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(data.get(i).getId()));
     }
 
     void updateFav(ViewHolder v, CollectionResponse p) {
@@ -109,6 +112,7 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView name, description;
+        public final ImageButton delete;
         public CollectionResponse mItem;
 
         public ViewHolder(@NonNull View itemView) {
@@ -116,6 +120,7 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
             mView = itemView;
             name = itemView.findViewById(R.id.item_collection_card_name);
             description = itemView.findViewById(R.id.item_collection_card_description);
+            delete = itemView.findViewById(R.id.item_collection_card_ib_delete);
         }
 
     }

@@ -1,12 +1,16 @@
 package com.mario.watsontv.retrofit.services;
 
+import com.mario.watsontv.dto.CollectionDto;
 import com.mario.watsontv.responses.CollectionResponse;
 import com.mario.watsontv.responses.ResponseContainer;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface CollectionService {
@@ -17,4 +21,10 @@ public interface CollectionService {
 
     @GET(BASE_URL + "/user/{id}")
     Call<List<CollectionResponse>> getUserCollections(@Path("id") String id);
+
+    @POST(BASE_URL)
+    Call<CollectionResponse> create(@Body CollectionDto collectionDto);
+
+    @DELETE(BASE_URL + "/{id}")
+    Call<CollectionResponse> delete(@Path("id") String id);
 }

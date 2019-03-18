@@ -24,6 +24,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.EndlessRecyclerViewScrollListener;
 import com.mario.watsontv.util.UtilToken;
 
@@ -43,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
@@ -59,7 +60,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     private Context ctx;
     private int mColumnCount = 3;
     ProgressDialog pgDialog;
-    private SeriesListListener mListener;
+    private MediaListListener mListener;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -169,6 +170,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         jwt = UtilToken.getToken(getContext());
+        mListener = this;
     }
 
     @Override
@@ -212,17 +214,31 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof SeriesListListener) {
-            mListener = (SeriesListListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement SeriesListListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void updateWatched(String id, boolean watched) {
+
+    }
+
+    @Override
+    public void updateWatchlisted(String id, boolean watchlisted) {
+
+    }
+
+    @Override
+    public void addToCollection(String id) {
+
+    }
+
+    @Override
+    public void removeFromCollection(String id) {
+
     }
 }

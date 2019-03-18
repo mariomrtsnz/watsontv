@@ -19,6 +19,9 @@ public class MediaResponse {
     String[] seasons;
     int airsDayOfWeek;
     String trailer;
+    boolean isWatched;
+    boolean isWatchlisted;
+    boolean isCollected;
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
     public String getId() {
@@ -126,4 +129,29 @@ public class MediaResponse {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public void setWatched(boolean watched) {
+        isWatched = watched;
+    }
+
+    public boolean isWatchlisted() {
+        return isWatchlisted;
+    }
+
+    public void setWatchlisted(boolean watchlisted) {
+        isWatchlisted = watchlisted;
+    }
+
+    public boolean isCollected() {
+        return isCollected;
+    }
+
+    public void setCollected(boolean collected) {
+        isCollected = collected;
+    }
+
 }

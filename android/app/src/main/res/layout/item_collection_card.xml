@@ -34,18 +34,19 @@
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:text="@string/go_details"
-            android:textSize="18sp"
+        <ImageButton
+            android:id="@+id/item_collection_card_ib_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/item_collection_card_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/item_collection_card_name"
-            app:layout_constraintTop_toTopOf="@+id/item_collection_card_name" />
+            app:layout_constraintTop_toTopOf="@+id/item_collection_card_name"
+            app:srcCompat="@drawable/ic_delete_black_24dp" />
 
         <TextView
             android:id="@+id/item_collection_card_description"
@@ -57,6 +58,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/item_collection_card_name" />
+            app:layout_constraintTop_toBottomOf="@+id/item_collection_card_ib_delete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

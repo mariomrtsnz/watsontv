@@ -37,7 +37,7 @@ router.get('/',
   query(),
   index)
 
-router.get('/mine',
+router.get('/user/:id',
   token({ required: true }),
   userCollections)
 

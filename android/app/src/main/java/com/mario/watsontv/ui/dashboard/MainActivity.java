@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
@@ -15,13 +13,9 @@ import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardFragment;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardListener;
 import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
-import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListListener;
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
-import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListListener;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
-import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListListener;
 import com.mario.watsontv.ui.dashboard.user.profile.ProfileFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.ProfileListener;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -29,7 +23,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
@@ -37,10 +30,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static java.security.AccessController.getContext;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener, SeriesListListener, MovieListListener, ProfileListener, CollectionListListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener {
 
     FragmentTransaction fragmentChanger;
     TextView name, email;

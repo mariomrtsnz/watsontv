@@ -16,6 +16,7 @@ import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
@@ -26,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder>{
-    private final MovieListListener mListener;
+    private final MediaListListener mListener;
     UserResponse user;
     private List<MediaResponse> data;
     private Context context;
@@ -34,7 +35,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private MediaService mediaService;
     private String jwt;
 
-    public MovieListAdapter(Context ctx, List<MediaResponse> data, MovieListListener mListener) {
+    public MovieListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
@@ -63,7 +64,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//        viewHolder.fav.setOnClickListener(v -> updateFav(viewHolder, data.get(i)));
+        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
+        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId(), viewHolder.mItem.isWatchlisted()));
 //        viewHolder.mView.setOnClickListener(v -> mListener.onPropertyClick(v, viewHolder.mItem));
     }
 

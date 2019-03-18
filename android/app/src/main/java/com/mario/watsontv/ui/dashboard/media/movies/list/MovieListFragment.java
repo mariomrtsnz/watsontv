@@ -24,6 +24,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class MovieListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener {
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
     MediaService service;
@@ -57,7 +58,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     private Context ctx;
     private int mColumnCount = 3;
     ProgressDialog pgDialog;
-    private MovieListListener mListener;
+    private MediaListListener mListener;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -168,6 +169,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         jwt = UtilToken.getToken(getContext());
+        mListener = this;
     }
 
     @Override
@@ -211,17 +213,31 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof MovieListListener) {
-            mListener = (MovieListListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement MovieListListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void updateWatched(String id, boolean watched) {
+        Toast.makeText(ctx, id, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void updateWatchlisted(String id, boolean watchlisted) {
+        Toast.makeText(ctx, id, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void addToCollection(String id) {
+
+    }
+
+    @Override
+    public void removeFromCollection(String id) {
+
     }
 }
