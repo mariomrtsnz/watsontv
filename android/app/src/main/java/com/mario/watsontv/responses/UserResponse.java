@@ -3,19 +3,19 @@ package com.mario.watsontv.responses;
 import java.util.List;
 
 public class UserResponse {
-    private String _id;
+    private String id;
     private String email;
     private String password;
     private String name;
     private String role;
     private String picture;
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -61,7 +61,7 @@ public class UserResponse {
     @Override
     public String toString() {
         return "UserResponse{" +
-                "_id='" + _id + '\'' +
+                "_id='" + id + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +

@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -24,6 +25,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
@@ -58,7 +60,12 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     private Context ctx;
     private int mColumnCount = 3;
     ProgressDialog pgDialog;
-    private SeriesListListener mListener;
+    boolean isScrolling = false;
+    int currentPage = 1;
+    int maxPage;
+    int maxItemsInPage = 30;
+    int totalItems;
+    private MediaListListener mListener;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -66,8 +73,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
         setHasOptionsMenu(true);
     }
 
-    public SeriesListFragment() {
-    }
+    public SeriesListFragment() {}
 
     // TODO: Rename and change types and number of parameters
     public static SeriesListFragment newInstance(int columnCount) {
@@ -93,13 +99,12 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         GenreResponse selectedGenreResponse = (GenreResponse) parent.getSelectedItem();
         selectedGenre = selectedGenreResponse.getId();
-        listSeries();
+        currentPage = 1;
+        listSeries(currentPage);
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(ctx, "Adios", Toast.LENGTH_LONG).show();
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -111,17 +116,23 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
         return super.onOptionsItemSelected(item);
     }
 
-    public void listSeries() {
+    public void listSeries(int page) {
         MediaService service = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<MediaResponse>> call = service.getAllSeries(selectedGenre);
+        Call<ResponseContainer<MediaResponse>> call = service.getAllSeries(selectedGenre, page);
         call.enqueue(new Callback<ResponseContainer<MediaResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<MediaResponse>> call, Response<ResponseContainer<MediaResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
+                    totalItems = (int) response.body().getCount();
+                    maxPage = (int) (response.body().getCount()/maxItemsInPage);
                     pgDialog.dismiss();
-                    items = response.body().getRows();
+                    if (page == 1) {
+                        items.clear();
+                        items = response.body().getRows();
+                    } else
+                        items.addAll(response.body().getRows());
                     adapter = new SeriesListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
                 }
@@ -169,6 +180,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         jwt = UtilToken.getToken(getContext());
+        mListener = this;
     }
 
     @Override
@@ -176,19 +188,13 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_media_list, container, false);
-//        layout.findViewById(R.id.fab_map).setVisibility(View.GONE);
-//        layout.findViewById(R.id.fab_list).setVisibility(View.VISIBLE);
 
         if (layout instanceof SwipeRefreshLayout) {
             ctx = layout.getContext();
             recycler = layout.findViewById(R.id.media_recyclerview);
-            if (mColumnCount <= 1) {
-                recycler.setLayoutManager(new LinearLayoutManager(ctx));
-            } else {
-                recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
-            }
+            final GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, mColumnCount);
+            recycler.setLayoutManager(gridLayoutManager);
             items = new ArrayList<>();
-            listSeries();
             pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
             pgDialog.setIndeterminate(true);
             pgDialog.setCancelable(false);
@@ -196,11 +202,35 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             pgDialog.show();
             adapter = new SeriesListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
+            recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                        isScrolling = true;
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    System.out.println(gridLayoutManager.findFirstVisibleItemPosition());
+                    System.out.println(items.size());
+                    System.out.println(totalItems);
+                    if (isScrolling && currentPage <= maxPage && gridLayoutManager.findFirstVisibleItemPosition() + items.size() >= totalItems) {
+                        currentPage++;
+                        isScrolling = false;
+                        listSeries(currentPage);
+                    }
+                }
+            });
             swipeLayout = layout.findViewById(R.id.swipeContainer);
             swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
             swipeLayout.setOnRefreshListener(() -> {
-                listSeries();
+                currentPage = 1;
+                listSeries(currentPage);
                 if (swipeLayout.isRefreshing()) {
+                    isScrolling = false;
                     swipeLayout.setRefreshing(false);
                 }
             });
@@ -212,17 +242,26 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof SeriesListListener) {
-            mListener = (SeriesListListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement SeriesListListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void updateWatched(String id, boolean watched) {
+
+    }
+
+    @Override
+    public void updateWatchlisted(String id, boolean watchlisted) {
+
+    }
+
+    @Override
+    public void updateCollected(String id, boolean collected) {
+
     }
 }

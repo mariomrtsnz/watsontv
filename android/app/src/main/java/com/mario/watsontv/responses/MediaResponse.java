@@ -19,6 +19,9 @@ public class MediaResponse {
     String[] seasons;
     int airsDayOfWeek;
     String trailer;
+    boolean isWatched;
+    boolean isWatchlisted;
+    boolean isCollected;
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
     public String getId() {
@@ -118,13 +121,37 @@ public class MediaResponse {
     }
 
     public Calendar getReleaseDate() throws ParseException {
-        Date date = myFormat.parse(releaseDate);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(myFormat.parse(releaseDate));
         return cal;
     }
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public void setWatched(boolean watched) {
+        isWatched = watched;
+    }
+
+    public boolean isWatchlisted() {
+        return isWatchlisted;
+    }
+
+    public void setWatchlisted(boolean watchlisted) {
+        isWatchlisted = watchlisted;
+    }
+
+    public boolean isCollected() {
+        return isCollected;
+    }
+
+    public void setCollected(boolean collected) {
+        isCollected = collected;
+    }
+
 }

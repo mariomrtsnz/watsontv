@@ -1,45 +1,36 @@
-package com.mario.watsontv.ui.dashboard.media.series.list;
+package com.mario.watsontv.ui.dashboard.media.collections.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mario.watsontv.R;
-import com.mario.watsontv.responses.MediaResponse;
+import com.mario.watsontv.responses.CollectionResponse;
 import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
-import com.mario.watsontv.retrofit.services.MediaService;
+import com.mario.watsontv.retrofit.services.CollectionService;
 import com.mario.watsontv.retrofit.services.UserService;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.ViewHolder>{
-    private final MediaListListener mListener;
+public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAdapter.ViewHolder> {
+    private final CollectionListListener mListener;
     UserResponse user;
-    private List<MediaResponse> data;
+    private List<CollectionResponse> data;
     private Context context;
     private UserService userService;
-    private MediaService mediaService;
+    private CollectionService collectionService;
     private String jwt;
 
-    public SeriesListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
+    public CollectionListAdapter(Context ctx, List<CollectionResponse> data, CollectionListListener mListener) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
@@ -48,7 +39,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_media_card, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_collection_card, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -58,18 +49,22 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         viewHolder.mItem = data.get(i);
 //        if (data.get(i).)
 //            viewHolder.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-        Glide.with(context).load(data.get(i).getCoverImage()).into(viewHolder.coverImage);
-        if (data.get(i).getTitle().length() > 15)
-            viewHolder.title.setText(data.get(i).getTitle().substring(0, 15) + "...");
+        if (data.get(i).getName().length() > 15)
+            viewHolder.name.setText(data.get(i).getName().substring(0, 15) + "...");
         else
-            viewHolder.title.setText(data.get(i).getTitle());
-        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId(), viewHolder.mItem.isWatchlisted()));
+            viewHolder.name.setText(data.get(i).getName());
+        if (data.get(i).getDescription().length() > 100)
+            viewHolder.description.setText(data.get(i).getDescription().substring(0, 100) + "...");
+        else
+            viewHolder.description.setText(data.get(i).getDescription());
+//        viewHolder.fav.setOnClickListener(v -> updateFav(viewHolder, data.get(i)));
+//        viewHolder.mView.setOnClickListener(v -> mListener.onPropertyClick(v, viewHolder.mItem));
+        viewHolder.delete.setOnClickListener(v -> mListener.delete(data.get(i).getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(data.get(i).getId()));
     }
 
-    void updateFav(ViewHolder v, MediaResponse p) {
-        mediaService = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
+    void updateFav(ViewHolder v, CollectionResponse p) {
+        collectionService = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
 //        if (v.isChecked) {
 //            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
 //            call.enqueue(new Callback<UserResponse>() {
@@ -116,25 +111,16 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView title, releaseDate;
-        public final ImageView coverImage;
-        public final ImageButton check;
-        public final ImageButton collection;
-        public final ImageButton watchlist;
-        public boolean isChecked;
-        public boolean isCollected;
-        public boolean isWatchlisted;
-        public MediaResponse mItem;
+        public final TextView name, description;
+        public final ImageButton delete;
+        public CollectionResponse mItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
-            title = itemView.findViewById(R.id.item_media_card_tv_title);
-            releaseDate = itemView.findViewById(R.id.item_media_card_tv_release_date);
-            coverImage = itemView.findViewById(R.id.item_media_card_iv_cover_image);
-            check = itemView.findViewById(R.id.item_media_card_ib_check);
-            collection = itemView.findViewById(R.id.item_media_card_ib_collect);
-            watchlist = itemView.findViewById(R.id.item_media_card_ib_watchlist);
+            name = itemView.findViewById(R.id.item_collection_card_name);
+            description = itemView.findViewById(R.id.item_collection_card_description);
+            delete = itemView.findViewById(R.id.item_collection_card_ib_delete);
         }
 
     }
