@@ -51,7 +51,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     int maxItemsInPage = 30;
     int totalItems;
 
-    private boolean allUsers;
+    private boolean allUsers = false;
     private Context ctx;
     private String jwt;
     private FriendsListener mListener;
@@ -69,20 +69,22 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Objects.requireNonNull(getActivity()).setTitle("Users");
         inflater.inflate(R.menu.fragment_friends_menu, menu);
+        MenuItem filter = menu.findItem(R.id.menu_friends_filter);
+        filter.setChecked(!allUsers);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.friends_befriended_filter) {
-            if(item.isChecked()){
+            if(item.isChecked()) {
                 allUsers = !allUsers;
                 item.setChecked(allUsers);
                 listUsers(1);
             } else {
                 allUsers = !allUsers;
                 item.setChecked(allUsers);
-                listUsers(1);
+                listFriends(1);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -117,6 +119,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             final GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, mColumnCount);
             recycler.setLayoutManager(gridLayoutManager);
             items = new ArrayList<>();
+            if (allUsers) listUsers(currentPage); else listFriends(currentPage);
             pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
             pgDialog.setIndeterminate(true);
             pgDialog.setCancelable(false);
@@ -146,7 +149,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
             swipeLayout.setOnRefreshListener(() -> {
                 currentPage = 1;
-                listUsers(currentPage);
+                if (allUsers) listUsers(currentPage); else listFriends(currentPage);
                 if (swipeLayout.isRefreshing()) {
                     isScrolling = false;
                     swipeLayout.setRefreshing(false);
@@ -170,7 +173,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     public void listUsers(int page) {
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<UserResponse>> call = service.listUsers(allUsers, page);
+        Call<ResponseContainer<UserResponse>> call = service.listUsers(page);
         call.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
@@ -192,6 +195,35 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
             @Override
             public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void listFriends(int page) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<List<UserResponse>> call = service.listFriends(page);
+        call.enqueue(new Callback<List<UserResponse>>() {
+            @Override
+            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    maxPage = totalItems/maxItemsInPage;
+                    pgDialog.dismiss();
+                    if (page == 1) {
+                        items.clear();
+                        items = response.body();
+                    } else
+                        items.addAll(response.body());
+                    adapter = new FriendsAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }

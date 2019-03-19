@@ -13,7 +13,7 @@ public class UserResponse {
     private List<String> watched;
     private List<String> likes;
     private List<String> friends;
-    private boolean friended;
+    private boolean isFriend;
 
     public String getId() {
         return id;
@@ -95,12 +95,12 @@ public class UserResponse {
         this.friends = friends;
     }
 
-    public boolean isFriended() {
-        return friended;
+    public boolean isFriend() {
+        return isFriend;
     }
 
-    public void setFriended(boolean friended) {
-        this.friended = friended;
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 
     @Override

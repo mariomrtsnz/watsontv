@@ -3,6 +3,8 @@ package com.mario.watsontv.retrofit.services;
 import com.mario.watsontv.responses.ResponseContainer;
 import com.mario.watsontv.responses.UserResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,7 +18,10 @@ public interface UserService {
     String BASE_URL = "/users";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<UserResponse>> listUsers(@Query("allUsers") boolean allUsers, @Query("page") int page);
+    Call<ResponseContainer<UserResponse>> listUsers(@Query("page") int page);
+
+    @GET(BASE_URL + "/befriended")
+    Call<List<UserResponse>> listFriends(@Query("page") int page);
 
 //    @GET(BASE_URL + "/{id}")
 //    Call<MyProfileResponse> getUser(@Path("id") String id);

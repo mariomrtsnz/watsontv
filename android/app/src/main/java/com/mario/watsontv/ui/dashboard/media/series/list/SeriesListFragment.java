@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard.media.series.list;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
+import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
@@ -296,6 +299,11 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void updateCollected(String id) {
-
+        AddToCollectionDialog addToCollectionDialog = new AddToCollectionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        addToCollectionDialog.setArguments(bundle);
+        addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+        addToCollectionDialog.show(getFragmentManager(), "create dialog");
     }
 }
