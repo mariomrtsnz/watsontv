@@ -25,7 +25,7 @@ public class StatsActivity extends AppCompatActivity {
         pieData.add(new SliceValue(15, Color.BLUE).setLabel("Comedy (12.5%)"));
         pieData.add(new SliceValue(25, Color.GRAY).setLabel("Drama (11.8%)"));
         pieData.add(new SliceValue(11, Color.RED).setLabel("Action (11.4%)"));
-        pieData.add(new SliceValue(60, Color.MAGENTA).setLabel("Family"));
+        pieData.add(new SliceValue(60, Color.MAGENTA).setLabel("Family (64.3%)"));
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(14);
         pieChartView.setPieChartData(pieChartData);

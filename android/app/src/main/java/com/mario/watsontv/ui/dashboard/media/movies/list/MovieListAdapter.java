@@ -73,15 +73,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
         if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
 
-        viewHolder.check.setOnClickListener(v -> {
-            mListener.updateWatched(viewHolder.mItem.getId());
-        });
-        viewHolder.collection.setOnClickListener(v -> {
-            mListener.updateCollected(viewHolder.mItem.getId());
-        });
-        viewHolder.watchlist.setOnClickListener(v -> {
-            mListener.updateWatchlisted(viewHolder.mItem.getId());
-        });
+        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId()));
+        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId()));
+        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
     }
 
     @Override

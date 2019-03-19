@@ -103,8 +103,7 @@ public class LoginFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String credentials) {
         if (mListener != null) {
-            mListener.onLoginSubmit(credentials);
-            pgDialog.dismiss();
+            mListener.onLoginSubmit(credentials, pgDialog);
         }
     }
 

@@ -48,4 +48,8 @@
     <string name="users_label">Users</string>
     <string name="filter">Filter</string>
     <string name="friends_filter_checkbox">Only My Friends</string>
+    <string name="media_detail_runningTime">Running Time:</string>
+    <string name="media_detail_synopsis_label">Synopsis</string>
+    <string name="media_detail_cast_label">Cast</string>
+    <string name="media_detail_released_label">Released:</string>
 </resources>

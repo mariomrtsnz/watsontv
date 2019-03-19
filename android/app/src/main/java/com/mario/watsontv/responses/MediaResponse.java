@@ -19,6 +19,7 @@ public class MediaResponse {
     String[] seasons;
     int airsDayOfWeek;
     String trailer;
+    int runtime;
     boolean watched;
     boolean watchlisted;
     boolean collected;
@@ -42,6 +43,17 @@ public class MediaResponse {
 
     public int[] getRating() {
         return rating;
+    }
+
+    public float getTotalRating() {
+        float totalRating = 0;
+        if (rating.length > 0) {
+            for(int i = 0; i <= rating.length; i++) {
+                totalRating += rating[i];
+            }
+            totalRating = totalRating/rating.length;
+        }
+        return totalRating;
     }
 
     public void setRating(int[] rating) {
@@ -128,6 +140,14 @@ public class MediaResponse {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
     }
 
     public boolean isWatched() {

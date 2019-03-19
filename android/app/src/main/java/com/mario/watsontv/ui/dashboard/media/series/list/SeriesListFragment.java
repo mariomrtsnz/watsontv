@@ -306,4 +306,9 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
         addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
         addToCollectionDialog.show(getFragmentManager(), "create dialog");
     }
+
+    @Override
+    public void goToDetail(String id) {
+
+    }
 }

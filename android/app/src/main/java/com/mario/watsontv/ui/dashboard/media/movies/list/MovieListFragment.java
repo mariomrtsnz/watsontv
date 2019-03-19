@@ -26,6 +26,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.movies.detail.MovieDetailFragment;
 import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
@@ -295,5 +296,14 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     @Override
     public void updateCollected(String id) {
 
+    }
+
+    @Override
+    public void goToDetail(String id) {
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        movieDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, movieDetailFragment).addToBackStack(null).commit();
     }
 }
