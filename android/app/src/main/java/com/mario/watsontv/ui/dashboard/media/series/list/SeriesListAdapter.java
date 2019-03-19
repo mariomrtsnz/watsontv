@@ -76,6 +76,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         viewHolder.watchlist.setOnClickListener(v -> {
             mListener.updateWatchlisted(viewHolder.mItem.getId());
         });
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
     }
 
     void updateFav(ViewHolder v, MediaResponse p) {

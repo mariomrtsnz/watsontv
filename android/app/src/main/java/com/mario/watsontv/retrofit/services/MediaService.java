@@ -1,5 +1,6 @@
 package com.mario.watsontv.retrofit.services;
 
+import com.mario.watsontv.responses.MediaDetailsResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
 
@@ -23,5 +24,5 @@ public interface MediaService {
     Call<ResponseContainer<MediaResponse>> getAllMovies(@Query("genre") String genre, @Query("page") int page);
 
     @GET(BASE_URL + "/{id}")
-    Call<MediaResponse> getOneMedia(@Path("id") String id);
+    Call<MediaDetailsResponse> getOneMedia(@Path("id") String id);
 }

@@ -30,6 +30,7 @@ import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.series.detail.SeriesDetailFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -309,6 +310,10 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void goToDetail(String id) {
-
+        SeriesDetailFragment movieDetailFragment = new SeriesDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        movieDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, movieDetailFragment).addToBackStack(null).commit();
     }
 }

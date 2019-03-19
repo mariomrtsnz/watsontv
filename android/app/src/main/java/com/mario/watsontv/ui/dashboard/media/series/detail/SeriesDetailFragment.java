@@ -1,16 +1,8 @@
-package com.mario.watsontv.ui.dashboard.media.movies.detail;
+package com.mario.watsontv.ui.dashboard.media.series.detail;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,15 +21,19 @@ import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsAdapter;
-import com.mario.watsontv.ui.dashboard.media.MediaDetailsListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class MovieDetailFragment extends Fragment implements MediaDetailsListener {
+
+public class SeriesDetailFragment extends Fragment implements SeriesDetailListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,17 +47,20 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
     private ImageView ivCoverImage;
     private MediaDetailsResponse media;
     private ProgressDialog pgDialog;
-    private RecyclerView recycler;
-    private MediaDetailsAdapter adapter;
-    private MediaDetailsListener mListener;
+    MediaDetailsAdapter castAdapter;
+    SeriesDetailAdapter seasonsAdapter;
+    RecyclerView castRecycler;
+    RecyclerView seasonsRecycler;
 
-    public MovieDetailFragment() {
+    private SeriesDetailListener mListener;
+
+    public SeriesDetailFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static MovieDetailFragment newInstance(String param1, String param2) {
-        MovieDetailFragment fragment = new MovieDetailFragment();
+    public static SeriesDetailFragment newInstance(String param1, String param2) {
+        SeriesDetailFragment fragment = new SeriesDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,16 +83,14 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        recycler = layout.findViewById(R.id.movie_detail_recyclerView);
-        recycler.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, true));
-        ivCoverImage = layout.findViewById(R.id.movie_detail_iv_coverImage);
-        tvTitle = layout.findViewById(R.id.movie_detail_tv_title);
-        tvReleaseDate = layout.findViewById(R.id.movie_detail_tv_releaseDate);
-        tvRatings = layout.findViewById(R.id.movie_detail_tv_ratings);
-        ratingBar = layout.findViewById(R.id.movie_detail_ratingBar);
-        tvRuntime = layout.findViewById(R.id.movie_detail_tv_runtime);
-        tvSynopsis = layout.findViewById(R.id.movie_detail_tv_synopsis);
-        btnGenre = layout.findViewById(R.id.movie_detail_btn_genre);
+        ivCoverImage = layout.findViewById(R.id.series_detail_iv_coverImage);
+        tvTitle = layout.findViewById(R.id.series_detail_tv_title);
+        tvReleaseDate = layout.findViewById(R.id.series_detail_tv_releaseDate);
+        tvRatings = layout.findViewById(R.id.series_detail_tv_ratings);
+        ratingBar = layout.findViewById(R.id.series_detail_ratingBar);
+        tvRuntime = layout.findViewById(R.id.series_detail_tv_runtime);
+        tvSynopsis = layout.findViewById(R.id.series_detail_tv_synopsis);
+        btnGenre = layout.findViewById(R.id.series_detail_btn_genre);
         getMediaDetails();
         pgDialog = new ProgressDialog(ctx, R.style.MaterialAlertDialog_MaterialComponents_Title_Icon_CenterStacked);
         pgDialog.setIndeterminate(true);
@@ -116,8 +113,6 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
     }
 
     private void setData() {
-        adapter = new MediaDetailsAdapter(ctx, media.getCast(), mListener);
-        recycler.setAdapter(adapter);
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
         tvTitle.setText(media.getTitle());
         tvRuntime.setText(String.valueOf(media.getRuntime()));

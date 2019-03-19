@@ -106,6 +106,5 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             collection = itemView.findViewById(R.id.item_media_card_ib_collect);
             watchlist = itemView.findViewById(R.id.item_media_card_ib_watchlist);
         }
-
     }
 }

@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.media.movies.detail.MovieDetailFragment">
+    tools:context=".ui.dashboard.media.series.detail.SeriesDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/movie_detail_iv_coverImage"
+            android:id="@+id/series_detail_iv_coverImage"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/ic_watsontv_logo"
@@ -25,12 +25,12 @@
             android:layout_width="0dp"
             android:layout_height="130dp"
             android:src="@drawable/shadow_white"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_detail_iv_coverImage"
+            app:layout_constraintBottom_toBottomOf="@+id/series_detail_iv_coverImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/movie_detail_tv_title"
+            android:id="@+id/series_detail_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -47,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/movie_detail_tv_title"
-            app:layout_constraintStart_toStartOf="@+id/movie_detail_tv_title"
-            app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_title">
+            app:layout_constraintEnd_toEndOf="@+id/series_detail_tv_title"
+            app:layout_constraintStart_toStartOf="@+id/series_detail_tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/series_detail_tv_title">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,18 +57,18 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="@string/media_detail_released_label"
-                app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_releaseDate" />
+                app:layout_constraintTop_toBottomOf="@+id/series_detail_tv_releaseDate" />
 
             <TextView
-                android:id="@+id/movie_detail_tv_releaseDate"
+                android:id="@+id/series_detail_tv_releaseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/movie_detail_tv_title"
-                app:layout_constraintStart_toStartOf="@+id/movie_detail_tv_title"
-                app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_title"
+                app:layout_constraintEnd_toEndOf="@+id/series_detail_tv_title"
+                app:layout_constraintStart_toStartOf="@+id/series_detail_tv_title"
+                app:layout_constraintTop_toBottomOf="@+id/series_detail_tv_title"
                 app:layout_constraintVertical_bias="1.0" />
         </LinearLayout>
 
@@ -77,12 +77,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/movie_detail_tv_title"
-            app:layout_constraintStart_toStartOf="@+id/movie_detail_tv_title"
+            app:layout_constraintEnd_toEndOf="@+id/series_detail_tv_title"
+            app:layout_constraintStart_toStartOf="@+id/series_detail_tv_title"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <RatingBar
-                android:id="@+id/movie_detail_ratingBar"
+                android:id="@+id/series_detail_ratingBar"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -93,7 +93,7 @@
                 tools:layout_editor_absoluteX="82dp" />
 
             <TextView
-                android:id="@+id/movie_detail_tv_ratings"
+                android:id="@+id/series_detail_tv_ratings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,7 +117,7 @@
                 android:text="@string/media_detail_runningTime" />
 
             <TextView
-                android:id="@+id/movie_detail_tv_runtime"
+                android:id="@+id/series_detail_tv_runtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,7 +126,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/movie_detail_btn_genre"
+            android:id="@+id/series_detail_btn_genre"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
@@ -149,7 +149,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_detail_btn_genre">
+            app:layout_constraintTop_toBottomOf="@+id/series_detail_btn_genre">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/movie_detail_tv_synopsis"
+                    android:id="@+id/series_detail_tv_synopsis"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -194,55 +194,50 @@
             app:layout_constraintStart_toStartOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movie_detail_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/textView27"
-            app:layout_constraintTop_toBottomOf="@+id/textView27"
-            tools:listitem="@layout/item_cast" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/textView27"
+                app:layout_constraintTop_toBottomOf="@+id/textView27"
+                tools:listitem="@layout/item_cast" />
 
         <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:menu_colorNormal="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:menu_icon="@drawable/ic_more_vert_24dp"
-            app:menu_labels_colorNormal="@android:color/white"
+            app:menu_colorNormal="@color/colorAccent"
             app:menu_labels_showShadow="false"
-            app:menu_labels_textColor="@android:color/black">
-
+            app:menu_labels_textColor="@android:color/black"
+            app:menu_labels_colorNormal="@android:color/white">
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/movie_detail_fab_menu_collection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_collections_bookmark_white_24dp"
-                app:fab_colorNormal="@color/colorAccent"
+                android:id="@+id/series_detail_fab_menu_collection"
                 app:fab_label="Add to Collections"
-                app:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/movie_detail_fab_menu_watchlist"
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_remove_red_eye_black_24dp"
-                app:fab_colorNormal="@color/colorAccent"
+                android:src="@drawable/ic_collections_bookmark_white_24dp" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/series_detail_fab_menu_watchlist"
                 app:fab_label="Add to Watchlist"
-                app:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/movie_detail_fab_menu_watch"
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_white_24dp"
-                app:fab_colorNormal="@color/colorAccent"
+                android:src="@drawable/ic_remove_red_eye_black_24dp" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/series_detail_fab_menu_watch"
                 app:fab_label="Check as Watched"
-                app:fab_size="mini" />
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_white_24dp" />
         </com.github.clans.fab.FloatingActionMenu>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
