@@ -16,7 +16,7 @@ import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFrag
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.user.profile.ProfileFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.friends.FriendsFragment;
+import com.mario.watsontv.ui.dashboard.user.profile.friends.list.FriendsFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity
                 fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, friendsFragment);
                 fragmentChanger.commit();
                 drawer.closeDrawer(GravityCompat.START);
+                return true;
             case R.id.nav_logout:
                 logout();
                 return true;

@@ -20,6 +20,7 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.responses.GenreResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
@@ -249,12 +250,48 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void updateWatched(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listSeries(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void updateWatchlisted(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listSeries(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

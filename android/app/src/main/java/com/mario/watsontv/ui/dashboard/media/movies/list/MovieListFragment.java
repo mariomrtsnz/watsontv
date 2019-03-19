@@ -256,7 +256,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    currentPage = 1;
+                    listMovies(currentPage);
                 }
             }
 
@@ -270,7 +271,25 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
 
     @Override
     public void updateWatchlisted(String id) {
-        Toast.makeText(ctx, id, Toast.LENGTH_LONG).show();
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listMovies(currentPage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

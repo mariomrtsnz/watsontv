@@ -46,4 +46,6 @@
     <string name="profile_stats_genres_label">Favorite Genres</string>
     <string name="profile_menu_collections">Collections</string>
     <string name="users_label">Users</string>
+    <string name="filter">Filter</string>
+    <string name="friends_filter_checkbox">Only My Friends</string>
 </resources>

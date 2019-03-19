@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface UserService {
@@ -15,18 +16,8 @@ public interface UserService {
     String BASE_URL = "/users";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<UserResponse>> listUsers();
+    Call<ResponseContainer<UserResponse>> listUsers(@Query("allUsers") boolean allUsers, @Query("page") int page);
 
-    /**
-     * Call that invokes the whole list of users, but with an additional field which contains
-     * a boolean attribute about if every single user is a friend of us or not
-     *
-     * @return The list of users
-     */
-
-//    @GET(BASE_URL + "/friended")
-//    Call<List<PeopleResponse>> listUsersAndFriended();
-//
 //    @GET(BASE_URL + "/{id}")
 //    Call<MyProfileResponse> getUser(@Path("id") String id);
 
@@ -42,7 +33,6 @@ public interface UserService {
     @PUT(BASE_URL + "/{id}/password")
     Call<UserResponse> editPassword(@Path("id") String id, @Body String password);
 
-    // It should be /me, must do in api first
 //    @DELETE("/users/{id}")
 //    Call<User> deleteUser(@Path("id") Long id);
 //    @Multipart

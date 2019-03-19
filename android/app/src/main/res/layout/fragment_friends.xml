@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.user.profile.friends.FriendsFragment">
+    android:id="@+id/friends_swipeContainer"
+    tools:context=".ui.dashboard.user.profile.friends.list.FriendsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

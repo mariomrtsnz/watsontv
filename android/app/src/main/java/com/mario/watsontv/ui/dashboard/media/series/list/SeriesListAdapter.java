@@ -56,16 +56,26 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         viewHolder.mItem = data.get(i);
-//        if (data.get(i).)
-//            viewHolder.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-        Glide.with(context).load(data.get(i).getCoverImage()).into(viewHolder.coverImage);
-        if (data.get(i).getTitle().length() > 15)
-            viewHolder.title.setText(data.get(i).getTitle().substring(0, 15) + "...");
+        boolean isWatched = viewHolder.mItem.isWatched();
+        boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
+        boolean isCollected = viewHolder.mItem.isCollected();
+        viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
+        viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
+        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
+        if (viewHolder.mItem.getTitle().length() > 15)
+            viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
         else
-            viewHolder.title.setText(data.get(i).getTitle());
-        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId()));
+            viewHolder.title.setText(viewHolder.mItem.getTitle());
+        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
+        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
+
+        viewHolder.check.setOnClickListener(v -> {
+            mListener.updateWatched(viewHolder.mItem.getId());
+        });
         viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId()));
-        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId()));
+        viewHolder.watchlist.setOnClickListener(v -> {
+            mListener.updateWatchlisted(viewHolder.mItem.getId());
+        });
     }
 
     void updateFav(ViewHolder v, MediaResponse p) {
