@@ -36,7 +36,7 @@ public class SeasonFragment extends Fragment implements SeasonListener {
     private SeasonAdapter adapter;
     private ProgressDialog pgDialog;
     private SeasonDetailsResponse season;
-    private TextView seriesTitle, seasonNumber;
+    private TextView seriesTitle, seasonNumber, episodeSeasonNumber;
 
     public SeasonFragment() {}
 
@@ -116,7 +116,7 @@ public class SeasonFragment extends Fragment implements SeasonListener {
     private void setData() {
         seriesTitle.setText(season.getSeries().getTitle());
         seasonNumber.setText(String.valueOf(season.getNumber()));
-        adapter = new SeasonAdapter(ctx, season.getEpisodes(), mListener);
+        adapter = new SeasonAdapter(ctx, season.getEpisodes(), mListener, season.getNumber());
         recycler.setAdapter(adapter);
     }
 }

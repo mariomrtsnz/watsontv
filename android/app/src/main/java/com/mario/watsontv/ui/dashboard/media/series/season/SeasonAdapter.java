@@ -30,12 +30,14 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
     private UserService userService;
     private MediaService mediaService;
     private String jwt;
+    private int seasonNumber;
     Locale locale = Locale.getDefault();
 
-    public SeasonAdapter(Context ctx, List<EpisodeResponse> data, SeasonListener mListener) {
+    public SeasonAdapter(Context ctx, List<EpisodeResponse> data, SeasonListener mListener, int seasonNumber) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
+        this.seasonNumber = seasonNumber;
     }
 
     @NonNull
@@ -54,11 +56,11 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
 //        boolean isCollected = viewHolder.mItem.isCollected();
         viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
         viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
-        if (viewHolder.mItem.getName().length() > 15)
-            viewHolder.title.setText(viewHolder.mItem.getName().substring(0, 15) + "...");
+        if (viewHolder.mItem.getName().length() > 25)
+            viewHolder.title.setText(viewHolder.mItem.getName().substring(0, 25) + "...");
         else
             viewHolder.title.setText(viewHolder.mItem.getName());
-        viewHolder.number.setText("x" + viewHolder.mItem.getNumber());
+        viewHolder.number.setText(seasonNumber + "x" + viewHolder.mItem.getNumber());
         viewHolder.synopsis.setText(viewHolder.mItem.getSynopsis());
         viewHolder.runtime.setText(String.valueOf(viewHolder.mItem.getDuration()) + "mins");
         Calendar airTime = null;
