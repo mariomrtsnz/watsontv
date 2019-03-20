@@ -67,21 +67,17 @@ export const allMediaAndAttributes = ({ querymen: { query, select, cursor }, use
       count,
       rows: media.map(foundMedia => {
         if (user.watched.length != 0) {
-          user.watched.forEach(userWatchedMedia => {
-            if (_.isEqual(userWatchedMedia.toString(), foundMedia.id))
-              foundMedia.set('watched', true)
-            else
-              foundMedia.set('watched', false)
-          });
+          if (user.watched.indexOf(foundMedia.id) != -1)
+            foundMedia.set('watched', true)
+          else
+            foundMedia.set('watched', false)
         } else
             foundMedia.set('watched', false)
         if (user.watchlist.length != 0) {
-          user.watchlist.forEach(userWatchlistedMedia => {
-            if (_.isEqual(userWatchlistedMedia.toString(), foundMedia.id))
-              foundMedia.set('watchlisted', true)
-            else
-              foundMedia.set('watchlisted', false)
-          });
+          if (user.watchlist.indexOf(foundMedia.id) != -1)
+            foundMedia.set('watchlisted', true)
+          else
+            foundMedia.set('watchlisted', false)
         } else
             foundMedia.set('watchlisted', false)
         return foundMedia;

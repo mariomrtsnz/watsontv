@@ -54,7 +54,6 @@ export const destroy = ({ params }, res, next) =>
 
 
 export const allMoviesAndAttributes = ({ querymen: { query, select, cursor }, user }, res, next) => {
-  console.log(user);
   // Collection.find(ownerId: user.id).then(collections => {
 
   // })
@@ -64,21 +63,17 @@ export const allMoviesAndAttributes = ({ querymen: { query, select, cursor }, us
       count,
       rows: media.map(foundMedia => {
         if (user.watched.length != 0) {
-          user.watched.forEach(userWatchedMedia => {
-            if (_.isEqual(userWatchedMedia.toString(), foundMedia.id))
-              foundMedia.set('watched', true)
-            else
-              foundMedia.set('watched', false)
-          });
+          if (user.watched.indexOf(foundMedia.id) != -1)
+            foundMedia.set('watched', true)
+          else
+            foundMedia.set('watched', false)
         } else
             foundMedia.set('watched', false)
         if (user.watchlist.length != 0) {
-          user.watchlist.forEach(userWatchlistedMedia => {
-            if (_.isEqual(userWatchlistedMedia.toString(), foundMedia.id))
-              foundMedia.set('watchlisted', true)
-            else
-              foundMedia.set('watchlisted', false)
-          });
+          if (user.watchlist.indexOf(foundMedia.id) != -1)
+            foundMedia.set('watchlisted', true)
+          else
+            foundMedia.set('watchlisted', false)
         } else
             foundMedia.set('watchlisted', false)
         return foundMedia;

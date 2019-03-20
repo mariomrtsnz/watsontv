@@ -4,12 +4,21 @@ import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { sign } from '../../services/jwt'
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
+export const index = ({ querymen: { query, select, cursor }, user }, res, next) =>
   User.count(query)
     .then(count => User.find(query, select, cursor)
       .then(users => ({
-        rows: users.map((user) => user.view()),
-        count
+        count,
+        rows: users.map((foundUser) => {
+          if (user.friends.length != 0) {
+            if (user.friends.indexOf(foundUser.id) != -1)
+              foundUser.set('isFriend', true)
+            else
+              foundUser.set('isFriend', false)
+          } else
+            foundUser.set('isFriend', false)
+          return foundUser;
+        })
       }))
     )
     .then(success(res))
@@ -107,19 +116,11 @@ export const getTotalWatchedTime = ({ params }, res, next) => {
     .catch(next)
 }
 
-export const allUsersAndFriended = ({ params, user }, res, next) => {
-  User.find().populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
+export const befriended = ({ user }, res, next) => {
+  User.find({'_id': {$in: user.friends}}).populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
     return new Promise(function (res, rej) {
       users.map((foundUser) => {
-        if (user.friends.length != 0) {
-          user.friends.forEach(userFriend => {
-            if (_.isEqual(userFriend.toString(), foundUser.id))
-              foundUser.set('friended', true)
-            else
-              foundUser.set('friended', false)
-          });
-        } else
-            foundUser.set('friended', false)
+        foundUser.set('isFriend', true);
       });
       res(users);
     });
@@ -137,7 +138,6 @@ export const updateWatched = ({params, user}, res, next) => {
     }
     user.watched.push(params.id);
   }
-
   user.save()
   .then(success(res))
   .catch(next)

@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { middleware as query } from 'querymen'
+import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, allUsersAndFriended, updateWatched, updateWatchlisted, editFriended} from './controller'
+import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, indexForAndroid, updateWatched, updateWatchlisted, editFriended} from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
@@ -38,9 +38,10 @@ router.get('/me',
   showMe)
 
 // CUSTOM CALL FOR ANDROID
-router.get('/allAndFriended',
+router.get('/befriended',
   token({ required: true }),
-  allUsersAndFriended)
+  query(),
+  befriended)
 
 /**
  * @api {get} /users/:id Retrieve user
