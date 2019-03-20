@@ -6,6 +6,7 @@ import com.mario.watsontv.responses.ResponseContainer;
 import com.mario.watsontv.responses.UserResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,8 +26,8 @@ public interface UserService {
     @GET(BASE_URL + "/befriended")
     Call<List<UserResponse>> listFriends(@Query("page") int page);
 
-//    @GET(BASE_URL + "/{id}")
-//    Call<MyProfileResponse> getUser(@Path("id") String id);
+    @GET(BASE_URL + "/{id}")
+    Call<UserResponse> getUser(@Path("id") String id);
 
     @GET(BASE_URL + "/{id}")
     Call<UserResponse> getUserResponse(@Path("id") String id);
@@ -58,4 +59,7 @@ public interface UserService {
 
     @GET(BASE_URL + "/myWatchlist")
     Call<List<MediaResponse>> getUserWatchlist();
+
+    @GET(BASE_URL + "/{id}/stats")
+    Call<Map<String, Float>> getUserStats(@Path("id") String id);
 }

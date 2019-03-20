@@ -19,6 +19,7 @@ import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.user.friends.detail.UserDetailsFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -237,7 +238,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.code() != 200) {
+                if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     if (allUsers) listUsers(currentPage); else listFriends(currentPage);
@@ -254,6 +255,10 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     @Override
     public void goToUserDetails(String id) {
-        
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedUserId", id);
+        userDetailsFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, userDetailsFragment).commit();
     }
 }

@@ -54,7 +54,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         else
             viewHolder.befriend.setImageResource(R.drawable.fab_add);
         viewHolder.befriend.setOnClickListener(v -> mListener.updateFriend(viewHolder.mItem.get_Id()));
-        viewHolder.mView.setOnClickListener(v -> mListener.goToUserDetails(viewHolder.mItem.get_Id()));
+        if (!viewHolder.mItem.get_Id().equals(UtilToken.getId(context)))
+            viewHolder.mView.setOnClickListener(v -> mListener.goToUserDetails(viewHolder.mItem.get_Id()));
     }
     @Override
     public int getItemCount() { return data.size(); }
@@ -71,7 +72,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             super(itemView);
             mView = itemView;
             username = itemView.findViewById(R.id.item_user_card_username);
-            profilePic = itemView.findViewById(R.id.item_user_card_profilePic);
+            profilePic = itemView.findViewById(R.id.user_details_civ_profilePic);
             befriend = itemView.findViewById(R.id.item_user_card_fab_add);
         }
     }

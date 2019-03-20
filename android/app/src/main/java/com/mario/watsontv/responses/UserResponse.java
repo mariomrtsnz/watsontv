@@ -1,5 +1,8 @@
 package com.mario.watsontv.responses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class UserResponse {
@@ -9,6 +12,8 @@ public class UserResponse {
     private String name;
     private String role;
     private String picture;
+    private String createdAt;
+    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
     private List<String> watchlist;
     private List<String> watched;
     private List<String> likes;
@@ -101,6 +106,20 @@ public class UserResponse {
 
     public void setFriend(boolean friend) {
         isFriend = friend;
+    }
+
+    public Calendar getCreatedAt() throws ParseException {
+        Calendar cal = null;
+
+        if (createdAt != null) {
+            cal = Calendar.getInstance();
+            cal.setTime(myFormat.parse(createdAt));
+        }
+        return cal;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

@@ -71,8 +71,8 @@ public class ProfileFragment extends Fragment implements ProfileListener{
         // Inflate the layout for this fragment
         Objects.requireNonNull(getActivity()).setTitle("Profile");
         View layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        profilePic = layout.findViewById(R.id.item_user_card_profilePic);
-        username = layout.findViewById(R.id.profile_username);
+        profilePic = layout.findViewById(R.id.user_details_civ_profilePic);
+        username = layout.findViewById(R.id.user_details_tv_username);
         Glide.with(this).load(UtilToken.getProfilePic(ctx)).into(profilePic);
         username.setText(UtilToken.getName(ctx));
         collections = layout.findViewById(R.id.profile_card_collections);
