@@ -3,7 +3,7 @@ package com.mario.watsontv.responses;
 import java.util.List;
 
 public class UserResponse {
-    private String id;
+    private String _id;
     private String email;
     private String password;
     private String name;
@@ -15,12 +15,12 @@ public class UserResponse {
     private List<String> friends;
     private boolean isFriend;
 
-    public String getId() {
-        return id;
+    public String get_Id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_Id(String _id) {
+        this._id = _id;
     }
 
     public String getEmail() {
@@ -106,7 +106,7 @@ public class UserResponse {
     @Override
     public String toString() {
         return "UserResponse{" +
-                "_id='" + id + '\'' +
+                "_id='" + _id + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +

@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.user.profile.friends.list;
+package com.mario.watsontv.ui.dashboard.user.friends.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -47,13 +47,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         boolean isFriend = viewHolder.mItem.isFriend();
         Glide.with(context).load(viewHolder.mItem.getPicture()).into(viewHolder.profilePic);
         viewHolder.username.setText(viewHolder.mItem.getName());
+        if (viewHolder.mItem.get_Id().equals(UtilToken.getId(context)))
+            viewHolder.befriend.setVisibility(View.GONE);
         if (isFriend)
-            viewHolder.befriend.setImageResource(R.drawable.ic_close_white_24dp);
+            viewHolder.befriend.setImageResource(R.drawable.ic_remove_24dp);
         else
             viewHolder.befriend.setImageResource(R.drawable.fab_add);
-        viewHolder.befriend.setOnClickListener(v -> {
-            mListener.updateFriend(viewHolder.mItem.getId());
-        });
+        viewHolder.befriend.setOnClickListener(v -> mListener.updateFriend(viewHolder.mItem.get_Id()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToUserDetails(viewHolder.mItem.get_Id()));
     }
     @Override
     public int getItemCount() { return data.size(); }

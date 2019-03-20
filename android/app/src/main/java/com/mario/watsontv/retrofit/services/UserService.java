@@ -1,5 +1,7 @@
 package com.mario.watsontv.retrofit.services;
 
+import com.mario.watsontv.responses.CollectionResponse;
+import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
 import com.mario.watsontv.responses.UserResponse;
 
@@ -53,4 +55,7 @@ public interface UserService {
 
     @PUT(BASE_URL + "/updateFriended/{id}")
     Call<UserResponse> updateFriended(@Path("id") String id);
+
+    @GET(BASE_URL + "/myWatchlist")
+    Call<List<MediaResponse>> getUserWatchlist();
 }

@@ -36,6 +36,7 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.CollectionService;
 import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
+import com.mario.watsontv.ui.dashboard.media.collections.detail.CollectionFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.io.Serializable;
@@ -217,7 +218,11 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
     }
 
     @Override
-    public void goToDetails(String collectionId) {
-        Toast.makeText(ctx, "Adios", Toast.LENGTH_LONG).show();
+    public void goToDetails(CollectionResponse collection) {
+        CollectionFragment collectionDetailFragment = new CollectionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("selectedCollection", collection);
+        collectionDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, collectionDetailFragment).addToBackStack(null).commit();
     }
 }

@@ -47,12 +47,11 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code() != 201) {
-                    // error
+                if (!response.isSuccessful()) {
                     Log.e("Request Error", response.message());
                     Toast.makeText(getApplicationContext(), "Error trying to login", Toast.LENGTH_SHORT).show();
+                    pgDialog.dismiss();
                 } else {
-                    // exito
                     UtilToken.setToken(getApplicationContext(), response.body().getToken());
                     System.out.println(response.body().getUser().getId());
                     UtilToken.setId(getApplicationContext(), response.body().getUser().getId());
@@ -86,7 +85,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.code() != 201) {
+                if (!response.isSuccessful()) {
                     Log.e("Request Error", response.message());
                     Toast.makeText(getApplicationContext(), "Error trying to register", Toast.LENGTH_SHORT).show();
                 } else {

@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.user.profile.stats;
+package com.mario.watsontv.ui.dashboard.user.stats;
 
 import androidx.appcompat.app.AppCompatActivity;
 import lecho.lib.hellocharts.model.PieChartData;

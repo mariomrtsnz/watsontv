@@ -17,9 +17,9 @@ import com.bumptech.glide.Glide;
 import com.mario.watsontv.R;
 import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.friends.list.FriendsFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.settings.SettingsFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.stats.StatsActivity;
+import com.mario.watsontv.ui.dashboard.user.friends.list.FriendsFragment;
+import com.mario.watsontv.ui.dashboard.user.settings.SettingsFragment;
+import com.mario.watsontv.ui.dashboard.user.stats.StatsActivity;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.Objects;

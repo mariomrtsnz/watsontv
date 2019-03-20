@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.dashboard.user.profile.stats.StatsActivity"
+        <activity android:name=".ui.dashboard.user.stats.StatsActivity"
             android:parentActivityName=".ui.dashboard.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/stats_label"></activity>

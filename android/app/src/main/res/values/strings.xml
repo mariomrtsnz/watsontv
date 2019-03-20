@@ -57,4 +57,5 @@
     <string name="empty_seasons_label">No Seasons added yet</string>
     <string name="media_detail_broadcaster">on</string>
     <string name="not_yet_released">Unreleased</string>
+    <string name="empty_list_label">No Media yet</string>
 </resources>

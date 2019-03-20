@@ -23,6 +23,7 @@ public class MediaResponse {
     boolean watched;
     boolean watchlisted;
     boolean collected;
+    String __t;
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
     public String getId() {
@@ -133,8 +134,12 @@ public class MediaResponse {
     }
 
     public Calendar getReleaseDate() throws ParseException {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(myFormat.parse(releaseDate));
+        Calendar cal = null;
+
+        if (releaseDate != null) {
+            cal = Calendar.getInstance();
+            cal.setTime(myFormat.parse(releaseDate));
+        }
         return cal;
     }
 
@@ -172,5 +177,13 @@ public class MediaResponse {
 
     public void setCollected(boolean collected) {
         this.collected = collected;
+    }
+
+    public String get__t() {
+        return __t;
+    }
+
+    public void set__t(String __t) {
+        this.__t = __t;
     }
 }

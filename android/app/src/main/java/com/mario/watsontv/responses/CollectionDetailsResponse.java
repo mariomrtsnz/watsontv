@@ -1,13 +1,12 @@
 package com.mario.watsontv.responses;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class CollectionResponse implements Serializable {
+public class CollectionDetailsResponse {
     String id;
     String name;
     String description;
-    List<String> collected;
+    List<MediaResponse> collected;
 
     public String getId() {
         return id;
@@ -33,11 +32,11 @@ public class CollectionResponse implements Serializable {
         this.description = description;
     }
 
-    public List<String> getCollected() {
+    public List<MediaResponse> getCollected() {
         return collected;
     }
 
-    public void setCollected(List<String> collected) {
+    public void setCollected(List<MediaResponse> collected) {
         this.collected = collected;
     }
 }

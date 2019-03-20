@@ -27,9 +27,9 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.MediaListAdapter;
 import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
-import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.MediaListListener;
 import com.mario.watsontv.ui.dashboard.media.series.detail.SeriesDetailFragment;
 import com.mario.watsontv.util.UtilToken;
 
@@ -42,7 +42,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
@@ -56,7 +55,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     MediaService service;
     UserService userService;
     List<MediaResponse> items;
-    SeriesListAdapter adapter;
+    MediaListAdapter adapter;
     SwipeRefreshLayout swipeLayout;
     RecyclerView recycler;
     Spinner spinner;
@@ -138,7 +137,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                         items = response.body().getRows();
                     } else
                         items.addAll(response.body().getRows());
-                    adapter = new SeriesListAdapter(ctx, items, mListener);
+                    adapter = new MediaListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
                 }
             }
@@ -205,7 +204,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             pgDialog.setCancelable(false);
             pgDialog.setTitle("Loading data");
             pgDialog.show();
-            adapter = new SeriesListAdapter(ctx, items, mListener);
+            adapter = new MediaListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
             recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -309,7 +308,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     }
 
     @Override
-    public void goToDetail(String id) {
+    public void goToDetail(String id, String mediaType) {
         SeriesDetailFragment movieDetailFragment = new SeriesDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString("mediaId", id);

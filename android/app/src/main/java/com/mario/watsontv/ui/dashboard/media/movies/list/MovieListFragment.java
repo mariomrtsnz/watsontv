@@ -26,8 +26,9 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.MediaListAdapter;
 import com.mario.watsontv.ui.dashboard.media.movies.detail.MovieDetailFragment;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     MediaService service;
     UserService userService;
     List<MediaResponse> items;
-    MovieListAdapter adapter;
+    MediaListAdapter adapter;
     SwipeRefreshLayout swipeLayout;
     RecyclerView recycler;
     Spinner spinner;
@@ -134,7 +135,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
                         items = response.body().getRows();
                     } else
                         items.addAll(response.body().getRows());
-                    adapter = new MovieListAdapter(ctx, items, mListener);
+                    adapter = new MediaListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
                 }
             }
@@ -201,7 +202,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
             pgDialog.setCancelable(false);
             pgDialog.setTitle("Loading data");
             pgDialog.show();
-            adapter = new MovieListAdapter(ctx, items, mListener);
+            adapter = new MediaListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
             recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -299,7 +300,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     }
 
     @Override
-    public void goToDetail(String id) {
+    public void goToDetail(String id, String mediaType) {
         MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString("mediaId", id);

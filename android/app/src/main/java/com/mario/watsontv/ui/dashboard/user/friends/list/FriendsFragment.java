@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.user.profile.friends.list;
+package com.mario.watsontv.ui.dashboard.user.friends.list;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -232,6 +232,28 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     @Override
     public void updateFriend(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateFriended(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (allUsers) listUsers(currentPage); else listFriends(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void goToUserDetails(String id) {
+        
     }
 }

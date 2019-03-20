@@ -12,11 +12,9 @@ import com.bumptech.glide.Glide;
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.UserResponse;
-import com.mario.watsontv.retrofit.generator.AuthType;
-import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
@@ -52,31 +50,30 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         viewHolder.mItem = data.get(i);
-
         boolean isWatched = viewHolder.mItem.isWatched();
         boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
-        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
+        boolean isCollected = viewHolder.mItem.isCollected();
 
+        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
         viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
         viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
-
-        if (viewHolder.mItem.getTitle().length() > 15)
-            viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
-        else
-            viewHolder.title.setText(viewHolder.mItem.getTitle());
+        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
+        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
+        if (viewHolder.mItem.getTitle().length() > 15) viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
+        else viewHolder.title.setText(viewHolder.mItem.getTitle());
 
         try {
-            viewHolder.releaseDate.setText(String.valueOf(viewHolder.mItem.getReleaseDate().get(Calendar.YEAR)));
+            if (viewHolder.mItem.getReleaseDate() != null) {
+                viewHolder.releaseDate.setText(String.valueOf(viewHolder.mItem.getReleaseDate().get(Calendar.YEAR)));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
-        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
 
         viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId()));
         viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId()));
         viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId()));
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId(), viewHolder.mItem.getMediaType()));
     }
 
     @Override

@@ -39,8 +39,12 @@ public class EpisodeResponse {
     }
 
     public Calendar getAirTime() throws ParseException {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(myFormat.parse(airTime));
+        Calendar cal = null;
+
+        if (airTime != null) {
+            cal = Calendar.getInstance();
+            cal.setTime(myFormat.parse(airTime));
+        }
         return cal;
     }
 

@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.media.series.list;
+package com.mario.watsontv.ui.dashboard.media;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.MediaResponse;
-import com.mario.watsontv.responses.UserResponse;
-import com.mario.watsontv.retrofit.services.MediaService;
-import com.mario.watsontv.retrofit.services.UserService;
-import com.mario.watsontv.ui.dashboard.media.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
@@ -24,16 +20,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.ViewHolder>{
+public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.ViewHolder> {
     private final MediaListListener mListener;
-    UserResponse user;
     private List<MediaResponse> data;
     private Context context;
-    private UserService userService;
-    private MediaService mediaService;
     private String jwt;
 
-    public SeriesListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
+    public MediaListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
@@ -77,7 +70,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         viewHolder.watchlist.setOnClickListener(v -> {
             mListener.updateWatchlisted(viewHolder.mItem.getId());
         });
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId(), viewHolder.mItem.getMediaType()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId(), viewHolder.mItem.get__t()));
     }
 
     @Override

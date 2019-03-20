@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.user.profile.settings;
+package com.mario.watsontv.ui.dashboard.user.settings;
 
 import android.content.Context;
 import android.net.Uri;

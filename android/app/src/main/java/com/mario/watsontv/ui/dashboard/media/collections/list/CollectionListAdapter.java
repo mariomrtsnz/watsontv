@@ -56,7 +56,7 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
         else
             viewHolder.description.setText(viewHolder.mItem.getDescription());
         viewHolder.delete.setOnClickListener(v -> mListener.delete(viewHolder.mItem.getId()));
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(viewHolder.mItem));
     }
 
     @Override
