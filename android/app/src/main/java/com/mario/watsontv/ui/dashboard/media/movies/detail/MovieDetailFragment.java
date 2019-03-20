@@ -125,7 +125,7 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
         }
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
         tvTitle.setText(media.getTitle());
-        tvRuntime.setText(String.valueOf(media.getRuntime()));
+        tvRuntime.setText(String.valueOf(media.getRuntime()) + "mins");
         tvSynopsis.setText(media.getSynopsis());
         tvRatings.setText(String.valueOf(media.getRating().length));
         ratingBar.setRating(media.getTotalRating());
