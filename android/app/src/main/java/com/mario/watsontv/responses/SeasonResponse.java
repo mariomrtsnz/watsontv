@@ -3,8 +3,17 @@ package com.mario.watsontv.responses;
 import java.util.List;
 
 public class SeasonResponse {
+    String id;
     int number;
-    List<EpisodeResponse> episodes;
+    List<String> episodes;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getNumber() {
         return number;
@@ -14,11 +23,11 @@ public class SeasonResponse {
         this.number = number;
     }
 
-    public List<EpisodeResponse> getEpisodes() {
+    public List<String> getEpisodes() {
         return episodes;
     }
 
-    public void setEpisodes(List<EpisodeResponse> episodes) {
+    public void setEpisodes(List<String> episodes) {
         this.episodes = episodes;
     }
 }

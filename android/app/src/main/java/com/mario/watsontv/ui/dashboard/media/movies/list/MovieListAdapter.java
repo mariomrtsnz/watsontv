@@ -52,62 +52,31 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         viewHolder.mItem = data.get(i);
-//        if (data.get(i).)
-//            viewHolder.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-        Glide.with(context).load(data.get(i).getCoverImage()).into(viewHolder.coverImage);
-        if (data.get(i).getTitle().length() > 15)
-            viewHolder.title.setText(data.get(i).getTitle().substring(0, 15) + "...");
+
+        boolean isWatched = viewHolder.mItem.isWatched();
+        boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
+        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
+
+        viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
+        viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
+
+        if (viewHolder.mItem.getTitle().length() > 15)
+            viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
         else
-            viewHolder.title.setText(data.get(i).getTitle());
+            viewHolder.title.setText(viewHolder.mItem.getTitle());
+
         try {
-            viewHolder.releaseDate.setText(String.valueOf(data.get(i).getReleaseDate().get(Calendar.YEAR)));
+            viewHolder.releaseDate.setText(String.valueOf(viewHolder.mItem.getReleaseDate().get(Calendar.YEAR)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId(), viewHolder.mItem.isWatched()));
-        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId(), viewHolder.mItem.isWatchlisted()));
-    }
+        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
+        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
 
-    void updateFav(ViewHolder v, MediaResponse p) {
-        mediaService = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
-//        if (v.isChecked) {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-//                        v.isFav = false;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        } else {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-//                        v.isFav = true;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+        viewHolder.check.setOnClickListener(v -> mListener.updateWatched(viewHolder.mItem.getId()));
+        viewHolder.collection.setOnClickListener(v -> mListener.updateCollected(viewHolder.mItem.getId()));
+        viewHolder.watchlist.setOnClickListener(v -> mListener.updateWatchlisted(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
     }
 
     @Override
@@ -137,6 +106,5 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             collection = itemView.findViewById(R.id.item_media_card_ib_collect);
             watchlist = itemView.findViewById(R.id.item_media_card_ib_watchlist);
         }
-
     }
 }

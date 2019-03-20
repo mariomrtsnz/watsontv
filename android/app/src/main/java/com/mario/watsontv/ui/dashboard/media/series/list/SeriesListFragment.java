@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard.media.series.list;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,12 +21,16 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.responses.GenreResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
+import com.mario.watsontv.ui.dashboard.media.collections.create.CreateCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.series.detail.SeriesDetailFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -126,7 +131,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     totalItems = (int) response.body().getCount();
-                    maxPage = (int) (response.body().getCount()/maxItemsInPage);
+                    maxPage = totalItems/maxItemsInPage;
                     pgDialog.dismiss();
                     if (page == 1) {
                         items.clear();
@@ -202,7 +207,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             pgDialog.show();
             adapter = new SeriesListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
-            recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
@@ -214,9 +219,6 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
 
-                    System.out.println(gridLayoutManager.findFirstVisibleItemPosition());
-                    System.out.println(items.size());
-                    System.out.println(totalItems);
                     if (isScrolling && currentPage <= maxPage && gridLayoutManager.findFirstVisibleItemPosition() + items.size() >= totalItems) {
                         currentPage++;
                         isScrolling = false;
@@ -251,17 +253,67 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     }
 
     @Override
-    public void updateWatched(String id, boolean watched) {
+    public void updateWatched(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listSeries(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void updateWatchlisted(String id, boolean watchlisted) {
+    public void updateWatchlisted(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listSeries(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void updateCollected(String id, boolean collected) {
+    public void updateCollected(String id) {
+        AddToCollectionDialog addToCollectionDialog = new AddToCollectionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        addToCollectionDialog.setArguments(bundle);
+        addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+        addToCollectionDialog.show(getFragmentManager(), "create dialog");
+    }
 
+    @Override
+    public void goToDetail(String id) {
+        SeriesDetailFragment movieDetailFragment = new SeriesDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        movieDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, movieDetailFragment).addToBackStack(null).commit();
     }
 }

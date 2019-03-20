@@ -47,61 +47,16 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         viewHolder.mItem = data.get(i);
-//        if (data.get(i).)
-//            viewHolder.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-        if (data.get(i).getName().length() > 15)
-            viewHolder.name.setText(data.get(i).getName().substring(0, 15) + "...");
+        if (viewHolder.mItem.getName().length() > 15)
+            viewHolder.name.setText(viewHolder.mItem.getName().substring(0, 15) + "...");
         else
-            viewHolder.name.setText(data.get(i).getName());
-        if (data.get(i).getDescription().length() > 100)
-            viewHolder.description.setText(data.get(i).getDescription().substring(0, 100) + "...");
+            viewHolder.name.setText(viewHolder.mItem.getName());
+        if (viewHolder.mItem.getDescription().length() > 100)
+            viewHolder.description.setText(viewHolder.mItem.getDescription().substring(0, 100) + "...");
         else
-            viewHolder.description.setText(data.get(i).getDescription());
-//        viewHolder.fav.setOnClickListener(v -> updateFav(viewHolder, data.get(i)));
-//        viewHolder.mView.setOnClickListener(v -> mListener.onPropertyClick(v, viewHolder.mItem));
-        viewHolder.delete.setOnClickListener(v -> mListener.delete(data.get(i).getId()));
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(data.get(i).getId()));
-    }
-
-    void updateFav(ViewHolder v, CollectionResponse p) {
-        collectionService = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
-//        if (v.isChecked) {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-//                        v.isFav = false;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        } else {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-//                        v.isFav = true;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+            viewHolder.description.setText(viewHolder.mItem.getDescription());
+        viewHolder.delete.setOnClickListener(v -> mListener.delete(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(viewHolder.mItem.getId()));
     }
 
     @Override
@@ -122,6 +77,5 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
             description = itemView.findViewById(R.id.item_collection_card_description);
             delete = itemView.findViewById(R.id.item_collection_card_ib_delete);
         }
-
     }
 }

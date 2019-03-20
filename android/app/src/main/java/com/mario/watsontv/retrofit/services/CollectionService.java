@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface CollectionService {
@@ -27,4 +28,10 @@ public interface CollectionService {
 
     @DELETE(BASE_URL + "/{id}")
     Call<CollectionResponse> delete(@Path("id") String id);
+
+    @PUT(BASE_URL + "/{id}")
+    Call<CollectionResponse> edit(@Path("id") String id);
+
+    @PUT(BASE_URL + "/add/{id}")
+    Call<CollectionResponse> addToCollections(@Body List<String> collectionsId, @Path("id") String mediaId);
 }

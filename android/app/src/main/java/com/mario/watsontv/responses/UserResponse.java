@@ -9,6 +9,11 @@ public class UserResponse {
     private String name;
     private String role;
     private String picture;
+    private List<String> watchlist;
+    private List<String> watched;
+    private List<String> likes;
+    private List<String> friends;
+    private boolean isFriend;
 
     public String getId() {
         return id;
@@ -56,6 +61,46 @@ public class UserResponse {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public List<String> getWatchlist() {
+        return watchlist;
+    }
+
+    public void setWatchlist(List<String> watchlist) {
+        this.watchlist = watchlist;
+    }
+
+    public List<String> getWatched() {
+        return watched;
+    }
+
+    public void setWatched(List<String> watched) {
+        this.watched = watched;
+    }
+
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<String> likes) {
+        this.likes = likes;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 
     @Override

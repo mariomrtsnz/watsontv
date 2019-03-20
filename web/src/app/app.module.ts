@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { MaterialModule } from './material-module';
 import { routes } from './app-routing.module';
@@ -51,6 +52,7 @@ import { DialogAddCastComponent } from './dialogs/dialog-add-cast/dialog-add-cas
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule,
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogGenreComponent,

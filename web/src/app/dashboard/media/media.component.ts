@@ -1,3 +1,4 @@
+import { ResponseContainer } from './../../interfaces/response-container';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Title } from '@angular/platform-browser';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -14,19 +15,22 @@ import { DialogMediaTypeComponent } from 'src/app/dialogs/dialog-media-type/dial
   styleUrls: ['./media.component.scss']
 })
 export class MediaComponent implements OnInit {
-  media: OneMediaResponse[];
+  media: ResponseContainer<OneMediaResponse>;
   alertMsg: string;
+  onlyMovies = false;
+  p = 1;
 
   constructor(private mediaService: MediaService, public dialog: MatDialog,
     public router: Router, public snackBar: MatSnackBar, private titleService: Title, public authService: AuthenticationService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Media');
-    this.getAll('Success retrieving items');
+    this.getAll(this.p);
   }
 
-  getAll(alerMsg: string) {
-    this.mediaService.getAll().subscribe(receivedMedia => this.media = receivedMedia.rows,
+  getAll(page: number) {
+    this.p = page;
+    this.mediaService.getAll(page).subscribe(receivedMedia => this.media = receivedMedia,
       err => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
 
@@ -53,7 +57,7 @@ export class MediaComponent implements OnInit {
       deleteMediaDialog.afterClosed().subscribe(result => {
         if (result === 'confirm') {
           this.alertMsg = 'Genre deleted';
-          this.getAll(this.alertMsg);
+          this.getAll(this.p);
         }
       });
   }

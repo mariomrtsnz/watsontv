@@ -20,11 +20,13 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.responses.GenreResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.movies.detail.MovieDetailFragment;
 import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
@@ -63,6 +65,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     int currentPage = 1;
     int maxPage;
     int maxItemsInPage = 30;
+    int totalItems;
     private MediaListListener mListener;
 
     @Override
@@ -123,7 +126,8 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    maxPage = (int) (response.body().getCount()/maxItemsInPage);
+                    totalItems = (int) response.body().getCount();
+                    maxPage = totalItems/maxItemsInPage;
                     pgDialog.dismiss();
                     if (page == 1) {
                         items.clear();
@@ -189,8 +193,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
         if (layout instanceof SwipeRefreshLayout) {
             ctx = layout.getContext();
             recycler = layout.findViewById(R.id.media_recyclerview);
-            GridLayoutManager gridLayoutManager = null;
-            gridLayoutManager = new GridLayoutManager(ctx, mColumnCount);
+            final GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, mColumnCount);
             recycler.setLayoutManager(gridLayoutManager);
             items = new ArrayList<>();
             pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
@@ -200,7 +203,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
             pgDialog.show();
             adapter = new MovieListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
-            recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
@@ -211,7 +214,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    if (isScrolling && currentPage <= maxPage) {
+                    if (isScrolling && currentPage <= maxPage && gridLayoutManager.findFirstVisibleItemPosition() + items.size() >= totalItems) {
                         currentPage++;
                         isScrolling = false;
                         listMovies(currentPage);
@@ -245,17 +248,62 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
     }
 
     @Override
-    public void updateWatched(String id, boolean watched) {
-        Toast.makeText(ctx, id, Toast.LENGTH_LONG).show();
+    public void updateWatched(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listMovies(currentPage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void updateWatchlisted(String id, boolean watchlisted) {
-        Toast.makeText(ctx, id, Toast.LENGTH_LONG).show();
+    public void updateWatchlisted(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentPage = 1;
+                    listMovies(currentPage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
-    public void updateCollected(String id, boolean collected) {
+    public void updateCollected(String id) {
 
+    }
+
+    @Override
+    public void goToDetail(String id) {
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        movieDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, movieDetailFragment).addToBackStack(null).commit();
     }
 }

@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.auth;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
     }
 
     @Override
-    public void onLoginSubmit(String credentials) {
+    public void onLoginSubmit(String credentials, ProgressDialog pgDialog) {
         LoginService service = ServiceGenerator.createService(LoginService.class);
         Call<LoginResponse> call = service.doLogin(credentials);
 
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
                     System.out.println(response.body().getUser().getId());
                     UtilToken.setId(getApplicationContext(), response.body().getUser().getId());
                     UtilToken.setUserLoggedData(getApplicationContext(), response.body().getUser());
+                    pgDialog.dismiss();
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
@@ -65,6 +67,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginListener, 
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getApplicationContext(), "Error. Can't connect to server", Toast.LENGTH_SHORT).show();
+                pgDialog.dismiss();
             }
         });
     }

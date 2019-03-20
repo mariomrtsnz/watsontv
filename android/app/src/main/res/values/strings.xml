@@ -45,4 +45,16 @@
     <string name="profile_stats_movies_label">Watched Movies</string>
     <string name="profile_stats_genres_label">Favorite Genres</string>
     <string name="profile_menu_collections">Collections</string>
+    <string name="users_label">Users</string>
+    <string name="filter">Filter</string>
+    <string name="friends_filter_checkbox">Only My Friends</string>
+    <string name="media_detail_runningTime">Running Time:</string>
+    <string name="media_detail_synopsis_label">Synopsis</string>
+    <string name="media_detail_cast_label">Cast</string>
+    <string name="media_detail_released_label">Released:</string>
+    <string name="media_detail_seasons_label">Seasons</string>
+    <string name="empty_cast_label">No Cast added yet</string>
+    <string name="empty_seasons_label">No Seasons added yet</string>
+    <string name="media_detail_broadcaster">on</string>
+    <string name="not_yet_released">Unreleased</string>
 </resources>
