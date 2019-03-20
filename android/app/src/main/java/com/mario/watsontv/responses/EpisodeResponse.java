@@ -1,14 +1,18 @@
 package com.mario.watsontv.responses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 public class EpisodeResponse {
     String id;
     String name;
     String synopsis;
-    LocalDateTime airTime;
     int duration;
     int number;
+    String airTime;
+    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
     public String getId() {
         return id;
@@ -34,11 +38,13 @@ public class EpisodeResponse {
         this.synopsis = synopsis;
     }
 
-    public LocalDateTime getAirTime() {
-        return airTime;
+    public Calendar getAirTime() throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(myFormat.parse(airTime));
+        return cal;
     }
 
-    public void setAirTime(LocalDateTime airTime) {
+    public void setAirTime(String airTime) {
         this.airTime = airTime;
     }
 

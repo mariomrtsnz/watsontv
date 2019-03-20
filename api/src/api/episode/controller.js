@@ -1,8 +1,9 @@
 import { success, notFound } from '../../services/response/'
 import { Episode } from '.'
 import { Season } from '../season'
+import { Series } from '../series'
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
   Episode.create(body)
   .then((episode) => {
     episode.view(true);
@@ -10,10 +11,19 @@ export const create = ({ bodymen: { body } }, res, next) =>
       { _id: episode.season },
       { $push: {episodes: episode } },
       {new: true})
-      .then(success(res, 200)).catch(next);
+      .then(season => {
+        Series.findOne({ _id: season.series }).then(foundMedia => {
+          if (foundMedia.releaseDate === undefined) {
+            foundMedia.releaseDate = episode.airTime;
+            foundMedia.save().then(success(res, 200)).catch(next);
+          }
+          return foundMedia;
+        }).then(success(res, 200)).catch(next);
+      }).then(success(res, 200)).catch(next);
   })
-    .then(success(res, 201))
-    .catch(next)
+  .then(success(res, 201))
+  .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Episode.count(query)
@@ -51,6 +61,7 @@ export const destroy = ({ params }, res, next) =>
         { new: true })
         .then(success(res, 200)).catch(next);
       episode ? episode.remove() : null
+      return null;
     })
     .then(success(res, 204))
     .catch(next)

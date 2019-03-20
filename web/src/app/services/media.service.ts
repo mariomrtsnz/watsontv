@@ -23,8 +23,8 @@ export class MediaService {
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  getAll(): Observable<ResponseContainer<OneMediaResponse>> {
-    return this.http.get<ResponseContainer<OneMediaResponse>>(`${mediaUrl}${this.token}`);
+  getAll(p: number): Observable<ResponseContainer<OneMediaResponse>> {
+    return this.http.get<ResponseContainer<OneMediaResponse>>(`${mediaUrl}${this.token}&page=${p}`);
   }
 
   addCastMember(actorId: string): any {

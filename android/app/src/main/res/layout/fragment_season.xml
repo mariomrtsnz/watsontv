@@ -45,7 +45,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/season_detail_tv_seasonNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -59,14 +59,11 @@
         android:id="@+id/season_detail_episodeRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        tools:listitem="@layout/item_episode_card"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+        tools:listitem="@layout/item_episode_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

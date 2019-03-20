@@ -14,7 +14,10 @@ import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.util.UtilToken;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +30,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
     private UserService userService;
     private MediaService mediaService;
     private String jwt;
+    Locale locale = Locale.getDefault();
 
     public SeasonAdapter(Context ctx, List<EpisodeResponse> data, SeasonListener mListener) {
         this.data = data;
@@ -54,9 +58,19 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
             viewHolder.title.setText(viewHolder.mItem.getName().substring(0, 15) + "...");
         else
             viewHolder.title.setText(viewHolder.mItem.getName());
-        viewHolder.number.setText("x" + viewHolder.mItem.getNumber() + "mins");
+        viewHolder.number.setText("x" + viewHolder.mItem.getNumber());
         viewHolder.synopsis.setText(viewHolder.mItem.getSynopsis());
-        viewHolder.runtime.setText(String.valueOf(viewHolder.mItem.getDuration()));
+        viewHolder.runtime.setText(String.valueOf(viewHolder.mItem.getDuration()) + "mins");
+        Calendar airTime = null;
+        try {
+            airTime = viewHolder.mItem.getAirTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String day = String.valueOf(airTime.get(Calendar.DAY_OF_MONTH));
+        String month = airTime.getDisplayName(Calendar.MONTH, Calendar.LONG, locale);
+        String year = String.valueOf(airTime.get(Calendar.YEAR));
+        viewHolder.releaseDate.setText(month + " " + day + ", " + year);
 //        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
 //        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
 

@@ -1,5 +1,8 @@
 <div fxLayout="row wrap">
-  <mat-card *ngFor="let m of media" class="poi-card">
+    <pagination-controls (pageChange)="getAll($event)"></pagination-controls>
+</div>
+<div fxLayout="row wrap">
+  <mat-card *ngFor="let m of media.rows | paginate: { itemsPerPage: 30, currentPage: p, totalItems: media.count }" class="poi-card">
     <mat-card-header (click)="openMediaDetails(m)">
       <mat-card-title>{{m.title}}</mat-card-title>
       <mat-card-subtitle>{{m.mediaType}}</mat-card-subtitle>

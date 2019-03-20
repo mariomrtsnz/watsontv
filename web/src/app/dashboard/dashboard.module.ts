@@ -16,6 +16,7 @@ import { CollectionComponent } from './collection/collection.component';
 import { MediaDetailComponent } from './media-detail/media-detail.component';
 import { MediaFormComponent } from './media-form/media-form.component';
 import { EpisodesComponent } from './episodes/episodes.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { EpisodesComponent } from './episodes/episodes.component';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     RouterModule.forChild(DashboardRoutes),
   ],
   declarations: [

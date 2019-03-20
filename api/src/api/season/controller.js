@@ -29,7 +29,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Season.findById(params.id)
+  Season.findById(params.id).populate('episodes').populate('series', 'title')
     .then(notFound(res))
     .then((season) => season ? season.view() : null)
     .then(success(res))
@@ -54,6 +54,7 @@ export const destroy = ({ params }, res, next) =>
         .then(success(res, 200)).catch(next);
       Episode.deleteMany({season: params.id}).then(success(res, 204)).catch(next);
       season ? season.remove() : null
+      return null;
     })
     .then(success(res, 204))
     .catch(next)

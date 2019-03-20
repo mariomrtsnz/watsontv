@@ -2,10 +2,11 @@ package com.mario.watsontv.responses;
 
 import java.util.List;
 
-public class SeasonResponse {
+public class SeasonDetailsResponse {
     String id;
+    MediaResponse series;
     int number;
-    List<String> episodes;
+    List<EpisodeResponse> episodes;
 
     public String getId() {
         return id;
@@ -13,6 +14,14 @@ public class SeasonResponse {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public MediaResponse getSeries() {
+        return series;
+    }
+
+    public void setSeries(MediaResponse series) {
+        this.series = series;
     }
 
     public int getNumber() {
@@ -23,11 +32,11 @@ public class SeasonResponse {
         this.number = number;
     }
 
-    public List<String> getEpisodes() {
+    public List<EpisodeResponse> getEpisodes() {
         return episodes;
     }
 
-    public void setEpisodes(List<String> episodes) {
+    public void setEpisodes(List<EpisodeResponse> episodes) {
         this.episodes = episodes;
     }
 }

@@ -27,6 +27,7 @@ import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Locale;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -45,7 +46,7 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
 
     private String mediaId, jwt;
     private Context ctx;
-    private TextView tvTitle, tvReleaseDate, tvRuntime, tvSynopsis, tvRatings, tvEmptyCast, tvEmptySeasons;
+    private TextView tvTitle, tvReleaseDate, tvBroadcaster, tvSynopsis, tvRatings, tvEmptyCast, tvEmptySeasons, tvAirsDayOfWeek;
     private RatingBar ratingBar;
     private Button btnGenre;
     private ImageView ivCoverImage;
@@ -55,6 +56,7 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
     SeriesDetailAdapter seasonsAdapter;
     RecyclerView castRecycler;
     RecyclerView seasonsRecycler;
+    private String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private SeriesDetailListener seriesDetailListener;
     private MediaDetailsListener mediaDetailsListener;
@@ -98,8 +100,9 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         tvReleaseDate = layout.findViewById(R.id.series_detail_tv_releaseDate);
         tvRatings = layout.findViewById(R.id.series_detail_tv_ratings);
         ratingBar = layout.findViewById(R.id.series_detail_ratingBar);
-        tvRuntime = layout.findViewById(R.id.series_detail_tv_runtime);
+        tvBroadcaster = layout.findViewById(R.id.series_detail_tv_broadcaster);
         tvSynopsis = layout.findViewById(R.id.series_detail_tv_synopsis);
+        tvAirsDayOfWeek = layout.findViewById(R.id.series_detail_tv_airsDayOfWeek);
         btnGenre = layout.findViewById(R.id.series_detail_btn_genre);
         tvEmptyCast = layout.findViewById(R.id.series_detail_tv_cast_empty);
         tvEmptySeasons = layout.findViewById(R.id.series_detail_tv_seasons_empty);
@@ -140,15 +143,17 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         }
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
         tvTitle.setText(media.getTitle());
-        tvRuntime.setText(String.valueOf(media.getRuntime()));
+        tvBroadcaster.setText(String.valueOf(media.getBroadcaster()));
+        tvAirsDayOfWeek.setText(daysOfWeek[media.getAirsDayOfWeek()-1]);
         tvSynopsis.setText(media.getSynopsis());
         tvRatings.setText(String.valueOf(media.getRating().length));
         ratingBar.setRating(media.getTotalRating());
-//        try {
-//            tvReleaseDate.setText(String.valueOf(media.getReleaseDate().get(Calendar.YEAR)));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            if (media.getReleaseDate() != null)
+                tvReleaseDate.setText(String.valueOf(media.getReleaseDate().get(Calendar.YEAR)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         btnGenre.setText(media.getGenre().getName());
         pgDialog.dismiss();
     }

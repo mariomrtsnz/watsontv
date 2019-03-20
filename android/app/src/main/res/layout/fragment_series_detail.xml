@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text="@string/not_yet_released"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/series_detail_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/series_detail_tv_title"
@@ -114,14 +114,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
                 <TextView
+                    android:id="@+id/series_detail_tv_airsDayOfWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:text="@string/media_detail_runningTime" />
+                    android:text="Sundays" />
 
                 <TextView
-                    android:id="@+id/series_detail_tv_runtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/media_detail_broadcaster" />
+
+                <TextView
+                    android:id="@+id/series_detail_tv_broadcaster"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
