@@ -141,7 +141,6 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/color3"
-                android:text="Button"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout5"
