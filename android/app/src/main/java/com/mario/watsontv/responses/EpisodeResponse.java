@@ -3,11 +3,20 @@ package com.mario.watsontv.responses;
 import java.time.LocalDateTime;
 
 public class EpisodeResponse {
+    String id;
     String name;
     String synopsis;
     LocalDateTime airTime;
     int duration;
     int number;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

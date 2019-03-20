@@ -45,7 +45,7 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
 
     private String mediaId, jwt;
     private Context ctx;
-    private TextView tvTitle, tvReleaseDate, tvRuntime, tvSynopsis, tvRatings;
+    private TextView tvTitle, tvReleaseDate, tvRuntime, tvSynopsis, tvRatings, tvEmptyCast;
     private RatingBar ratingBar;
     private Button btnGenre;
     private ImageView ivCoverImage;
@@ -85,7 +85,7 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         recycler = layout.findViewById(R.id.movie_detail_recyclerView);
-        recycler.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, true));
+        recycler.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false));
         ivCoverImage = layout.findViewById(R.id.movie_detail_iv_coverImage);
         tvTitle = layout.findViewById(R.id.movie_detail_tv_title);
         tvReleaseDate = layout.findViewById(R.id.movie_detail_tv_releaseDate);
@@ -94,6 +94,7 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
         tvRuntime = layout.findViewById(R.id.movie_detail_tv_runtime);
         tvSynopsis = layout.findViewById(R.id.movie_detail_tv_synopsis);
         btnGenre = layout.findViewById(R.id.movie_detail_btn_genre);
+        tvEmptyCast = layout.findViewById(R.id.movie_detail_tv_cast_empty);
         getMediaDetails();
         pgDialog = new ProgressDialog(ctx, R.style.MaterialAlertDialog_MaterialComponents_Title_Icon_CenterStacked);
         pgDialog.setIndeterminate(true);
@@ -116,8 +117,12 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
     }
 
     private void setData() {
-        adapter = new MediaDetailsAdapter(ctx, media.getCast(), mListener);
-        recycler.setAdapter(adapter);
+        if (media.getCast().size() == 0)
+            tvEmptyCast.setVisibility(View.VISIBLE);
+        else {
+            adapter = new MediaDetailsAdapter(ctx, media.getCast(), mListener);
+            recycler.setAdapter(adapter);
+        }
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
         tvTitle.setText(media.getTitle());
         tvRuntime.setText(String.valueOf(media.getRuntime()));

@@ -79,47 +79,6 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
     }
 
-    void updateFav(ViewHolder v, MediaResponse p) {
-        mediaService = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
-//        if (v.isChecked) {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-//                        v.isFav = false;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        } else {
-//            Call<UserResponse> call = mediaService.checkAsWatched(p.getId());
-//            call.enqueue(new Callback<UserResponse>() {
-//                @Override
-//                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                    if (response.code() != 200) {
-//                        Toast.makeText(context, "Request Error", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        v.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-//                        v.isFav = true;
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserResponse> call, Throwable t) {
-//                    Toast.makeText(context, "Network Failure", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-    }
-
     @Override
     public int getItemCount() {
         return data.size();
@@ -147,6 +106,5 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
             collection = itemView.findViewById(R.id.item_media_card_ib_collect);
             watchlist = itemView.findViewById(R.id.item_media_card_ib_watchlist);
         }
-
     }
 }

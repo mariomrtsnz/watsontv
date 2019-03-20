@@ -21,19 +21,23 @@ import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsAdapter;
+import com.mario.watsontv.ui.dashboard.media.MediaDetailsListener;
+import com.mario.watsontv.ui.dashboard.media.series.season.SeasonFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
 import java.util.Calendar;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SeriesDetailFragment extends Fragment implements SeriesDetailListener {
+public class SeriesDetailFragment extends Fragment implements SeriesDetailListener, MediaDetailsListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +45,7 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
 
     private String mediaId, jwt;
     private Context ctx;
-    private TextView tvTitle, tvReleaseDate, tvRuntime, tvSynopsis, tvRatings;
+    private TextView tvTitle, tvReleaseDate, tvRuntime, tvSynopsis, tvRatings, tvEmptyCast, tvEmptySeasons;
     private RatingBar ratingBar;
     private Button btnGenre;
     private ImageView ivCoverImage;
@@ -52,7 +56,8 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
     RecyclerView castRecycler;
     RecyclerView seasonsRecycler;
 
-    private SeriesDetailListener mListener;
+    private SeriesDetailListener seriesDetailListener;
+    private MediaDetailsListener mediaDetailsListener;
 
     public SeriesDetailFragment() {
         // Required empty public constructor
@@ -75,14 +80,19 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
             mediaId = getArguments().getString("mediaId");
         }
         jwt = UtilToken.getToken(getContext());
-        mListener = this;
+        seriesDetailListener = this;
+        mediaDetailsListener = this;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        View layout = inflater.inflate(R.layout.fragment_series_detail, container, false);
+        castRecycler = layout.findViewById(R.id.series_detail_castRecycler);
+        castRecycler.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false));
+        seasonsRecycler = layout.findViewById(R.id.series_detail_seasonsRecycler);
+        seasonsRecycler.setLayoutManager(new GridLayoutManager(ctx, 4));
         ivCoverImage = layout.findViewById(R.id.series_detail_iv_coverImage);
         tvTitle = layout.findViewById(R.id.series_detail_tv_title);
         tvReleaseDate = layout.findViewById(R.id.series_detail_tv_releaseDate);
@@ -91,6 +101,8 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         tvRuntime = layout.findViewById(R.id.series_detail_tv_runtime);
         tvSynopsis = layout.findViewById(R.id.series_detail_tv_synopsis);
         btnGenre = layout.findViewById(R.id.series_detail_btn_genre);
+        tvEmptyCast = layout.findViewById(R.id.series_detail_tv_cast_empty);
+        tvEmptySeasons = layout.findViewById(R.id.series_detail_tv_seasons_empty);
         getMediaDetails();
         pgDialog = new ProgressDialog(ctx, R.style.MaterialAlertDialog_MaterialComponents_Title_Icon_CenterStacked);
         pgDialog.setIndeterminate(true);
@@ -109,21 +121,34 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        seriesDetailListener = null;
+        mediaDetailsListener = null;
     }
 
     private void setData() {
+        if (media.getCast().size() == 0)
+            tvEmptyCast.setVisibility(View.VISIBLE);
+        else {
+            castAdapter = new MediaDetailsAdapter(ctx, media.getCast(), mediaDetailsListener);
+            castRecycler.setAdapter(castAdapter);
+        }
+        if (media.getSeasons().size() == 0)
+            tvEmptySeasons.setVisibility(View.VISIBLE);
+        else {
+            seasonsAdapter = new SeriesDetailAdapter(ctx, media.getSeasons(), seriesDetailListener);
+            seasonsRecycler.setAdapter(seasonsAdapter);
+        }
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
         tvTitle.setText(media.getTitle());
         tvRuntime.setText(String.valueOf(media.getRuntime()));
         tvSynopsis.setText(media.getSynopsis());
         tvRatings.setText(String.valueOf(media.getRating().length));
         ratingBar.setRating(media.getTotalRating());
-        try {
-            tvReleaseDate.setText(String.valueOf(media.getReleaseDate().get(Calendar.YEAR)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            tvReleaseDate.setText(String.valueOf(media.getReleaseDate().get(Calendar.YEAR)));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         btnGenre.setText(media.getGenre().getName());
         pgDialog.dismiss();
     }
@@ -148,5 +173,14 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void goToSeasonDetail(String id) {
+        SeasonFragment seasonDetailFragment = new SeasonFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("seasonId", id);
+        seasonDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, seasonDetailFragment).addToBackStack(null).commit();
     }
 }
