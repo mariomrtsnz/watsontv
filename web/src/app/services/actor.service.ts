@@ -14,12 +14,12 @@ const actorUrl = `${environment.apiUrl}/actors`;
 })
 export class ActorService {
 
-  token = `access_token=${this.authService.getToken()}`;
+  token = `?access_token=${this.authService.getToken()}`;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAll() {
-    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?${this.token}`);
+    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}${this.token}`);
   }
 
   getAllSortedByName() {
@@ -42,19 +42,4 @@ export class ActorService {
     return this.http.put<OneActorResponse>(`${actorUrl}/${id}?${this.token}`, resource);
   }
 
-  uploadPicture(file: File): Observable<HttpEvent<any>> {
-
-    const formData = new FormData();
-    formData.append('actorPicture', file);
-
-    const params = new HttpParams();
-
-    const options = {
-      params: params,
-      reportProgress: true,
-    };
-
-    const req = new HttpRequest('POST', `${actorUrl}/picture?${this.token}`, formData, options);
-    return this.http.request(req);
-  }
 }

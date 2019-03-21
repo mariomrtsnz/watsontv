@@ -2,11 +2,19 @@ import { success, notFound } from '../../services/response/'
 import { Actor } from '.'
 const uploadService = require('../../services/upload/')
 
-export const create = ({ bodymen: { body } }, res, next) =>
-  Actor.create(body)
-    .then((actor) => actor.view(true))
-    .then(success(res, 201))
-    .catch(next)
+export const create = (req, res, next) => {  
+  uploadService.uploadFromBinary(req.file.buffer)
+    .then((json) =>     
+      Actor.create({
+        name: req.body.name,
+        picture: json.data.link
+      }))
+      .then(actor => actor.view(true))
+      .then(success(res, 201))
+      .catch(next)
+  }
+
+
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Actor.count(query)
@@ -40,9 +48,3 @@ export const destroy = ({ params }, res, next) =>
     .then((actor) => actor ? actor.remove() : null)
     .then(success(res, 204))
     .catch(next)
-
-export const uploadImage = (req, res, next) => uploadService.uploadFromBinary(req.file.buffer)
-.then((json) => {
-  link: json.data.link
-})
-.then(success(res, 201))

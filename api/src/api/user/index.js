@@ -2,12 +2,18 @@ import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, indexForAndroid, updateWatched, updateWatchlisted, editFriended} from './controller'
+import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, updateWatched, updateWatchlisted, editFriended, getWatchlist, getGenreStats, getDashboardMedia } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
 const { email, password, name, picture, role, friends, dateOfBirth } = schema.tree
+const userSchema = new Schema({
+  name: {
+    type: RegExp,
+    paths: ['name']
+  }
+})
 
 /**
  * @api {get} /users Retrieve users
@@ -21,8 +27,8 @@ const { email, password, name, picture, role, friends, dateOfBirth } = schema.tr
  * @apiError 401 Admin access only.
  */
 router.get('/',
-  token({ required: true, roles: ['admin'] }),
-  query(),
+  token({ required: true, roles: ['admin', 'user'] }),
+  query(userSchema),
   index)
 
 /**
@@ -33,6 +39,23 @@ router.get('/',
  * @apiParam {String} access_token User access_token.
  * @apiSuccess {Object} user User's data.
  */
+
+router.get('/:id/dashboard',
+  token({ required: true }),
+  getDashboardMedia)
+
+router.get('/:id/timeStats',
+  token({ required: true }),
+  getTotalWatchedTime)
+
+router.get('/myWatchlist',
+  token({ required: true }),
+  getWatchlist)
+
+router.get('/:id/stats',
+  token({ required: true }),
+  getGenreStats)
+
 router.get('/me',
   token({ required: true }),
   showMe)
@@ -40,7 +63,7 @@ router.get('/me',
 // CUSTOM CALL FOR ANDROID
 router.get('/befriended',
   token({ required: true }),
-  query(),
+  query(userSchema),
   befriended)
 
 /**
@@ -52,6 +75,7 @@ router.get('/befriended',
  * @apiError 404 User not found.
  */
 router.get('/:id',
+  token({ required: true }),
   show)
 
 /**
@@ -90,8 +114,13 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ name, picture }),
+  body({ email, name, role }),
   update)
+
+// router.put('/:id',
+//   token({ required: true }),
+//   body({ email, name, picture }),
+//   update)
 
 /**
  * @api {put} /users/:id/password Update password

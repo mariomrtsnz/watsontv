@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import { success, notFound } from '../../services/response/'
 import { User } from '.'
+import { Genre } from '../genre'
 import { sign } from '../../services/jwt'
 
 export const index = ({ querymen: { query, select, cursor }, user }, res, next) =>
@@ -24,12 +25,20 @@ export const index = ({ querymen: { query, select, cursor }, user }, res, next) 
     .then(success(res))
     .catch(next)
 
-export const show = ({ params }, res, next) =>
+export const show = ({ params, user }, res, next) => {
+  const foundInFriends = user.friends.indexOf(params.id);
   User.findById(params.id)
-    .then(notFound(res))
-    .then((user) => user ? user.view() : null)
+    .then((user) => {
+      if (foundInFriends != -1) {
+        user.set('isFriend', true);
+      } else {
+        user.set('isFriend', false);
+      }
+      return user;
+    })
     .then(success(res))
     .catch(next)
+}
 
 export const showMe = ({ user }, res) =>
   res.json(user.view(true))
@@ -108,15 +117,7 @@ export const destroy = ({ params }, res, next) =>
 
 // CUSTOM CONTROLLERS
 
-export const getTotalWatchedTime = ({ params }, res, next) => {
-  User.findById(params.id)
-    .then(notFound(res))
-    .then((user) => user ? user.view() : null)
-    .then(success(res))
-    .catch(next)
-}
-
-export const befriended = ({ user }, res, next) => {
+export const befriended = ({querymen: query, select, cursor, user }, res, next) => {
   User.find({'_id': {$in: user.friends}}).populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
     return new Promise(function (res, rej) {
       users.map((foundUser) => {
@@ -164,3 +165,110 @@ export const editFriended = ({ params, user }, res, next) => {
     .then(success(res))
     .catch(next);
 }
+
+export const getWatchlist = ({ user }, res, next) => {
+  User.findById(user.id).select('watchlist').populate({path: 'watchlist', populate: { path: 'genre' }}).then(watchlist => {
+    watchlist.watchlist.map(foundMedia => {
+        if (user.watched.length != 0) {
+          if (user.watched.indexOf(foundMedia.id) != -1)
+            foundMedia.set('watched', true)
+          else
+            foundMedia.set('watched', false)
+        } else
+            foundMedia.set('watched', false)
+        foundMedia.set('watchlisted', true)
+        return foundMedia;
+      })
+      return watchlist.watchlist;
+    })
+  .then(success(res))
+  .catch(next)
+}
+
+export const getGenreStats = ({ params }, res, next) => {
+  Array.prototype.multiIndexOf = function (el) { 
+    var idxs = [];
+    for (var i = this.length - 1; i >= 0; i--) {
+        if (this[i] === el) {
+            idxs.unshift(i);
+        }
+    }
+    return idxs;
+  };
+  User.findById(params.id).select('watched').populate({path: 'watched', select: 'genre -_id -__t'}).then(watchedMedia => {
+    const watchedGenres = [];
+    watchedMedia.watched.forEach(media => {
+      watchedGenres.push(media.genre.toString());
+    })
+    var stats = {};
+    Genre.find().then(genres => {
+      genres.forEach(genre => {
+        const genreOcurrences = watchedGenres.multiIndexOf(genre.id.toString());
+        stats[genre.name] = (genreOcurrences.length/watchedMedia.watched.length)*100;
+      })
+      res.send(stats);
+    })
+  })
+}
+
+export const getTotalWatchedTime = ({ params }, res, next) => {
+  const totalWatchedTime = {
+    episodes: {
+      totalNumber: 0,
+      totalTime: 0
+    },
+    movies: {
+      totalNumber: 0,
+      totalTime: 0
+    }
+  }
+  User.findById(params.id).select('watched').populate({path: 'watched', model: 'Media', select: 'seasons runtime', populate: {path: 'seasons', model: 'Season', select: 'episodes', populate: {path: 'episodes', model: 'Episode', select: 'duration'}}})
+    .then((foundUserWatched) => {
+      foundUserWatched.watched.forEach(media => {
+        if (media.__t === 'Series') {
+          media.seasons.forEach(season => {
+            season.episodes.forEach(episode => {
+              totalWatchedTime.episodes.totalNumber += 1;
+              totalWatchedTime.episodes.totalTime += episode.duration;
+            })
+          })
+        } else {
+          totalWatchedTime.movies.totalNumber += 1;
+          totalWatchedTime.movies.totalTime += media.runtime
+        }
+        return totalWatchedTime;
+      })
+      res.send(totalWatchedTime);
+    })
+}
+
+export const getDashboardMedia = ({ params }, req, res) => {
+  const totalWatchedTime = {
+    episodes: {
+      totalNumber: 0,
+      totalTime: 0
+    },
+    movies: {
+      totalNumber: 0,
+      totalTime: 0
+    }
+  }
+  User.findById(params.id).select('watched').populate({path: 'watched', model: 'Media', select: 'seasons runtime', populate: {path: 'seasons', model: 'Season', select: 'episodes', populate: {path: 'episodes', model: 'Episode', select: 'duration'}}})
+    .then((foundUserWatched) => {
+      foundUserWatched.watched.forEach(media => {
+        if (media.__t === 'Series') {
+          media.seasons.forEach(season => {
+            season.episodes.forEach(episode => {
+              totalWatchedTime.episodes.totalNumber += 1;
+              totalWatchedTime.episodes.totalTime += episode.duration;
+            })
+          })
+        } else {
+          totalWatchedTime.movies.totalNumber += 1;
+          totalWatchedTime.movies.totalTime += media.runtime
+        }
+        return totalWatchedTime;
+      })
+      res.send(totalWatchedTime);
+    })
+  }

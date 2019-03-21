@@ -22,10 +22,26 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
     .catch(next)
 }
 
-export const show = ({ params }, res, next) =>
+export const show = ({ params, user }, res, next) =>
   Media.findById(params.id).populate('genre').populate('seasons', 'id number episodes').populate('cast', 'id name picture')
     .then(notFound(res))
-    .then((media) => media ? media.view() : null)
+    .then((media) =>  {
+      if (user.watched.length != 0) {
+        if (user.watched.indexOf(media.id) != -1)
+          media.set('watched', true)
+        else
+          media.set('watched', false)
+      } else
+          media.set('watched', false)
+      if (user.watchlist.length != 0) {
+        if (user.watchlist.indexOf(media.id) != -1)
+          media.set('watchlisted', true)
+        else
+          media.set('watchlisted', false)
+      } else
+        media.set('watchlisted', false)
+      return media;
+    })
     .then(success(res))
     .catch(next)
 
@@ -45,7 +61,7 @@ export const destroy = ({ params }, res, next) =>
     .catch(next)
 
 export const addCastMember = ({ bodymen: { body }, params }, res, next) =>
-  Media.findByIdAndUpdate(params.id, { $push: {cast: body.cast } }, {new: true})
+  Media.findByIdAndUpdate(params.id, { $addToSet: {cast: body.cast } }, {new: true})
     .then(notFound(res))
     .then(success(res))
     .catch(next)
@@ -57,7 +73,6 @@ export const removeCastMember = ({ bodymen: { body }, params }, res, next) =>
     .catch(next)
 
 export const allMediaAndAttributes = ({ querymen: { query, select, cursor }, user }, res, next) => {
-  console.log(user);
   // Collection.find(ownerId: user.id).then(collections => {
 
   // })

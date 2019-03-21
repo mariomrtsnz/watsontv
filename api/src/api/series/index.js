@@ -12,6 +12,10 @@ const genreSchema = new Schema({
   genre: {
     type: String,
     paths: ['genre']
+  },
+  title: {
+    type: RegExp,
+    paths: ['title']
   }
 })
 
