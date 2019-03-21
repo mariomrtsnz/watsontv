@@ -14,12 +14,12 @@ const actorUrl = `${environment.apiUrl}/actors`;
 })
 export class ActorService {
 
-  token = `?access_token=${this.authService.getToken()}`;
+  token = `access_token=${this.authService.getToken()}`;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAll() {
-    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}${this.token}`);
+    return this.http.get<ResponseContainer<OneActorResponse>>(`${actorUrl}?${this.token}`);
   }
 
   getAllSortedByName() {

@@ -77,6 +77,15 @@ export class DialogActorComponent implements OnInit {
     );
   }
 
+  onSubmit() {
+    if (this.edit) {
+      const editedActor: ActorDto = <ActorDto>this.form.value;
+      this.actorService.edit(this.actorId, editedActor).subscribe(result => {
+        this.dialogRef.close('confirm');
+      }, error => this.snackBar.open('There was an error when were trying to edit this actor.', 'Close', { duration: 3000 }));
+    }
+  }
+
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     this.files = new Set();

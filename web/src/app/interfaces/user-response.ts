@@ -9,6 +9,7 @@ export interface UserResponse {
     watchlist: OneMediaResponse[];
     friends: UserResponse[];
     id: string;
+    _id: string;
     wishlist: OneMediaResponse[];
     picture: string;
     name: string;

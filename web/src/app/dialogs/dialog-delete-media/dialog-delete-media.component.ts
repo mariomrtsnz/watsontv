@@ -22,7 +22,6 @@ export class DialogDeleteMediaComponent implements OnInit {
     this.elementId = this.data.mediaId;
     this.elementName = this.data.mediaTitle;
     this.elementMediaType = this.data.mediaType;
-    console.log(this.elementMediaType);
   }
 
   captcha() {

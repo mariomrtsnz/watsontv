@@ -16,4 +16,5 @@ export interface OneMediaResponse {
     seasons: OneSeasonResponse[];
     airsDayOfWeek: number;
     runtime: number;
+    __t: string;
 }
