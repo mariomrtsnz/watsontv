@@ -51,8 +51,8 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         viewHolder.mItem = data.get(i);
-//        boolean isWatched = viewHolder.mItem.isWatched();
-//        boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
+        boolean isWatched = viewHolder.mItem.isWatched();
+        boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
 //        boolean isCollected = viewHolder.mItem.isCollected();
         viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
         viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
@@ -73,17 +73,17 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.ViewHolder
         String month = airTime.getDisplayName(Calendar.MONTH, Calendar.LONG, locale);
         String year = String.valueOf(airTime.get(Calendar.YEAR));
         viewHolder.releaseDate.setText(month + " " + day + ", " + year);
-//        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
-//        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
+        if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
+        if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
 
         viewHolder.check.setOnClickListener(v -> {
-//            mListener.updateWatched(viewHolder.mItem.getId());
+            mListener.updateWatched(viewHolder.mItem.getId());
         });
         viewHolder.collection.setOnClickListener(v -> {
-//            mListener.updateCollected(viewHolder.mItem.getId())
+            mListener.updateCollected(viewHolder.mItem.getId());
         });
         viewHolder.watchlist.setOnClickListener(v -> {
-//            mListener.updateWatchlisted(viewHolder.mItem.getId());
+            mListener.updateWatchlisted(viewHolder.mItem.getId());
         });
     }
 
