@@ -10,7 +10,7 @@
     <div fxFlex.gt-md="50" fxFlex="100">
       <h1>{{ media.title }}</h1>
       <mat-chip-list>
-        <mat-chip>{{ media.mediaType }}</mat-chip>
+        <mat-chip>{{ media.__t }}</mat-chip>
         <mat-chip>{{ media.genre.name }}</mat-chip>
       </mat-chip-list>
       <div>{{ media.synopsis }}</div>
@@ -18,13 +18,13 @@
   </mat-card>
   <div fxLayout="column" fxLayoutGap="5%"
     fxFlex.gt-sm="20" fxFlex="100">
-    <mat-card *ngIf="media.mediaType.toLowerCase() == 'series'; else movieDetails">
+    <mat-card *ngIf="media.__t.toLowerCase() == 'series'; else movieDetails">
       <p>Broadcaster: {{media.broadcaster}}</p>
       <p>Airs on {{airsDayOfWeek()}}</p>
     </mat-card>
     <ng-template #movieDetails>
       <mat-card>
-        <p>Runtime: {{media.runtime}}</p>
+        <p>Runtime: {{media.runtime}} mins</p>
       </mat-card>
     </ng-template>
     <mat-card>
@@ -44,7 +44,7 @@
     </mat-card>
   </div>
 </div>
-<div *ngIf="media.mediaType.toLowerCase() == 'series'" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+<div *ngIf="media.__t.toLowerCase() == 'series'" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
   <mat-card *ngFor="let s of media.seasons" class="poi-card">
     <mat-card-header (click)="openSeasonDetails(s)">
       <mat-card-title>Season {{s.number}}</mat-card-title>
@@ -76,7 +76,7 @@
     <mat-icon>delete</mat-icon>
     <span>Delete Media</span>
   </button>
-  <button mat-menu-item (click)="openDialogCreateSeason()">
+  <button *ngIf="media.__t.toLowerCase() == 'series'" mat-menu-item (click)="openDialogCreateSeason()">
     <mat-icon>add</mat-icon>
     <span>Add Season</span>
   </button>

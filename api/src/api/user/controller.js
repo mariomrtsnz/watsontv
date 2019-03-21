@@ -117,7 +117,7 @@ export const destroy = ({ params }, res, next) =>
 
 // CUSTOM CONTROLLERS
 
-export const befriended = ({ user }, res, next) => {
+export const befriended = ({querymen: query, select, cursor, user }, res, next) => {
   User.find({'_id': {$in: user.friends}}).populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
     return new Promise(function (res, rej) {
       users.map((foundUser) => {

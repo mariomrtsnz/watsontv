@@ -8,11 +8,12 @@
       <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
     </mat-form-field>
     <mat-form-field class="w-100">
-      <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
+      <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']"
+        required></textarea>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Owner" [formControl]="form.controls['owner']">
-        <mat-option *ngFor="let user of allUsers" [value]="user.id">{{user.name}}</mat-option>
+        <mat-option *ngFor="let user of allUsers" [value]="user._id">{{user.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -27,11 +28,12 @@
         <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
       </mat-form-field>
       <mat-form-field class="w-100">
-        <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
+        <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']"
+          required></textarea>
       </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Owner" [formControl]="form.controls['owner']">
-          <mat-option *ngFor="let user of allUsers" [value]="user.id">{{user.name}}</mat-option>
+          <mat-option *ngFor="let user of allUsers" [value]="user._id">{{user.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

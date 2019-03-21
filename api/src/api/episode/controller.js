@@ -65,3 +65,19 @@ export const destroy = ({ params }, res, next) =>
     })
     .then(success(res, 204))
     .catch(next)
+
+export const updateWatchedEpisodes = ({params, user}, res, next) => {
+  const found = user.watchedEpisodes.indexOf(params.id);
+  const foundInWatchlistedEpisodes = user.watchlistedEpisodes.indexOf(params.id);
+  if (found != -1)
+    user.watched.splice(found, 1);
+  else {
+    if (foundInWatchlistedEpisodes != -1) {
+      user.watchlist.splice(foundInWatchlisted, 1);
+    }
+    user.watched.push(params.id);
+  }
+  user.save()
+  .then(success(res))
+  .catch(next)
+}

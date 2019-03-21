@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, uploadImage } from './controller'
+import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
 export Actor, { schema } from './model'
 
@@ -27,7 +27,7 @@ const upload = multer({storage: storage})
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, picture }),
+  upload.single('picture'),
   create)
 
 /**
@@ -54,12 +54,6 @@ router.get('/',
 router.get('/:id',
   show)
 
-router.post('/picture',
-  token({ required: true, roles: ['admin'] }),
-  upload.single('actorPicture'),
-  uploadImage
-)
-
 /**
  * @api {put} /actors/:id Update actor
  * @apiName UpdateActor
@@ -75,7 +69,7 @@ router.post('/picture',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
-  body({ name, picture }),
+  body({ name }),
   update)
 
 /**

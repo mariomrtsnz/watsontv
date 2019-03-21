@@ -8,6 +8,12 @@ export User, { schema } from './model'
 
 const router = new Router()
 const { email, password, name, picture, role, friends, dateOfBirth } = schema.tree
+const userSchema = new Schema({
+  name: {
+    type: RegExp,
+    paths: ['name']
+  }
+})
 
 /**
  * @api {get} /users Retrieve users
@@ -22,7 +28,7 @@ const { email, password, name, picture, role, friends, dateOfBirth } = schema.tr
  */
 router.get('/',
   token({ required: true, roles: ['admin', 'user'] }),
-  query(),
+  query(userSchema),
   index)
 
 /**
@@ -57,7 +63,7 @@ router.get('/me',
 // CUSTOM CALL FOR ANDROID
 router.get('/befriended',
   token({ required: true }),
-  query(),
+  query(userSchema),
   befriended)
 
 /**
@@ -108,8 +114,13 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({ name, picture }),
+  body({ email, name, role }),
   update)
+
+// router.put('/:id',
+//   token({ required: true }),
+//   body({ email, name, picture }),
+//   update)
 
 /**
  * @api {put} /users/:id/password Update password

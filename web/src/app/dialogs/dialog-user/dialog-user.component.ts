@@ -27,7 +27,7 @@ export class DialogUserComponent implements OnInit {
     this.createForm();
     if (this.data) {
       this.edit = true;
-      this.userId = this.data.user.id;
+      this.userId = this.data.user._id;
     } else {
       this.edit = false;
     }

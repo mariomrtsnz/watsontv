@@ -56,7 +56,7 @@ export class UserComponent implements OnInit {
 
   openDialogDeleteUser(user: UserResponse) {
     const deleteUserDialog = this.dialog.open(DialogDeleteUserComponent,
-      { panelClass: 'delete-dialog', data: { userId: user.id, userName: user.name } });
+      { panelClass: 'delete-dialog', data: { userId: user._id, userName: user.name } });
 
       deleteUserDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

@@ -12,6 +12,10 @@ const genreSchema = new Schema({
   genre: {
     type: String,
     paths: ['genre']
+  },
+  title: {
+    type: RegExp,
+    paths: ['title']
   }
 })
 
@@ -65,6 +69,7 @@ router.get('/user',
  * @apiError 404 Media not found.
  */
 router.get('/:id',
+  token({ required: true }),
   show)
 
 /**

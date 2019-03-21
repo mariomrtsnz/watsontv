@@ -140,13 +140,14 @@ export class MediaDetailComponent implements OnInit {
   }
 
   openEditMedia() {
-    this.mediaService.mediaType = this.media.mediaType;
+    this.mediaService.mediaType = this.media.__t;
     this.router.navigate(['home/media/edit']);
   }
 
   openDialogDeleteMedia() {
+    console.log(this.media.__t);
     const deleteMediaDialog = this.dialog.open(DialogDeleteMediaComponent,
-      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title, mediaType: this.media.mediaType } });
+      { panelClass: 'delete-dialog', data: { mediaId: this.media.id, mediaTitle: this.media.title, mediaType: this.media.__t } });
 
       deleteMediaDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

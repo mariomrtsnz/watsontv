@@ -42,9 +42,17 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Genre'
   }],
+  watchedEpisodes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Episode'
+  }],
   watched: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'
+  }],
+  watchlistedEpisodes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Episdes'
   }],
   watchlist: [{
     type: Schema.Types.ObjectId,

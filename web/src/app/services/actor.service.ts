@@ -42,19 +42,4 @@ export class ActorService {
     return this.http.put<OneActorResponse>(`${actorUrl}/${id}?${this.token}`, resource);
   }
 
-  uploadPicture(file: File): Observable<HttpEvent<any>> {
-
-    const formData = new FormData();
-    formData.append('actorPicture', file);
-
-    const params = new HttpParams();
-
-    const options = {
-      params: params,
-      reportProgress: true,
-    };
-
-    const req = new HttpRequest('POST', `${actorUrl}/picture?${this.token}`, formData, options);
-    return this.http.request(req);
-  }
 }
