@@ -121,6 +121,9 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     }
 
     public void listSeries(int page) {
+        if (getArguments() != null) {
+            selectedGenre = getArguments().getString("selectedGenreId");
+        }
         MediaService service = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
         Call<ResponseContainer<MediaResponse>> call = service.getAllSeries(selectedGenre, page);
         call.enqueue(new Callback<ResponseContainer<MediaResponse>>() {
@@ -180,9 +183,6 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
         jwt = UtilToken.getToken(getContext());
         mListener = this;
     }

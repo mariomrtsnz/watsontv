@@ -159,4 +159,9 @@ public class MovieDetailFragment extends Fragment implements MediaDetailsListene
             }
         });
     }
+
+    @Override
+    public void goToGenreMedia(String genreId) {
+
+    }
 }

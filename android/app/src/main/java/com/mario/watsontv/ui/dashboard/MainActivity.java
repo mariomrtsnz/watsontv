@@ -33,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentTransaction fragmentChanger;
     TextView name, email;

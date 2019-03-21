@@ -22,6 +22,8 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsAdapter;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsListener;
+import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
+import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.season.SeasonFragment;
 import com.mario.watsontv.util.UtilToken;
 
@@ -155,6 +157,7 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
             e.printStackTrace();
         }
         btnGenre.setText(media.getGenre().getName());
+        btnGenre.setOnClickListener(v -> mediaDetailsListener.goToGenreMedia(media.getId()));
         pgDialog.dismiss();
     }
 
@@ -187,5 +190,14 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         bundle.putString("seasonId", id);
         seasonDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.content_main_container, seasonDetailFragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void goToGenreMedia(String genreId) {
+        SeriesListFragment seriesListFragment = new SeriesListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedGenreId", genreId);
+        seriesListFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.content_main_container, seriesListFragment).addToBackStack(null).commit();
     }
 }

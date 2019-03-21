@@ -241,3 +241,34 @@ export const getTotalWatchedTime = ({ params }, res, next) => {
       res.send(totalWatchedTime);
     })
 }
+
+export const getDashboardMedia = ({ params }, req, res) => {
+  const totalWatchedTime = {
+    episodes: {
+      totalNumber: 0,
+      totalTime: 0
+    },
+    movies: {
+      totalNumber: 0,
+      totalTime: 0
+    }
+  }
+  User.findById(params.id).select('watched').populate({path: 'watched', model: 'Media', select: 'seasons runtime', populate: {path: 'seasons', model: 'Season', select: 'episodes', populate: {path: 'episodes', model: 'Episode', select: 'duration'}}})
+    .then((foundUserWatched) => {
+      foundUserWatched.watched.forEach(media => {
+        if (media.__t === 'Series') {
+          media.seasons.forEach(season => {
+            season.episodes.forEach(episode => {
+              totalWatchedTime.episodes.totalNumber += 1;
+              totalWatchedTime.episodes.totalTime += episode.duration;
+            })
+          })
+        } else {
+          totalWatchedTime.movies.totalNumber += 1;
+          totalWatchedTime.movies.totalTime += media.runtime
+        }
+        return totalWatchedTime;
+      })
+      res.send(totalWatchedTime);
+    })
+  }

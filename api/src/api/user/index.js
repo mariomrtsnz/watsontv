@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, updateWatched, updateWatchlisted, editFriended, getWatchlist, getGenreStats } from './controller'
+import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, updateWatched, updateWatchlisted, editFriended, getWatchlist, getGenreStats, getDashboardMedia } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
@@ -21,7 +21,7 @@ const { email, password, name, picture, role, friends, dateOfBirth } = schema.tr
  * @apiError 401 Admin access only.
  */
 router.get('/',
-  token({ required: true, roles: ['admin'] }),
+  token({ required: true, roles: ['admin', 'user'] }),
   query(),
   index)
 
@@ -33,6 +33,10 @@ router.get('/',
  * @apiParam {String} access_token User access_token.
  * @apiSuccess {Object} user User's data.
  */
+
+router.get('/:id/dashboard',
+  token({ required: true }),
+  getDashboardMedia)
 
 router.get('/:id/timeStats',
   token({ required: true }),

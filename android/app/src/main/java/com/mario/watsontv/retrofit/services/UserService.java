@@ -66,4 +66,7 @@ public interface UserService {
 
     @GET(BASE_URL + "/{id}/timeStats")
     Call<UserTimeStats> getUserTimeStats(@Path("id") String id);
+
+    @GET(BASE_URL + "/{id}/dashboard")
+    Call<UserTimeStats> getUserDashboardMedia(@Path("id") String id);
 }

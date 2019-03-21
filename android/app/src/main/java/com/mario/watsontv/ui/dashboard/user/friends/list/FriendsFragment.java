@@ -180,6 +180,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                    pgDialog.dismiss();
                 } else {
                     totalItems = (int) response.body().getCount();
                     maxPage = totalItems/maxItemsInPage;
@@ -198,6 +199,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                pgDialog.dismiss();
             }
         });
     }
@@ -210,6 +212,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                    pgDialog.dismiss();
                 } else {
                     maxPage = totalItems/maxItemsInPage;
                     pgDialog.dismiss();
@@ -227,6 +230,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                pgDialog.dismiss();
             }
         });
     }
