@@ -79,7 +79,7 @@ router.get('/:id/media',
   query(),
   getCollectionMedia)
 
-router.put('/add/:mediaId',
+router.put('/update/:mediaId',
   token({required: true}),
   updateCollected)
 

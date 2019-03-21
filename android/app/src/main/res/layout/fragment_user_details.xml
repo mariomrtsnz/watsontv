@@ -34,6 +34,7 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:src="@drawable/fab_add"
+            android:visibility="gone"
             app:elevation="5dp"
             app:layout_constraintBottom_toTopOf="@+id/user_details_tv_username"
             app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,7 @@ package com.mario.watsontv.ui.dashboard.media.collections.addTo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,14 @@ public class AddToCollectionDialog extends DialogFragment implements AddToCollec
     private AddToCollectionListener mListener;
     private List<CollectionResponse> items;
     private List<String> selectedCollections = new ArrayList<>();
+    private ProgressDialog pgDialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mListener = this;
+        jwt = UtilToken.getToken(getContext());
+    }
 
     @NonNull
     @Override
@@ -51,7 +60,11 @@ public class AddToCollectionDialog extends DialogFragment implements AddToCollec
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ctx);
         recycler.setLayoutManager(linearLayoutManager);
         id = getArguments().getString("mediaId");
-        jwt = UtilToken.getToken(ctx);
+        pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        pgDialog.setIndeterminate(true);
+        pgDialog.setCancelable(false);
+        pgDialog.setTitle("Loading My Collections");
+        pgDialog.show();
         listMyCollections();
         builder.setView(view).setTitle("Collections").setNegativeButton("Cancel", (dialog, which) -> {
             getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, null);
@@ -83,19 +96,20 @@ public class AddToCollectionDialog extends DialogFragment implements AddToCollec
 
     public void addToCollectionsSubmit() {
         service = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
-        Call<CollectionResponse> call = service.addToCollections(selectedCollections, id);
-        call.enqueue(new Callback<CollectionResponse>() {
+        Call<Void> call = service.addToCollections(selectedCollections, id);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<CollectionResponse> call, Response<CollectionResponse> response) {
-                if (response.code() != 201) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, null);
                 } else {
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, null);
+                    Toast.makeText(ctx, "Collection Updated", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<CollectionResponse> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, null);
             }
@@ -111,8 +125,8 @@ public class AddToCollectionDialog extends DialogFragment implements AddToCollec
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println(response.body());
                     items = response.body();
+                    pgDialog.dismiss();
                     adapter = new AddToCollectionAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
                 }

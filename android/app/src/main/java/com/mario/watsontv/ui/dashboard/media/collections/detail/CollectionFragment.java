@@ -1,7 +1,9 @@
 package com.mario.watsontv.ui.dashboard.media.collections.detail;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.mario.watsontv.responses.CollectionResponse;
 import com.mario.watsontv.responses.GenreResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.CollectionService;
@@ -29,6 +32,7 @@ import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.ui.dashboard.media.MediaListAdapter;
 import com.mario.watsontv.ui.dashboard.media.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.movies.detail.MovieDetailFragment;
 import com.mario.watsontv.ui.dashboard.media.series.detail.SeriesDetailFragment;
 import com.mario.watsontv.util.UtilToken;
@@ -194,7 +198,7 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
                     items = response.body();
                     adapter = new MediaListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
-                    if (selectedCollection.getCollected().size() <= 0) tvEmptyList.setVisibility(View.VISIBLE);
+                    if (selectedCollection.getCollected().size() <= 0 || items.size() <= 0) tvEmptyList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -243,17 +247,62 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void updateWatched(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    listCollectionMedia();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void updateWatchlisted(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    listCollectionMedia();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void updateCollected(String id) {
+        AddToCollectionDialog addToCollectionDialog = new AddToCollectionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        addToCollectionDialog.setArguments(bundle);
+        addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+        addToCollectionDialog.show(getFragmentManager(), "create dialog");
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        listCollectionMedia();
     }
 
     @Override

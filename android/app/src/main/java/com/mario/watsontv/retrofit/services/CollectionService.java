@@ -32,8 +32,8 @@ public interface CollectionService {
     @PUT(BASE_URL + "/{id}")
     Call<CollectionResponse> edit(@Path("id") String id);
 
-    @PUT(BASE_URL + "/add/{id}")
-    Call<CollectionResponse> addToCollections(@Body List<String> collectionsId, @Path("id") String mediaId);
+    @PUT(BASE_URL + "/update/{id}")
+    Call<Void> addToCollections(@Body List<String> collectionsIds, @Path("id") String mediaId);
 
     @GET(BASE_URL + "/{id}/media")
     Call<List<MediaResponse>> getCollectionMedia(@Path("id") String selectedCollectionId);

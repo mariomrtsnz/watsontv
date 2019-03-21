@@ -46,7 +46,7 @@ export const destroy = ({ params }, res, next) =>
     .catch(next)
 
 export const updateCollected = function (req, res) {
-  req.body.collectionsIds.forEach(collectionId => {
+  req.body.forEach(collectionId => {
     Collection.findById(collectionId).then(collection => {
       const found = collection.collected.indexOf(req.params.mediaId);
       if (found != -1)
@@ -57,7 +57,7 @@ export const updateCollected = function (req, res) {
       return collection;
     })
   });
-  res.send(req.body.collectionsIds, 200);
+  res.status(200).send(req.body.collectionsIds);
 }
 
 export const getCollectionMedia = ({ querymen: { query, select, cursor }, params, user }, res, next) => {

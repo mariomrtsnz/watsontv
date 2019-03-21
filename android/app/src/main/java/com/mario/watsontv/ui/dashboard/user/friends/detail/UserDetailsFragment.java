@@ -46,6 +46,7 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
     private UserResponse selectedUser;
     private ProgressDialog pgDialog;
     private CardView cvStats, cvCollections;
+    private boolean isFriend;
 
     public UserDetailsFragment() {}
 
@@ -129,8 +130,9 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
     private void setData() {
         Glide.with(ctx).load(selectedUser.getPicture()).into(civProfilePic);
         tvUsername.setText(selectedUser.getName());
-        if (selectedUser.isFriend())
-            fabBefriend.setImageResource(R.drawable.ic_remove_24dp);
+        fabBefriend.setVisibility(View.VISIBLE);
+        if (selectedUser.isFriend()) fabBefriend.setImageResource(R.drawable.ic_remove_24dp);
+        isFriend = selectedUser.isFriend();
         Calendar createdAt = null;
         try {
             createdAt = selectedUser.getCreatedAt();
@@ -163,6 +165,26 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
 
     @Override
     public void updateFriend(String selectedUserId) {
-        
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateFriended(selectedUserId);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    isFriend = !isFriend;
+                    if (isFriend)
+                        fabBefriend.setImageResource(R.drawable.ic_remove_24dp);
+                    else fabBefriend.setImageResource(R.drawable.fab_add);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
