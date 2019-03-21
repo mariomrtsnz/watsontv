@@ -40,7 +40,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,8 +100,7 @@
                     android:id="@+id/series_detail_tv_ratings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,8 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:text="Sundays" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,8 +130,7 @@
                     android:id="@+id/series_detail_tv_broadcaster"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -145,7 +141,6 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="@color/color3"
-                android:text="Button"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout5"
@@ -186,7 +181,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="TextView"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"

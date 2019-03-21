@@ -2,7 +2,7 @@ package com.mario.watsontv.responses;
 
 public class LoginResponse {
     String token;
-    UserResponse user;
+    LoginUserResponse user;
 
     public String getToken() {
         return token;
@@ -12,11 +12,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public UserResponse getUser() {
+    public LoginUserResponse getUser() {
         return user;
     }
 
-    public void setUser(UserResponse user) {
+    public void setUser(LoginUserResponse user) {
         this.user = user;
     }
 

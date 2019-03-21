@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:text="TextView"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="TextView"
+            android:text="Unreleased"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toStartOf="@+id/item_media_card_tv_title"
             app:layout_constraintTop_toBottomOf="@+id/item_media_card_tv_title" />

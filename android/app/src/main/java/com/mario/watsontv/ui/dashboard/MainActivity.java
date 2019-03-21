@@ -12,11 +12,12 @@ import com.mario.watsontv.R;
 import com.mario.watsontv.ui.auth.LoginActivity;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardFragment;
 import com.mario.watsontv.ui.dashboard.dashboard.DashboardListener;
+import com.mario.watsontv.ui.dashboard.media.collections.detail.CollectionFragment;
 import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
 import com.mario.watsontv.ui.dashboard.media.movies.list.MovieListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.user.profile.ProfileFragment;
-import com.mario.watsontv.ui.dashboard.user.profile.friends.list.FriendsFragment;
+import com.mario.watsontv.ui.dashboard.user.friends.list.FriendsFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import androidx.core.view.GravityCompat;
@@ -32,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentTransaction fragmentChanger;
     TextView name, email;
@@ -125,17 +126,15 @@ public class MainActivity extends AppCompatActivity
                 fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, collectionListFragment);
                 fragmentChanger.commit();
                 drawer.closeDrawer(GravityCompat.START);
-
                 return true;
             case R.id.nav_watchlist:
-//                WatchlistFragment watchlistFragment = new WatchlistFragment();
-//                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, watchlistFragment);
+                CollectionFragment watchlistFragment = new CollectionFragment();
+                Bundle watchListBundle = new Bundle();
+                watchListBundle.putBoolean("isWatchlist", true);
+                watchlistFragment.setArguments(watchListBundle);
+                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, watchlistFragment);
                 fragmentChanger.commit();
-                return true;
-            case R.id.nav_favorites:
-//                FavoritestFragment favoritesFragment = new FavoritestFragment();
-//                fragmentChanger = getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, favoritesFragment);
-                fragmentChanger.commit();
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_profile:
                 ProfileFragment profileFragment = new ProfileFragment();

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/item_user_card_profilePic"
+        android:id="@+id/user_details_civ_profilePic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -25,11 +25,10 @@
         android:id="@+id/item_user_card_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_user_card_profilePic"
-        app:layout_constraintStart_toStartOf="@+id/item_user_card_profilePic"
-        app:layout_constraintTop_toBottomOf="@+id/item_user_card_profilePic" />
+        app:layout_constraintEnd_toEndOf="@+id/user_details_civ_profilePic"
+        app:layout_constraintStart_toStartOf="@+id/user_details_civ_profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/user_details_civ_profilePic" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/item_user_card_fab_add"
@@ -37,8 +36,8 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@+id/item_user_card_profilePic"
-        app:layout_constraintEnd_toEndOf="@+id/item_user_card_profilePic"
+        app:layout_constraintBottom_toBottomOf="@+id/user_details_civ_profilePic"
+        app:layout_constraintEnd_toEndOf="@+id/user_details_civ_profilePic"
         app:srcCompat="@drawable/fab_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

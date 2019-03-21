@@ -1,4 +1,4 @@
-package com.mario.watsontv.ui.dashboard.user.profile.friends.list;
+package com.mario.watsontv.ui.dashboard.user.friends.list;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.mario.watsontv.R;
@@ -19,6 +20,7 @@ import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.user.friends.detail.UserDetailsFragment;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsFragment extends Fragment implements FriendsListener {
+public class FriendsFragment extends Fragment implements FriendsListener, SearchView.OnQueryTextListener {
     private static final String ARG_COLUMN_COUNT = "column-count";
     UserService userService;
     List<UserResponse> items;
@@ -47,13 +49,11 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     ProgressDialog pgDialog;
     boolean isScrolling = false;
     int currentPage = 1;
-    int maxPage;
+    int maxPage, totalItems;
     int maxItemsInPage = 30;
-    int totalItems;
-
     private boolean allUsers = false;
     private Context ctx;
-    private String jwt;
+    private String jwt, nameQuery;
     private FriendsListener mListener;
 
 
@@ -69,23 +69,46 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Objects.requireNonNull(getActivity()).setTitle("Users");
         inflater.inflate(R.menu.fragment_friends_menu, menu);
+//        allUsers = getArguments().getBoolean("allUsers");
         MenuItem filter = menu.findItem(R.id.menu_friends_filter);
+        SearchView searchView = (SearchView) menu.findItem(R.id.friends_search).getActionView();
+        searchView.setOnQueryTextListener(this);
         filter.setChecked(!allUsers);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
+    public boolean onQueryTextSubmit(String query) {
+        nameQuery = query;
+        if (allUsers) listUsers(currentPage);
+        else listFriends(currentPage);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length() == 0) {
+            nameQuery = newText;
+            if (allUsers) listUsers(currentPage);
+            else listFriends(currentPage);
+        }
+        return false;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.friends_befriended_filter) {
-            if(item.isChecked()) {
-                allUsers = !allUsers;
-                item.setChecked(allUsers);
-                listUsers(1);
-            } else {
-                allUsers = !allUsers;
-                item.setChecked(allUsers);
-                listFriends(1);
-            }
+        switch (item.getItemId()) {
+            case R.id.friends_befriended_filter:
+                if(item.isChecked()){
+                    allUsers = !allUsers;
+                    item.setChecked(allUsers);
+                    listUsers(1);
+                } else {
+                    allUsers = !allUsers;
+                    item.setChecked(allUsers);
+                    listFriends(1);
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -173,12 +196,13 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     public void listUsers(int page) {
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<UserResponse>> call = service.listUsers(page);
+        Call<ResponseContainer<UserResponse>> call = service.listUsers(nameQuery, page);
         call.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                    pgDialog.dismiss();
                 } else {
                     totalItems = (int) response.body().getCount();
                     maxPage = totalItems/maxItemsInPage;
@@ -197,18 +221,20 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                pgDialog.dismiss();
             }
         });
     }
 
     public void listFriends(int page) {
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<List<UserResponse>> call = service.listFriends(page);
+        Call<List<UserResponse>> call = service.listFriends(nameQuery, page);
         call.enqueue(new Callback<List<UserResponse>>() {
             @Override
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                    pgDialog.dismiss();
                 } else {
                     maxPage = totalItems/maxItemsInPage;
                     pgDialog.dismiss();
@@ -226,12 +252,39 @@ public class FriendsFragment extends Fragment implements FriendsListener {
             public void onFailure(Call<List<UserResponse>> call, Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                pgDialog.dismiss();
             }
         });
     }
 
     @Override
     public void updateFriend(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateFriended(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (allUsers) listUsers(currentPage); else listFriends(currentPage);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void goToUserDetails(String id) {
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedUserId", id);
+        userDetailsFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, userDetailsFragment).commit();
     }
 }

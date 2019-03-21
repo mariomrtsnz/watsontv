@@ -29,11 +29,13 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
     private UserService userService;
     private CollectionService collectionService;
     private String jwt;
+    private boolean isMine;
 
-    public CollectionListAdapter(Context ctx, List<CollectionResponse> data, CollectionListListener mListener) {
+    public CollectionListAdapter(Context ctx, List<CollectionResponse> data, CollectionListListener mListener, boolean isMine) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
+        this.isMine = isMine;
     }
 
     @NonNull
@@ -55,8 +57,9 @@ public class CollectionListAdapter extends RecyclerView.Adapter<CollectionListAd
             viewHolder.description.setText(viewHolder.mItem.getDescription().substring(0, 100) + "...");
         else
             viewHolder.description.setText(viewHolder.mItem.getDescription());
-        viewHolder.delete.setOnClickListener(v -> mListener.delete(viewHolder.mItem.getId()));
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(viewHolder.mItem.getId()));
+        if (isMine) viewHolder.delete.setOnClickListener(v -> mListener.delete(viewHolder.mItem.getId()));
+        else viewHolder.delete.setVisibility(View.GONE);
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetails(viewHolder.mItem));
     }
 
     @Override

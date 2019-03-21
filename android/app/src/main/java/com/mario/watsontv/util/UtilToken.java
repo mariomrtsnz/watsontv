@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.LoginResponse;
+import com.mario.watsontv.responses.LoginUserResponse;
 import com.mario.watsontv.responses.UserResponse;
 
 public class UtilToken {
@@ -40,7 +41,7 @@ public class UtilToken {
         editor.commit();
     }
 
-    public static void setUserLoggedData(Context mContext, UserResponse loggedUser) {
+    public static void setUserLoggedData(Context mContext, LoginUserResponse loggedUser) {
         SharedPreferences sharedPreferences =
                 mContext.getSharedPreferences(
                         mContext.getString(R.string.sharedpreferences_filename),

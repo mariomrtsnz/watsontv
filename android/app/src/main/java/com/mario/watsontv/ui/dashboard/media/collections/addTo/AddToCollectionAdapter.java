@@ -37,7 +37,7 @@ public class AddToCollectionAdapter extends RecyclerView.Adapter<AddToCollection
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_collection_card, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_add_collection, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -47,6 +47,7 @@ public class AddToCollectionAdapter extends RecyclerView.Adapter<AddToCollection
         viewHolder.mItem = data.get(i);
         viewHolder.checkbox.setText(viewHolder.mItem.getName());
         viewHolder.checkbox.setOnClickListener(v -> {
+            System.out.println(viewHolder.checkbox.isChecked());
             if (viewHolder.checkbox.isChecked())
                 mListener.addToCollections(viewHolder.mItem.getId());
             else

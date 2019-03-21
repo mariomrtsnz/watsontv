@@ -5,54 +5,41 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mario.watsontv.R;
+import com.mario.watsontv.responses.UserTimeStats;
+import com.mario.watsontv.retrofit.generator.AuthType;
+import com.mario.watsontv.retrofit.generator.ServiceGenerator;
+import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.util.UtilToken;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DashboardFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DashboardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DashboardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class DashboardFragment extends Fragment implements DashboardListener {
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private String jwt;
     private DashboardListener mListener;
     private Context ctx;
+    private TextView tvUsername, tvEpisodesTime, tvMoviesTime;
+    private UserTimeStats userTimeStats;
 
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
+    public DashboardFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DashboardFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static DashboardFragment newInstance(String param1, String param2) {
         DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,36 +48,92 @@ public class DashboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+        Objects.requireNonNull(getActivity()).setTitle("WatsonTV");
+        mListener = this;
+        jwt = UtilToken.getToken(ctx);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Objects.requireNonNull(getActivity()).setTitle("WatsonTV");
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View layout = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        tvUsername = layout.findViewById(R.id.dashboard_tv_username);
+        tvEpisodesTime = layout.findViewById(R.id.dashboard_tv_stats_series_time);
+        tvMoviesTime = layout.findViewById(R.id.dashboard_tv_stats_movies_time);
+        tvUsername.setText(UtilToken.getName(ctx));
+        getUserData();
+        return layout;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        if (mListener != null) {
+    private void getUserData() {
+        getUserTimeStats();
+        getUserDashboardMedia();
+    }
 
-        }
+    private void getUserTimeStats() {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserTimeStats> call = service.getUserTimeStats(UtilToken.getId(ctx));
+        call.enqueue(new Callback<UserTimeStats>() {
+            @Override
+            public void onResponse(Call<UserTimeStats> call, Response<UserTimeStats> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    userTimeStats = response.body();
+                    setTimeStats();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserTimeStats> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(ctx, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getUserDashboardMedia() {
+//        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+//        Call<UserTimeStats> call = service.getUserDashboardMedia(UtilToken.getId(ctx));
+//        call.enqueue(new Callback<UserTimeStats>() {
+//            @Override
+//            public void onResponse(Call<UserTimeStats> call, Response<UserTimeStats> response) {
+//                if (response.code() != 200) {
+//                    Toast.makeText(ctx, "Request Error", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    userTimeStats = response.body();
+//                    setDashboardMedia();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UserTimeStats> call, Throwable t) {
+//                Log.e("Network Failure", t.getMessage());
+//                Toast.makeText(ctx, "Network Error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
+
+    private void setTimeStats() {
+        tvEpisodesTime.setText(timeConvert(userTimeStats.getEpisodes().getTotalTime()));
+        tvMoviesTime.setText(timeConvert(userTimeStats.getMovies().getTotalTime()));
+    }
+
+    private String timeConvert(int time) {
+        return time/24/60 + "d " + time/60%24 + "h " + time%60 + "m";
+    }
+
+    private void setDashboardMedia() {
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         ctx = context;
-        if (context instanceof DashboardListener) {
-            mListener = (DashboardListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement DashboardListener");
-        }
     }
 
     @Override

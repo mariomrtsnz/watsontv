@@ -1,45 +1,32 @@
-package com.mario.watsontv.ui.dashboard.media.series.list;
+package com.mario.watsontv.ui.dashboard.media;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.MediaResponse;
-import com.mario.watsontv.responses.UserResponse;
-import com.mario.watsontv.retrofit.generator.AuthType;
-import com.mario.watsontv.retrofit.generator.ServiceGenerator;
-import com.mario.watsontv.retrofit.services.MediaService;
-import com.mario.watsontv.retrofit.services.UserService;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.ViewHolder>{
+public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.ViewHolder> {
     private final MediaListListener mListener;
-    UserResponse user;
     private List<MediaResponse> data;
     private Context context;
-    private UserService userService;
-    private MediaService mediaService;
     private String jwt;
 
-    public SeriesListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
+    public MediaListAdapter(Context ctx, List<MediaResponse> data, MediaListListener mListener) {
         this.data = data;
         this.context = ctx;
         this.mListener = mListener;
@@ -59,15 +46,22 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         boolean isWatched = viewHolder.mItem.isWatched();
         boolean isWatchlisted = viewHolder.mItem.isWatchlisted();
         boolean isCollected = viewHolder.mItem.isCollected();
+
+        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
         viewHolder.check.setImageResource(R.drawable.ic_check_white_24dp);
         viewHolder.watchlist.setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
-        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.coverImage);
-        if (viewHolder.mItem.getTitle().length() > 15)
-            viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
-        else
-            viewHolder.title.setText(viewHolder.mItem.getTitle());
         if (isWatched) viewHolder.check.setImageResource(R.drawable.ic_check_box_black_24dp);
         if (isWatchlisted) viewHolder.watchlist.setImageResource(R.drawable.ic_eye_hide);
+        if (viewHolder.mItem.getTitle().length() > 15) viewHolder.title.setText(viewHolder.mItem.getTitle().substring(0, 15) + "...");
+        else viewHolder.title.setText(viewHolder.mItem.getTitle());
+
+        try {
+            if (viewHolder.mItem.getReleaseDate() != null) {
+                viewHolder.releaseDate.setText(String.valueOf(viewHolder.mItem.getReleaseDate().get(Calendar.YEAR)));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         viewHolder.check.setOnClickListener(v -> {
             mListener.updateWatched(viewHolder.mItem.getId());
@@ -76,7 +70,7 @@ public class SeriesListAdapter extends RecyclerView.Adapter<SeriesListAdapter.Vi
         viewHolder.watchlist.setOnClickListener(v -> {
             mListener.updateWatchlisted(viewHolder.mItem.getId());
         });
-        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId()));
+        viewHolder.mView.setOnClickListener(v -> mListener.goToDetail(viewHolder.mItem.getId(), viewHolder.mItem.get__t()));
     }
 
     @Override

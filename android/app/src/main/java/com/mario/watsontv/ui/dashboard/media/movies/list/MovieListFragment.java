@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard.media.movies.list;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,8 +28,10 @@ import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.GenreService;
 import com.mario.watsontv.retrofit.services.MediaService;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.MediaListAdapter;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.movies.detail.MovieDetailFragment;
-import com.mario.watsontv.ui.dashboard.media.series.MediaListListener;
+import com.mario.watsontv.ui.dashboard.media.MediaListListener;
 import com.mario.watsontv.util.UtilToken;
 
 import java.util.ArrayList;
@@ -45,18 +49,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener {
+public class MovieListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener, SearchView.OnQueryTextListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
     MediaService service;
     UserService userService;
     List<MediaResponse> items;
-    MovieListAdapter adapter;
+    MediaListAdapter adapter;
     SwipeRefreshLayout swipeLayout;
     RecyclerView recycler;
     Spinner spinner;
-    private String selectedGenre;
+    private String selectedGenre, nameQuery;
     private List<GenreResponse> genres = new ArrayList<>();
     private Context ctx;
     private int mColumnCount = 3;
@@ -92,8 +96,26 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
         MenuItem item = menu.findItem(R.id.spinner);
         spinner = (Spinner) item.getActionView();
         spinner.setOnItemSelectedListener(this);
+        SearchView searchView = (SearchView) menu.findItem(R.id.media_search).getActionView();
+        searchView.setOnQueryTextListener(this);
         getGenres();
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        nameQuery = query;
+        listMovies(currentPage);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length() == 0) {
+            nameQuery = newText;
+            listMovies(currentPage);
+        }
+        return false;
     }
 
     @Override
@@ -119,7 +141,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
 
     public void listMovies(int page) {
         MediaService service = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<MediaResponse>> call = service.getAllMovies(selectedGenre, page);
+        Call<ResponseContainer<MediaResponse>> call = service.getAllMovies(selectedGenre, nameQuery, page);
         call.enqueue(new Callback<ResponseContainer<MediaResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<MediaResponse>> call, Response<ResponseContainer<MediaResponse>> response) {
@@ -134,7 +156,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
                         items = response.body().getRows();
                     } else
                         items.addAll(response.body().getRows());
-                    adapter = new MovieListAdapter(ctx, items, mListener);
+                    adapter = new MediaListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
                 }
             }
@@ -201,7 +223,7 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
             pgDialog.setCancelable(false);
             pgDialog.setTitle("Loading data");
             pgDialog.show();
-            adapter = new MovieListAdapter(ctx, items, mListener);
+            adapter = new MediaListAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
             recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -295,11 +317,16 @@ public class MovieListFragment extends Fragment implements AdapterView.OnItemSel
 
     @Override
     public void updateCollected(String id) {
-
+        AddToCollectionDialog addToCollectionDialog = new AddToCollectionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        addToCollectionDialog.setArguments(bundle);
+        addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+        addToCollectionDialog.show(getFragmentManager(), "create dialog");
     }
 
     @Override
-    public void goToDetail(String id) {
+    public void goToDetail(String id, String mediaType) {
         MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString("mediaId", id);
