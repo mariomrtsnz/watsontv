@@ -22,10 +22,10 @@ public interface UserService {
     String BASE_URL = "/users";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<UserResponse>> listUsers(@Query("page") int page);
+    Call<ResponseContainer<UserResponse>> listUsers(@Query("name") String name, @Query("page") int page);
 
     @GET(BASE_URL + "/befriended")
-    Call<List<UserResponse>> listFriends(@Query("page") int page);
+    Call<List<UserResponse>> listFriends(@Query("name") String name, @Query("page") int page);
 
     @GET(BASE_URL + "/{id}")
     Call<UserResponse> getUser(@Path("id") String id);

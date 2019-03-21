@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,11 +52,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CollectionFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener{
+public class CollectionFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener, SearchView.OnQueryTextListener {
 
     private MediaListListener mListener;
     private Context ctx;
-    private String jwt, selectedGenre;
+    private String jwt, selectedGenre, nameQuery;
     private static final String ARG_COLUMN_COUNT = "column-count";
     MediaService service;
     UserService userService;
@@ -79,17 +80,37 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (!isWatchlist) Objects.requireNonNull(getActivity()).setTitle("Collection - " + selectedCollection.getName());
+        if (!isWatchlist)
+            Objects.requireNonNull(getActivity()).setTitle("Collection - " + selectedCollection.getName());
         else Objects.requireNonNull(getActivity()).setTitle("Collection - Watchlist");
         inflater.inflate(R.menu.fragment_media_menu, menu);
         MenuItem item = menu.findItem(R.id.spinner);
         spinner = (Spinner) item.getActionView();
         spinner.setOnItemSelectedListener(this);
+        SearchView searchView = (SearchView) menu.findItem(R.id.media_search).getActionView();
+        searchView.setOnQueryTextListener(this);
         getGenres();
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public CollectionFragment() {}
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        nameQuery = query;
+        listCollectionMedia();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length() == 0) {
+            nameQuery = newText;
+            listCollectionMedia();
+        }
+        return false;
+    }
+
+    public CollectionFragment() {
+    }
 
     // TODO: Rename and change types and number of parameters
     public static CollectionFragment newInstance(int columnCount) {
@@ -122,7 +143,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
             final GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, mColumnCount);
             recycler.setLayoutManager(gridLayoutManager);
             items = new ArrayList<>();
-            if (isWatchlist) listUserWatchlist(); else listCollectionMedia();
+            if (isWatchlist) listUserWatchlist();
+            else listCollectionMedia();
             pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
             pgDialog.setIndeterminate(true);
             pgDialog.setCancelable(false);
@@ -137,7 +159,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
             swipeLayout = layout.findViewById(R.id.swipeContainer);
             swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
             swipeLayout.setOnRefreshListener(() -> {
-                if (isWatchlist) listUserWatchlist(); else listCollectionMedia();
+                if (isWatchlist) listUserWatchlist();
+                else listCollectionMedia();
                 if (swipeLayout.isRefreshing()) {
                     swipeLayout.setRefreshing(false);
                 }
@@ -198,7 +221,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
                     items = response.body();
                     adapter = new MediaListAdapter(ctx, items, mListener);
                     recycler.setAdapter(adapter);
-                    if (selectedCollection.getCollected().size() <= 0 || items.size() <= 0) tvEmptyList.setVisibility(View.VISIBLE);
+                    if (selectedCollection.getCollected().size() <= 0 || items.size() <= 0)
+                        tvEmptyList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -255,7 +279,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    listCollectionMedia();
+                    if (isWatchlist) listUserWatchlist();
+                    else listCollectionMedia();
                 }
             }
 
@@ -277,7 +302,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    listCollectionMedia();
+                    if (isWatchlist) listUserWatchlist();
+                    else listCollectionMedia();
                 }
             }
 
@@ -302,7 +328,8 @@ public class CollectionFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        listCollectionMedia();
+        if (isWatchlist) listUserWatchlist();
+        else listCollectionMedia();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard.media.series.detail;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,14 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.clans.fab.FloatingActionButton;
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.MediaDetailsResponse;
 import com.mario.watsontv.responses.MediaResponse;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.MediaService;
+import com.mario.watsontv.retrofit.services.UserService;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsAdapter;
 import com.mario.watsontv.ui.dashboard.media.MediaDetailsListener;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
 import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.list.SeriesListFragment;
 import com.mario.watsontv.ui.dashboard.media.series.season.SeasonFragment;
@@ -59,6 +64,7 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
     RecyclerView castRecycler;
     RecyclerView seasonsRecycler;
     private String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    private FloatingActionButton fabCheck, fabCollect, fabWatchlist;
 
     private SeriesDetailListener seriesDetailListener;
     private MediaDetailsListener mediaDetailsListener;
@@ -108,6 +114,9 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         btnGenre = layout.findViewById(R.id.series_detail_btn_genre);
         tvEmptyCast = layout.findViewById(R.id.series_detail_tv_cast_empty);
         tvEmptySeasons = layout.findViewById(R.id.series_detail_tv_seasons_empty);
+        fabCheck = layout.findViewById(R.id.series_detail_fab_menu_watch);
+        fabCollect = layout.findViewById(R.id.series_detail_fab_menu_collection);
+        fabWatchlist = layout.findViewById(R.id.series_detail_fab_menu_watchlist);
         getMediaDetails();
         pgDialog = new ProgressDialog(ctx, R.style.MaterialAlertDialog_MaterialComponents_Title_Icon_CenterStacked);
         pgDialog.setIndeterminate(true);
@@ -144,12 +153,23 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
             seasonsRecycler.setAdapter(seasonsAdapter);
         }
         Glide.with(ctx).load(media.getCoverImage()).into(ivCoverImage);
+        if (media.isWatched()) {
+            fabCheck.setImageResource(R.drawable.ic_check_box_black_24dp);
+            fabCheck.setLabelText(String.valueOf("Uncheck as Watched"));
+        }
+        if (media.isWatchlisted()) {
+            fabWatchlist.setImageResource(R.drawable.ic_eye_hide);
+            fabWatchlist.setLabelText(String.valueOf("Remove from Watchlisted"));
+        }
         tvTitle.setText(media.getTitle());
         tvBroadcaster.setText(String.valueOf(media.getBroadcaster()));
         tvAirsDayOfWeek.setText(daysOfWeek[media.getAirsDayOfWeek()-1]);
         tvSynopsis.setText(media.getSynopsis());
         tvRatings.setText(String.valueOf(media.getRating().length));
         ratingBar.setRating(media.getTotalRating());
+        fabCheck.setOnClickListener(v -> mediaDetailsListener.updateWatched(mediaId));
+        fabCollect.setOnClickListener(v -> mediaDetailsListener.updateCollected(mediaId));
+        fabWatchlist.setOnClickListener(v -> mediaDetailsListener.updateWatchlisted(mediaId));
         try {
             if (media.getReleaseDate() != null)
                 tvReleaseDate.setText(String.valueOf(media.getReleaseDate().get(Calendar.YEAR)));
@@ -198,6 +218,61 @@ public class SeriesDetailFragment extends Fragment implements SeriesDetailListen
         Bundle bundle = new Bundle();
         bundle.putString("selectedGenreId", genreId);
         seriesListFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.content_main_container, seriesListFragment).addToBackStack(null).commit();
+//        getFragmentManager().beginTransaction().replace(R.id.content_main_container, seriesListFragment).addToBackStack(null).commit();
     }
+
+    @Override
+    public void updateWatched(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    getMediaDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void updateWatchlisted(String id) {
+        UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    getMediaDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void updateCollected(String id) {
+        AddToCollectionDialog addToCollectionDialog = new AddToCollectionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("mediaId", id);
+        addToCollectionDialog.setArguments(bundle);
+        addToCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+        addToCollectionDialog.show(getFragmentManager(), "create dialog");
+    }
+
 }

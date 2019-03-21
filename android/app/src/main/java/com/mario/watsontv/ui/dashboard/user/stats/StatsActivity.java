@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class StatsActivity extends AppCompatActivity {
     int[] colorsArray = {Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY, Color.MAGENTA, Color.RED, Color.YELLOW};
     String jwt, selectedUserId;
     TextView atEpisodesNumber, atMoviesNumber, atEpisodesTime, atMoviesTime;
+    private ImageView placeholderPieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class StatsActivity extends AppCompatActivity {
         atMoviesNumber = findViewById(R.id.profile_stats_movies_at_number);
         atEpisodesTime = findViewById(R.id.profile_stats_series_at_time);
         atMoviesTime = findViewById(R.id.profile_stats_movies_at_time);
+        placeholderPieChart = findViewById(R.id.profile_stats_placeHolderPieChart);
         pieChartView = findViewById(R.id.chart);
         getUserStats();
         getUserTimeStats();
@@ -63,16 +67,20 @@ public class StatsActivity extends AppCompatActivity {
                 if (response.code() != 200) {
                     Toast.makeText(ctx, "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
+                    int nullValues = 0;
                     userStats = response.body();
                     for (Map.Entry<String, Float> entry : userStats.entrySet()) {
                         if (entry.getValue() != null) {
                             Random random = new Random();
                             pieData.add(new SliceValue(entry.getValue(), colorsArray[random.nextInt(colorsArray.length)]).setLabel(entry.getKey() + " (" + String.valueOf(entry.getValue()) + "%)"));
-                        }
+                        } else nullValues +=1 ;
                     }
-                    PieChartData pieChartData = new PieChartData(pieData);
-                    pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-                    pieChartView.setPieChartData(pieChartData);
+                    if (nullValues == 0) {
+                        PieChartData pieChartData = new PieChartData(pieData);
+                        pieChartData.setHasLabels(true).setValueLabelTextSize(14);
+                        pieChartView.setPieChartData(pieChartData);
+                        placeholderPieChart.setVisibility(View.GONE);
+                    }
                 }
             }
 

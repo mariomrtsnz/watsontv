@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.mario.watsontv.R;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsFragment extends Fragment implements FriendsListener {
+public class FriendsFragment extends Fragment implements FriendsListener, SearchView.OnQueryTextListener {
     private static final String ARG_COLUMN_COUNT = "column-count";
     UserService userService;
     List<UserResponse> items;
@@ -48,13 +49,11 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     ProgressDialog pgDialog;
     boolean isScrolling = false;
     int currentPage = 1;
-    int maxPage;
+    int maxPage, totalItems;
     int maxItemsInPage = 30;
-    int totalItems;
-
     private boolean allUsers = false;
     private Context ctx;
-    private String jwt;
+    private String jwt, nameQuery;
     private FriendsListener mListener;
 
 
@@ -70,23 +69,46 @@ public class FriendsFragment extends Fragment implements FriendsListener {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Objects.requireNonNull(getActivity()).setTitle("Users");
         inflater.inflate(R.menu.fragment_friends_menu, menu);
+//        allUsers = getArguments().getBoolean("allUsers");
         MenuItem filter = menu.findItem(R.id.menu_friends_filter);
+        SearchView searchView = (SearchView) menu.findItem(R.id.friends_search).getActionView();
+        searchView.setOnQueryTextListener(this);
         filter.setChecked(!allUsers);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
+    public boolean onQueryTextSubmit(String query) {
+        nameQuery = query;
+        if (allUsers) listUsers(currentPage);
+        else listFriends(currentPage);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length() == 0) {
+            nameQuery = newText;
+            if (allUsers) listUsers(currentPage);
+            else listFriends(currentPage);
+        }
+        return false;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.friends_befriended_filter) {
-            if(item.isChecked()) {
-                allUsers = !allUsers;
-                item.setChecked(allUsers);
-                listUsers(1);
-            } else {
-                allUsers = !allUsers;
-                item.setChecked(allUsers);
-                listFriends(1);
-            }
+        switch (item.getItemId()) {
+            case R.id.friends_befriended_filter:
+                if(item.isChecked()){
+                    allUsers = !allUsers;
+                    item.setChecked(allUsers);
+                    listUsers(1);
+                } else {
+                    allUsers = !allUsers;
+                    item.setChecked(allUsers);
+                    listFriends(1);
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -174,7 +196,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     public void listUsers(int page) {
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<UserResponse>> call = service.listUsers(page);
+        Call<ResponseContainer<UserResponse>> call = service.listUsers(nameQuery, page);
         call.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
@@ -206,7 +228,7 @@ public class FriendsFragment extends Fragment implements FriendsListener {
 
     public void listFriends(int page) {
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<List<UserResponse>> call = service.listFriends(page);
+        Call<List<UserResponse>> call = service.listFriends(nameQuery, page);
         call.enqueue(new Callback<List<UserResponse>>() {
             @Override
             public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
