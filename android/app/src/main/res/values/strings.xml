@@ -58,4 +58,6 @@
     <string name="media_detail_broadcaster">on</string>
     <string name="not_yet_released">Unreleased</string>
     <string name="empty_list_label">No Media yet</string>
+    <string name="edit_label">Profile - Edit</string>
+    <string name="save_edit_label">Save</string>
 </resources>

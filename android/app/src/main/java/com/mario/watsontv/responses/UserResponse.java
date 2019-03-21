@@ -1,11 +1,12 @@
 package com.mario.watsontv.responses;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class UserResponse {
+public class UserResponse implements Serializable {
     private String _id;
     private String email;
     private String password;

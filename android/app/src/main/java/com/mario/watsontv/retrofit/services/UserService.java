@@ -1,6 +1,6 @@
 package com.mario.watsontv.retrofit.services;
 
-import com.mario.watsontv.responses.CollectionResponse;
+import com.mario.watsontv.dto.ProfileEditDto;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
 import com.mario.watsontv.responses.UserResponse;
@@ -30,20 +30,15 @@ public interface UserService {
     @GET(BASE_URL + "/{id}")
     Call<UserResponse> getUser(@Path("id") String id);
 
-    @GET(BASE_URL + "/{id}")
-    Call<UserResponse> getUserResponse(@Path("id") String id);
-
     @GET(BASE_URL + "/me")
     Call<UserResponse> getMe();
 
-//    @PUT(BASE_URL + "/{id}")
-//    Call<UserEditResponse> editUser(@Path("id") String id, @Body UserEditDto user);
+    @PUT(BASE_URL + "/{id}")
+    Call<UserResponse> editUser(@Path("id") String id, @Body ProfileEditDto user);
 
     @PUT(BASE_URL + "/{id}/password")
     Call<UserResponse> editPassword(@Path("id") String id, @Body String password);
 
-//    @DELETE("/users/{id}")
-//    Call<User> deleteUser(@Path("id") Long id);
 //    @Multipart
 //    @POST(BASE_URL + "/uploadProfilePicture")
 //    Call<MyProfileResponse> uploadPictureProfile(@Part MultipartBody.Part avatar,

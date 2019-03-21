@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener {
+public class SeriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener, MediaListListener, SearchView.OnQueryTextListener {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
@@ -59,7 +60,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
     SwipeRefreshLayout swipeLayout;
     RecyclerView recycler;
     Spinner spinner;
-    private String selectedGenre;
+    private String selectedGenre, nameQuery;
     private List<GenreResponse> genres = new ArrayList<>();
     private Context ctx;
     private int mColumnCount = 3;
@@ -95,8 +96,26 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
         MenuItem item = menu.findItem(R.id.spinner);
         spinner = (Spinner) item.getActionView();
         spinner.setOnItemSelectedListener(this);
+        SearchView searchView = (SearchView) menu.findItem(R.id.media_search).getActionView();
+        searchView.setOnQueryTextListener(this);
         getGenres();
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        nameQuery = query;
+        listSeries(currentPage);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length() == 0) {
+            nameQuery = newText;
+            listSeries(currentPage);
+        }
+        return false;
     }
 
     @Override
@@ -112,11 +131,6 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.media_search:
-
-                return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -125,7 +139,7 @@ public class SeriesListFragment extends Fragment implements AdapterView.OnItemSe
             selectedGenre = getArguments().getString("selectedGenreId");
         }
         MediaService service = ServiceGenerator.createService(MediaService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<MediaResponse>> call = service.getAllSeries(selectedGenre, page);
+        Call<ResponseContainer<MediaResponse>> call = service.getAllSeries(selectedGenre, nameQuery, page);
         call.enqueue(new Callback<ResponseContainer<MediaResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<MediaResponse>> call, Response<ResponseContainer<MediaResponse>> response) {

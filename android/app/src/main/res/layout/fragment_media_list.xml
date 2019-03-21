@@ -11,8 +11,7 @@
         android:id="@+id/media_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_media_card"
-        />
+        tools:listitem="@layout/item_media_card"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

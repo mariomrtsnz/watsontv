@@ -1,7 +1,6 @@
 package com.mario.watsontv.ui.auth.signup;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mario.watsontv.R;
 import com.mario.watsontv.dto.RegisterDto;
-import com.mario.watsontv.ui.auth.login.LoginListener;
 
 import java.util.regex.Pattern;
 
@@ -86,9 +84,9 @@ public class SignupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        email_input = getActivity().findViewById(R.id.signup_email_input);
-        password_input = getActivity().findViewById(R.id.signup_password_input);
-        name_input = getActivity().findViewById(R.id.signup_name_input);
+        email_input = getActivity().findViewById(R.id.email_input);
+        password_input = getActivity().findViewById(R.id.password_input);
+        name_input = getActivity().findViewById(R.id.name_input);
         btn_signup = getActivity().findViewById(R.id.btn_signup_submit);
         goToLogin = getActivity().findViewById(R.id.tv_go_to_LogIn);
         goToLogin.setOnClickListener(v -> mListener.goToLogin());
@@ -109,13 +107,6 @@ public class SignupFragment extends Fragment {
                         mListener.onSignupSubmit(registerDto);
                     }
         });
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(RegisterDto registerDto) {
-        if (mListener != null) {
-            mListener.onSignupSubmit(registerDto);
-        }
     }
 
     @Override

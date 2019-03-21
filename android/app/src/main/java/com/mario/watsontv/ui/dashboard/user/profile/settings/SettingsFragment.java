@@ -1,16 +1,10 @@
-package com.mario.watsontv.ui.dashboard.user.settings;
+package com.mario.watsontv.ui.dashboard.user.profile.settings;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +14,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.user.profile.edit.EditProfile;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SettingsFragment extends Fragment implements SettingsListener {
@@ -42,8 +47,11 @@ public class SettingsFragment extends Fragment implements SettingsListener {
     private CircleImageView civPicture;
     private UserResponse loggedUser;
     private ProgressDialog pgDialog;
+    private FloatingActionButton fabEdit;
+    private SwipeRefreshLayout swipeLayout;
 
-    public SettingsFragment() {}
+    public SettingsFragment() {
+    }
 
     // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
@@ -68,17 +76,26 @@ public class SettingsFragment extends Fragment implements SettingsListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_settings, container, false);
-        civPicture = layout.findViewById(R.id.user_details_settings_civ_profilePic);
+        civPicture = layout.findViewById(R.id.edit_profile_settings_civ_profilePic);
         tvEmail = layout.findViewById(R.id.user_details_settings_tv_email);
         tvUsername = layout.findViewById(R.id.user_details_settings_tv_username);
         tvMemberSince = layout.findViewById(R.id.user_details_settings_tv_memberSince);
         switchDarkMode = layout.findViewById(R.id.user_details_settings_switch_darkMode);
         pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        fabEdit = layout.findViewById(R.id.user_details_settings_fab_edit);
         pgDialog.setIndeterminate(true);
         pgDialog.setCancelable(false);
         pgDialog.setTitle("Loading profile");
         pgDialog.show();
         getUserData();
+        swipeLayout = layout.findViewById(R.id.user_details_settings_swipeRefresh);
+        swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
+        swipeLayout.setOnRefreshListener(() -> {
+            getUserData();
+            if (swipeLayout.isRefreshing()) {
+                swipeLayout.setRefreshing(false);
+            }
+        });
         return layout;
     }
 
@@ -108,6 +125,7 @@ public class SettingsFragment extends Fragment implements SettingsListener {
 
     private void setData() {
         Glide.with(ctx).load(loggedUser.getPicture()).into(civPicture);
+        tvEmail.setText(loggedUser.getEmail());
         tvUsername.setText(loggedUser.getName());
         Calendar createdAt = null;
         try {
@@ -118,8 +136,8 @@ public class SettingsFragment extends Fragment implements SettingsListener {
         String day = String.valueOf(createdAt.get(Calendar.DAY_OF_MONTH));
         String month = createdAt.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
         String year = String.valueOf(createdAt.get(Calendar.YEAR));
-
         tvMemberSince.setText("Member since " + month + " " + day + ", " + year);
+        fabEdit.setOnClickListener(v -> mListener.editProfile());
         pgDialog.dismiss();
     }
 
@@ -133,5 +151,27 @@ public class SettingsFragment extends Fragment implements SettingsListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void editProfile() {
+        Intent i = new Intent(ctx, EditProfile.class);
+        Bundle bundle = new Bundle();
+        i.putExtra("loggedUserData", loggedUser);
+        startActivityForResult(i, Activity.RESULT_OK);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+            fabEdit = getView().findViewById(R.id.user_details_settings_fab_edit);
+            pgDialog.setIndeterminate(true);
+            pgDialog.setCancelable(false);
+            pgDialog.setTitle("Loading profile");
+            pgDialog.show();
+            getUserData();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
