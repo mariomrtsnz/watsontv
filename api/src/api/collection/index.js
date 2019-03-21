@@ -1,13 +1,20 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { create, index, show, update, destroy, userCollections } from './controller'
+import { create, index, show, update, destroy, userCollections, updateCollected, getCollectionMedia } from './controller'
 import { schema } from './model'
 import { token } from '../../services/passport'
+import mongoose, { Schema } from 'mongoose'
 export Collection, { schema } from './model'
 
 const router = new Router()
 const { name, description, collected, owner } = schema.tree
+const genreSchema = new Schema({
+  genre: {
+    type: String,
+    paths: ['genre']
+  }
+})
 
 /**
  * @api {post} /collections Create collection
@@ -66,6 +73,15 @@ router.get('/:id',
 router.put('/:id',
   body({ name, description, collected }),
   update)
+
+router.get('/:id/media',
+  token({required: true}),
+  query(),
+  getCollectionMedia)
+
+router.put('/add/:mediaId',
+  token({required: true}),
+  updateCollected)
 
 /**
  * @api {delete} /collections/:id Delete collection

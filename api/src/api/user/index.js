@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, indexForAndroid, updateWatched, updateWatchlisted, editFriended} from './controller'
+import { index, showMe, show, create, update, updatePassword, destroy, getTotalWatchedTime, befriended, updateWatched, updateWatchlisted, editFriended, getWatchlist, getGenreStats } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
@@ -33,6 +33,19 @@ router.get('/',
  * @apiParam {String} access_token User access_token.
  * @apiSuccess {Object} user User's data.
  */
+
+router.get('/:id/timeStats',
+  token({ required: true }),
+  getTotalWatchedTime)
+
+router.get('/myWatchlist',
+  token({ required: true }),
+  getWatchlist)
+
+router.get('/:id/stats',
+  token({ required: true }),
+  getGenreStats)
+
 router.get('/me',
   token({ required: true }),
   showMe)
@@ -52,6 +65,7 @@ router.get('/befriended',
  * @apiError 404 User not found.
  */
 router.get('/:id',
+  token({ required: true }),
   show)
 
 /**

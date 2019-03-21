@@ -4,6 +4,7 @@ import com.mario.watsontv.responses.CollectionResponse;
 import com.mario.watsontv.responses.MediaResponse;
 import com.mario.watsontv.responses.ResponseContainer;
 import com.mario.watsontv.responses.UserResponse;
+import com.mario.watsontv.responses.UserTimeStats;
 
 import java.util.List;
 import java.util.Map;
@@ -62,4 +63,7 @@ public interface UserService {
 
     @GET(BASE_URL + "/{id}/stats")
     Call<Map<String, Float>> getUserStats(@Path("id") String id);
+
+    @GET(BASE_URL + "/{id}/timeStats")
+    Call<UserTimeStats> getUserTimeStats(@Path("id") String id);
 }

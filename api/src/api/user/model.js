@@ -59,7 +59,7 @@ const userSchema = new Schema({
   }]
 }, {
   strict: false,
-  timestamps: true
+  timestamps: true,
 })
 
 userSchema.path('email').set(function (email) {

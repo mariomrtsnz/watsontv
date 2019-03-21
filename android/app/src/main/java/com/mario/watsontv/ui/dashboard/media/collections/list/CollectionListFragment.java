@@ -61,13 +61,14 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
     List<CollectionResponse> items;
     CollectionListAdapter adapter;
     RecyclerView recycler;
-    private String selectedGenre;
+    private String selectedUserId;
     private int mColumnCount = 1;
     ProgressDialog pgDialog;
     private CollectionListListener mListener;
     private Context ctx;
     SwipeRefreshLayout swipeLayout;
     private FloatingActionButton fab;
+    private boolean isMine;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -96,9 +97,9 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     pgDialog.dismiss();
-                    listMyCollections();
+                    listCollections();
                     Toast.makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                    adapter = new CollectionListAdapter(ctx, items, mListener);
+                    adapter = new CollectionListAdapter(ctx, items, mListener, isMine);
                     recycler.setAdapter(adapter);
                 }
             }
@@ -111,9 +112,9 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
         });
     }
 
-    public void listMyCollections() {
+    public void listCollections() {
         service = ServiceGenerator.createService(CollectionService.class, jwt, AuthType.JWT);
-        Call<List<CollectionResponse>> call = service.getUserCollections(UtilToken.getId(ctx));
+        Call<List<CollectionResponse>> call = service.getUserCollections(selectedUserId);
         call.enqueue(new Callback<List<CollectionResponse>>() {
             @Override
             public void onResponse(Call<List<CollectionResponse>> call, Response<List<CollectionResponse>> response) {
@@ -122,7 +123,7 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
                 } else {
                     pgDialog.dismiss();
                     items = response.body();
-                    adapter = new CollectionListAdapter(ctx, items, mListener);
+                    adapter = new CollectionListAdapter(ctx, items, mListener, isMine);
                     recycler.setAdapter(adapter);
                 }
             }
@@ -137,7 +138,12 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Objects.requireNonNull(getActivity()).setTitle("My Collections");
+        if (isMine) {
+            Objects.requireNonNull(getActivity()).setTitle("My Collections");
+        }
+        else {
+            Objects.requireNonNull(getActivity()).setTitle("User - Collections");
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -145,11 +151,15 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            selectedUserId = getArguments().getString("selectedUserId");
+            isMine = false;
         }
-        jwt = UtilToken.getToken(getContext());
+        else {
+            selectedUserId = UtilToken.getId(getContext());
+            isMine = true;
+        }
         mListener = this;
+        jwt = UtilToken.getToken(getContext());
     }
 
     @Override
@@ -166,36 +176,38 @@ public class CollectionListFragment extends Fragment implements CollectionListLi
                 recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
             }
             items = new ArrayList<>();
-            listMyCollections();
+            listCollections();
             pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
             pgDialog.setIndeterminate(true);
             pgDialog.setCancelable(false);
             pgDialog.setTitle("Loading data");
             pgDialog.show();
-            adapter = new CollectionListAdapter(ctx, items, mListener);
+            adapter = new CollectionListAdapter(ctx, items, mListener, isMine);
             recycler.setAdapter(adapter);
             swipeLayout = layout.findViewById(R.id.collection_list_swipeContainer);
             swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
             swipeLayout.setOnRefreshListener(() -> {
-                listMyCollections();
+                listCollections();
                 if (swipeLayout.isRefreshing()) {
                     swipeLayout.setRefreshing(false);
                 }
             });
         }
         fab = layout.findViewById(R.id.collection_list_fab_create);
-        fab.setOnClickListener(v -> {
-            CreateCollectionDialog createCollectionDialog = new CreateCollectionDialog();
-            createCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
-            createCollectionDialog.show(getFragmentManager(), "create dialog");
-        });
+        if (isMine) {
+            fab.setOnClickListener(v -> {
+                CreateCollectionDialog createCollectionDialog = new CreateCollectionDialog();
+                createCollectionDialog.setTargetFragment(this, Activity.RESULT_OK);
+                createCollectionDialog.show(getFragmentManager(), "create dialog");
+            });
+        } else fab.setVisibility(View.GONE);
         return layout;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            listMyCollections();
+            listCollections();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

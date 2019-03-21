@@ -2,9 +2,11 @@ package com.mario.watsontv.ui.dashboard.user.friends.detail;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -25,6 +27,8 @@ import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
 import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.collections.list.CollectionListFragment;
+import com.mario.watsontv.ui.dashboard.user.stats.StatsActivity;
 import com.mario.watsontv.util.UtilToken;
 
 import java.text.ParseException;
@@ -41,6 +45,7 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
     private FloatingActionButton fabBefriend;
     private UserResponse selectedUser;
     private ProgressDialog pgDialog;
+    private CardView cvStats, cvCollections;
 
     public UserDetailsFragment() {}
 
@@ -68,9 +73,14 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_user_details, container, false);
         civProfilePic = layout.findViewById(R.id.user_details_civ_profilePic);
+        cvCollections = layout.findViewById(R.id.user_details_collections);
+        cvStats = layout.findViewById(R.id.user_details_stats);
+        cvCollections.setOnClickListener(v -> mListener.goToCollections(selectedUserId));
+        cvStats.setOnClickListener(v -> mListener.goToStats(selectedUserId));
         tvUsername = layout.findViewById(R.id.user_details_tv_username);
         tvMemberSince = layout.findViewById(R.id.user_details_tv_memberSince);
         fabBefriend = layout.findViewById(R.id.user_details_fab_befriend);
+        fabBefriend.setOnClickListener(v -> mListener.updateFriend(selectedUserId));
         pgDialog = new ProgressDialog(ctx, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
         pgDialog.setIndeterminate(true);
         pgDialog.setCancelable(false);
@@ -135,4 +145,24 @@ public class UserDetailsFragment extends Fragment implements UserDetailsListener
         pgDialog.dismiss();
     }
 
+    @Override
+    public void goToStats(String id) {
+        Intent i = new Intent(ctx, StatsActivity.class);
+        i.putExtra("selectedUserId", selectedUserId);
+        startActivity(i);
+    }
+
+    @Override
+    public void goToCollections(String id) {
+        CollectionListFragment collectionListFragment = new CollectionListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedUserId", id);
+        collectionListFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content_main_container, collectionListFragment).commit();
+    }
+
+    @Override
+    public void updateFriend(String selectedUserId) {
+        
+    }
 }
