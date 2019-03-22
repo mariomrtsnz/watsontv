@@ -51,6 +51,14 @@ router.get('/',
 router.get('/:id',
   show)
 
+  /**
+ * @api {get} /seasons/:id/episodes Show all episodes by Season Id
+ * @apiName RetrieveSeasonEpisodes
+ * @apiGroup User
+ * @apiParam {String} id Season id
+ * @apiUse listParams
+ * @apiSuccess {Object[]} Episode.
+ */
 router.get('/:id/episodes',
   showEpisodes)
 

@@ -50,6 +50,13 @@ router.get('/',
   query(genreSchema),
   index)
 
+  /**
+ * @api {get} /series/user Get All Series with associated Logged User's attributes
+ * @apiName RetrieveSeriesWithAttributes
+ * @apiGroup Series
+ * @apiPermission token
+ * @apiSuccess {Object[]} Series.
+ */
 router.get('/user',
   token({ required: true }),
   query(genreSchema),

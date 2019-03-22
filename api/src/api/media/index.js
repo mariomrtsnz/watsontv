@@ -55,6 +55,13 @@ router.get('/',
   query(genreSchema),
   index)
 
+/**
+ * @api {get} /media/user Get All Media with associated Logged User's attributes
+ * @apiName RetrieveMediaWithAttributes
+ * @apiGroup Media
+ * @apiPermission token
+ * @apiSuccess {Object[]} Media.
+ */
 router.get('/user',
   token({ required: true }),
   query(genreSchema),
@@ -95,12 +102,29 @@ router.put('/:id',
   body({ title, releaseDate, rating, cast, coverImage, genre, synopsis }),
   update)
 
+  /**
+ * @api {get} /media/:id/addCast Adds an Actor to Media Cast list by Media Id
+ * @apiName RetrieveMediaWithAttributes
+ * @apiGroup Media
+ * @apiParam {String} id Media id
+ * @apiParam {String} cast Actor
+ * @apiPermission token
+ * @apiSuccess {Object} Media.
+ */
 router.put('/:id/addCast',
   token({ required: true, roles: ['admin'] }),
   body({ cast }),
   addCastMember)
 
-
+  /**
+ * @api {get} /media/:id/removeCast Removes an Actor from Media Cast list by Media Id
+ * @apiName RetrieveMediaWithAttributes
+ * @apiGroup Media
+ * @apiParam {String} id Media id
+ * @apiParam {String} cast Actor
+ * @apiPermission token
+ * @apiSuccess {Object} Media.
+ */
 router.put('/:id/removeCast',
   token({ required: true, roles: ['admin'] }),
   body({ cast }),

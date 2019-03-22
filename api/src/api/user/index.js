@@ -20,6 +20,7 @@ const userSchema = new Schema({
  * @apiName RetrieveUsers
  * @apiGroup User
  * @apiPermission admin
+ * @apiPermission user
  * @apiParam {String} access_token User access_token.
  * @apiUse listParams
  * @apiSuccess {Object[]} users List of users.
@@ -32,6 +33,56 @@ router.get('/',
   index)
 
 /**
+ * @api {get} /users/:id/dashboard Retrieve Dashboard Media by User Id
+ * @apiName GetDashboardMedia
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id User id
+ * @apiUse listParams
+ * @apiSuccess {Object[]} Media.
+ * @apiError {Object} 400 Empty user watchedEpisodes.
+ */
+router.get('/:id/dashboard',
+  token({ required: true }),
+  getDashboardMedia)
+
+/**
+ * @api {get} /users/:id/timeStats Retrieve Time Stats by User Id
+ * @apiName GetUserTimeStats
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id User id
+ * @apiUse listParams
+ * @apiSuccess {Object} timeStats
+ */
+router.get('/:id/timeStats',
+  token({ required: true }),
+  getTotalWatchedTime)
+
+  /**
+ * @api {get} /users/myWatchlist Retrieve Logged User Watchlist
+ * @apiName GetMyWatchlist
+ * @apiGroup User
+ * @apiPermission token
+ * @apiSuccess {Object[]} Media.
+ */
+router.get('/myWatchlist',
+  token({ required: true }),
+  getWatchlist)
+
+  /**
+ * @api {get} /users/:id/stats Retrieve Genre Stats by User Id
+ * @apiName GetUserGenreStats
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id User id
+ * @apiSuccess {Object[]} genreStats.
+ */
+router.get('/:id/stats',
+  token({ required: true }),
+  getGenreStats)
+
+/**
  * @api {get} /users/me Retrieve current user
  * @apiName RetrieveCurrentUser
  * @apiGroup User
@@ -39,28 +90,19 @@ router.get('/',
  * @apiParam {String} access_token User access_token.
  * @apiSuccess {Object} user User's data.
  */
-
-router.get('/:id/dashboard',
-  token({ required: true }),
-  getDashboardMedia)
-
-router.get('/:id/timeStats',
-  token({ required: true }),
-  getTotalWatchedTime)
-
-router.get('/myWatchlist',
-  token({ required: true }),
-  getWatchlist)
-
-router.get('/:id/stats',
-  token({ required: true }),
-  getGenreStats)
-
 router.get('/me',
   token({ required: true }),
   showMe)
 
-// CUSTOM CALL FOR ANDROID
+  /**
+ * @api {get} /users/befriended Retrieve Only Users in Logged User's friend list
+ * @apiName GetFriends
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id User id
+ * @apiUse listParams
+ * @apiSuccess {Object[]} Users.
+ */
 router.get('/befriended',
   token({ required: true }),
   query(userSchema),
@@ -152,15 +194,42 @@ router.delete('/:id',
   token({ required: true, roles: ['admin'] }),
   destroy)
 
-
+/**
+ * @api {get} /users/updateWatched/:id Update Logged User's Watched list by Media Id
+ * @apiName UpdateWatched
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id Media id
+ * @apiUse listParams
+ * @apiSuccess {Object} User.
+ */
 router.put('/updateWatched/:id',
   token({required: true}),
   updateWatched)
 
+  /**
+ * @api {get} /users/updateWatchlisted/:id Update Logged User's Watchlist list by Media Id
+ * @apiName UpdateWatched
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id Media id
+ * @apiUse listParams
+ * @apiSuccess {Object} User.
+ */
 router.put('/updateWatchlisted/:id',
   token({required: true}),
   updateWatchlisted)
 
+  /**
+ * @api {get} /users/updateFriended/:id Update Logged User's Friends list by User Id
+ * @apiName UpdateWatched
+ * @apiGroup User
+ * @apiPermission token
+ * @apiParam {String} id Media id
+ * @apiUse listParams
+ * @apiSuccess {Object} User.
+ * @apiError {Object} 400 Empty user watchedEpisodes.
+ */
 router.put('/updateFriended/:id',
   token({ required: true }),
   editFriended)

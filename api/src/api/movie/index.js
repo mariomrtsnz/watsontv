@@ -48,6 +48,13 @@ router.get('/',
   query(genreSchema),
   index)
 
+  /**
+ * @api {get} /movies/user Get All Movies with associated Logged User's attributes
+ * @apiName RetrieveMoviesWithAttributes
+ * @apiGroup Movie
+ * @apiPermission token
+ * @apiSuccess {Object[]} Movie.
+ */
 router.get('/user',
   token({ required: true }),
   query(genreSchema),

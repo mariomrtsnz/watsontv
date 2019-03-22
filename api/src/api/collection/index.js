@@ -74,11 +74,25 @@ router.put('/:id',
   body({ name, description, collected }),
   update)
 
+  /**
+ * @api {get} /collections/:id/media Get All Media by Collection Id
+ * @apiName RetrieveCollectionsMedia
+ * @apiGroup Collection
+ * @apiPermission token
+ * @apiSuccess {Object[]} Media.
+ */
 router.get('/:id/media',
   token({required: true}),
   query(),
   getCollectionMedia)
 
+  /**
+ * @api {get} /collections/update/:mediaid Updates Collection Collected list with mediaId by removing or adding
+ * @apiName UpdateCollectionsCollected
+ * @apiGroup Collection
+ * @apiPermission token
+ * @apiSuccess {Object} Collection.
+ */
 router.put('/update/:mediaId',
   token({required: true}),
   updateCollected)
