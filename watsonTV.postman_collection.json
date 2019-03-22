@@ -382,7 +382,7 @@
 							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
 						},
 						"url": {
-							"raw": "https://watsontv.herokuapp.com/collections/mine",
+							"raw": "https://watsontv.herokuapp.com/collections/user/5c7fa7c695b92319379ed27b",
 							"protocol": "https",
 							"host": [
 								"watsontv",
@@ -391,7 +391,74 @@
 							],
 							"path": [
 								"collections",
-								"mine"
+								"user",
+								"5c7fa7c695b92319379ed27b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - Update media",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"collectionsIds\":[\"5c8f65ec61d0340017e186fd\", \"5c929238524a9f00175c0b3f\"]\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/collections/update/5c8e84dfc9cbca00179f7065",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"collections",
+								"update",
+								"5c8e84dfc9cbca00179f7065"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections - Get All Media in a Collection",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Favorites\",\n\t\"description\":\"TV Shows, Documentaries and Movies that I love.\"\n}"
+						},
+						"url": {
+							"raw": "localhost:9000/users/myWatchlist",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								"myWatchlist"
 							]
 						}
 					},
@@ -416,7 +483,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Minimum Viable Product\",\n\t\"synopsis\": \"Attending an elaborate launch party, Richard and his computer programmer friends - Big Head, Dinesh and Gilfoyle - dream of making it big. Instead, they're living in the communal Hacker Hostel owned by former programmer Erlich, who gets to claim ten percent of anything they invent there. When it becomes clear that Richard has developed a powerful compression algorithm for his website, Pied Piper, he finds himself courted by Gavin Belson, his egomaniacal corporate boss, who offers a $10 million buyout by his firm, Hooli. But Richard holds back when well-known investor Peter Gregory makes a counteroffer.\",\n\t\"airTime\": \"April 7, 2014\",\n\t\"duration\": 29,\n\t\"number\": 1\n}"
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\": \"Minimum Viable Product\",\n\t\"synopsis\": \"Attending an elaborate launch party, Richard and his computer programmer friends - Big Head, Dinesh and Gilfoyle - dream of making it big. Instead, they're living in the communal Hacker Hostel owned by former programmer Erlich, who gets to claim ten percent of anything they invent there. When it becomes clear that Richard has developed a powerful compression algorithm for his website, Pied Piper, he finds himself courted by Gavin Belson, his egomaniacal corporate boss, who offers a $10 million buyout by his firm, Hooli. But Richard holds back when well-known investor Peter Gregory makes a counteroffer.\",\n\t\"airTime\": \"April 7, 2014\",\n\t\"duration\": 29,\n\t\"number\": 1,\n\t\"season\": \"5c8959ec050c7f0017a3dfa4\"\n}"
 						},
 						"url": {
 							"raw": "https://watsontv.herokuapp.com/episodes",
@@ -529,6 +596,134 @@
 							"path": [
 								"episodes",
 								"5c858377952a8f23b46a0980"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All of a Season",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/seasons/5c8959ec050c7f0017a3dfa4/episodes",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seasons",
+								"5c8959ec050c7f0017a3dfa4",
+								"episodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episodes - Update User WatchedEpisodes",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes/updateWatched/5c8a0aa35bdf5f0017ed7197",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes",
+								"updateWatched",
+								"5c8a0aa35bdf5f0017ed7197"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episodes - Update User Watchlisted",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/episodes/updateWatchlisted/5c8a0aa35bdf5f0017ed7197",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"episodes",
+								"updateWatchlisted",
+								"5c8a0aa35bdf5f0017ed7197"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Get Dashboard Media",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c7fa7c695b92319379ed27b/dashboard",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c7fa7c695b92319379ed27b",
+								"dashboard"
 							]
 						}
 					},
@@ -739,7 +934,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"series\": \"5c855e9c017f4c1daab7ad9e\",\n\t\"number\": 1\n}"
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"series\": \"5c8959d4050c7f0017a3dfa3\",\n\t\"number\": 1\n}"
 						},
 						"url": {
 							"raw": "https://watsontv.herokuapp.com/seasons",
@@ -807,7 +1002,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"Silicon Valley\",\n\t\"coverImage\": \"http://olivierhanna.club/wp-content/uploads/2018/02/silicon-valley-online-free-architecture-photography-books.jpg\",\n\t\"genre\": \"5c8548a5ea901816f22d7209\",\n\t\"synopsis\": \"In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.\",\n\t\"broadcaster\": \"HBO\"\n}"
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"{{title}}\",\n\t\"genre\": \"5c8548a5ea901816f22d7209\",\n\t\"synopsis\": \"{{synopsis}}\",\n\t\"broadcaster\": \"{{broadcaster}}\",\n\t\"airsDayOfWeek\": 4\n}"
 						},
 						"url": {
 							"raw": "https://watsontv.herokuapp.com/series",
@@ -912,12 +1107,22 @@
 			"item": [
 				{
 					"name": "Media - Get One",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
 						},
 						"url": {
 							"raw": "https://watsontv.herokuapp.com/media/5c855c6b8cc1461cab5495d6",
@@ -958,6 +1163,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Media - Add Cast",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"cast\":\"5c854e7cc07fb217e3db6f16\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/media/5c8a6c90f785f700170b8aeb/addCast",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"media",
+								"5c8a6c90f785f700170b8aeb",
+								"addCast"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -972,13 +1210,13 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"Christopher Robin\",\n\t\"releaseDate\": \"August 3, 2018\",\n\t\"coverImage\": \"https://buzz.tt/media/posters/2093/posters_1_1500.jpg\",\n\t\"genre\": \"5c85600b017f4c1daab7ada3\",\n\t\"synopsis\": \"Christopher Robin, the boy who had countless adventures in the Hundred Acre Wood, has grown up and lost his way. Now it’s up to his spirited and loveable stuffed animals, Winnie The Pooh, Tigger, Piglet, and the rest of the gang, to rekindle their friendship and remind him of endless days of childlike wonder and make-believe, when doing nothing was the very best something.\"\n}"
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"title\": \"{{title}}\",\n\t\"releaseDate\": \"{{releaseDate}}\",\n\t\"genre\": \"5c854f54c07fb217e3db6f1c\",\n\t\"synopsis\": \"{{synopsis}}\",\n\t\"runtime\": 127\n}"
 						},
 						"url": {
 							"raw": "https://watsontv.herokuapp.com/movies",
@@ -1082,7 +1320,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Users - Get All",
+					"name": "Users - Get All and isFriend",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1101,7 +1339,7 @@
 							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
 						},
 						"url": {
-							"raw": "https://watsontv.herokuapp.com/users",
+							"raw": "https://watsontv.herokuapp.com/users?name=",
 							"protocol": "https",
 							"host": [
 								"watsontv",
@@ -1110,6 +1348,12 @@
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -1151,7 +1395,7 @@
 					"response": []
 				},
 				{
-					"name": "Users - Get All And Friended",
+					"name": "Users - Get Befriended",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1170,7 +1414,7 @@
 							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
 						},
 						"url": {
-							"raw": "https://watsontv.herokuapp.com/users/allAndFriended",
+							"raw": "https://watsontv.herokuapp.com/users/befriended",
 							"protocol": "https",
 							"host": [
 								"watsontv",
@@ -1179,7 +1423,622 @@
 							],
 							"path": [
 								"users",
-								"allAndFriended"
+								"befriended"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Update Watched",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/updateWatched/5c8e84cfc9cbca00179f7064",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updateWatched",
+								"5c8e84cfc9cbca00179f7064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Update Friended",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/updateFriended/5c8b71e5e767ed00170f2ea8",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updateFriended",
+								"5c8b71e5e767ed00170f2ea8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Update Watchlisted",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/updateWatchlisted/5c8e84cfc9cbca00179f7064",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updateWatchlisted",
+								"5c8e84cfc9cbca00179f7064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Media - Get All and User Attributes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/media/user",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"media",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Get User Watchlist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"name\":\"Favorites\",\n\t\"description\":\"TV Shows, Documentaries and Movies that I love.\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/myWatchlist",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"myWatchlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User - Get TimeStats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c7fa7c695b92319379ed27b/timeStats",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c7fa7c695b92319379ed27b",
+								"timeStats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"email\": \"pepe@pepe.co\",\n\t\"name\": \"pepe\",\n\t\"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c93892523ab10001736f44f",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c93892523ab10001736f44f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjN2ZhN2M2OTViOTIzMTkzNzllZDI3YiIsImlhdCI6MTU1MTg2OTk2Mn0.t-LpPM8_CiHKZ0zEGO-ms-QoSfYMh3zMdqvMrkNmDzs\",\n\t\"password\":\"pepepepe\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c93892523ab10001736f44f",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c93892523ab10001736f44f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users - Edit Password",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pepepepepepe",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "pepe@pepe.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOTNiZDI4MzU0OWZmMDAxN2RmYWNmOSIsImlhdCI6MTU1MzE4NjE2MH0.N3HjHhsLIOSsDK0Z-5zdNXYCIDu6dukjDJXrbAkG04k\",\n\t\"password\":\"pepepepe\"\n}"
+						},
+						"url": {
+							"raw": "https://watsontv.herokuapp.com/users/5c93bd283549ff0017dfacf9/password",
+							"protocol": "https",
+							"host": [
+								"watsontv",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c93bd283549ff0017dfacf9",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "theTVDB",
+			"item": [
+				{
+					"name": "theTVDB - Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"apikey\":\"LH2UMLGQKHXOUUH9\",\n\t\"username\":\"mario.mrtsnzeiz\",\n\t\"userkey\":\"8C64S5M4ZM803SFQ\"\n}"
+						},
+						"url": {
+							"raw": "https://api.thetvdb.com/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"thetvdb",
+								"com"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "theTVDB - Get Series",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTI1ODU1ODcsImlkIjoid2F0c29udHYiLCJvcmlnX2lhdCI6MTU1MjQ5OTE4NywidXNlcmlkIjo1MjI3ODQsInVzZXJuYW1lIjoibWFyaW8ubXJ0c256ZWl6In0.HDPRhNtcXYlPc3DpSDsEeKaKHjiMNXDSbgcCsWSeoY264g0fIIgLQSn1uA-r3VqtOMpvQEu9BNBLo95Ez1Hp08LPjJ5eUX1l24O5FPHbDe5T2BUBHMiR6HuunTGHSeSVXMLQ0pN4DFze17Iq6fk5Ye0AA4jRQjvwp-4lg3TD5jtNrbMC-DsfaoKSKSxgeh9Al8KWJXaTf4jhJfSe6IQ0fQRb2VFKI6d708YWzc--8kjubUd1_7T7tyUEdOX8fEY02mGeppXTR2GrFPPnHp_TYbxMInPjsPCXitzsiHBu5Spuv6oSeIPo0Q7C-huuXeuOIyrbawvZCk1xpZdXkI9R9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.thetvdb.com/search/series?name=silicon valley",
+							"protocol": "https",
+							"host": [
+								"api",
+								"thetvdb",
+								"com"
+							],
+							"path": [
+								"search",
+								"series"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "silicon valley"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "theTVDB - Get One Series",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTI1ODU1ODcsImlkIjoid2F0c29udHYiLCJvcmlnX2lhdCI6MTU1MjQ5OTE4NywidXNlcmlkIjo1MjI3ODQsInVzZXJuYW1lIjoibWFyaW8ubXJ0c256ZWl6In0.HDPRhNtcXYlPc3DpSDsEeKaKHjiMNXDSbgcCsWSeoY264g0fIIgLQSn1uA-r3VqtOMpvQEu9BNBLo95Ez1Hp08LPjJ5eUX1l24O5FPHbDe5T2BUBHMiR6HuunTGHSeSVXMLQ0pN4DFze17Iq6fk5Ye0AA4jRQjvwp-4lg3TD5jtNrbMC-DsfaoKSKSxgeh9Al8KWJXaTf4jhJfSe6IQ0fQRb2VFKI6d708YWzc--8kjubUd1_7T7tyUEdOX8fEY02mGeppXTR2GrFPPnHp_TYbxMInPjsPCXitzsiHBu5Spuv6oSeIPo0Q7C-huuXeuOIyrbawvZCk1xpZdXkI9R9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.thetvdb.com/series/277165",
+							"protocol": "https",
+							"host": [
+								"api",
+								"thetvdb",
+								"com"
+							],
+							"path": [
+								"series",
+								"277165"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Series Episodes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTI1ODU1ODcsImlkIjoid2F0c29udHYiLCJvcmlnX2lhdCI6MTU1MjQ5OTE4NywidXNlcmlkIjo1MjI3ODQsInVzZXJuYW1lIjoibWFyaW8ubXJ0c256ZWl6In0.HDPRhNtcXYlPc3DpSDsEeKaKHjiMNXDSbgcCsWSeoY264g0fIIgLQSn1uA-r3VqtOMpvQEu9BNBLo95Ez1Hp08LPjJ5eUX1l24O5FPHbDe5T2BUBHMiR6HuunTGHSeSVXMLQ0pN4DFze17Iq6fk5Ye0AA4jRQjvwp-4lg3TD5jtNrbMC-DsfaoKSKSxgeh9Al8KWJXaTf4jhJfSe6IQ0fQRb2VFKI6d708YWzc--8kjubUd1_7T7tyUEdOX8fEY02mGeppXTR2GrFPPnHp_TYbxMInPjsPCXitzsiHBu5Spuv6oSeIPo0Q7C-huuXeuOIyrbawvZCk1xpZdXkI9R9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.thetvdb.com/series/277165/episodes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"thetvdb",
+								"com"
+							],
+							"path": [
+								"series",
+								"277165",
+								"episodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "omdbAPI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cef67c04-038d-43be-978d-e5f0f310e7c7",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"title\", jsonData.Title);\r",
+									"postman.setEnvironmentVariable(\"releaseDate\", jsonData.Released);\r",
+									"postman.setEnvironmentVariable(\"synopsis\", jsonData.Plot);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://www.omdbapi.com/?t=Se7en&apikey=d29a85f5",
+							"protocol": "http",
+							"host": [
+								"www",
+								"omdbapi",
+								"com"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "t",
+									"value": "Se7en"
+								},
+								{
+									"key": "apikey",
+									"value": "d29a85f5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TraktTV",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"c122c2341ca116eaec553c5791513b4eb355cd1abde2a1958fd34f506c3fa554\",\n    \"client_id\": \"ce185cf2ca624a07ef2aa41753559489145f9a91f6590d243dc999b75abdbd0f\",\n    \"client_secret\": \"921e13f9adbd49c98396cbf116039b672ddddb86c630d6a2c083650e9a435a78\",\n    \"redirect_uri\": \"https://watsontv.herokuapp.com/\",\n    \"grant_type\": \"authorization_code\"\n}"
+						},
+						"url": {
+							"raw": "https://api.trakt.tv/oauth/token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trakt",
+								"tv"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shows - Get Trending",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5a088ba41e90e0e47f3f98189d5fc2a692e4d40fe7a51b78e4ba04e554a79ad1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "trakt-api-version",
+								"value": "2",
+								"type": "text"
+							},
+							{
+								"key": "trakt-api-key",
+								"value": "ce185cf2ca624a07ef2aa41753559489145f9a91f6590d243dc999b75abdbd0f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "https://api.trakt.tv/shows/trending",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trakt",
+								"tv"
+							],
+							"path": [
+								"shows",
+								"trending"
 							]
 						}
 					},
