@@ -61,7 +61,6 @@ router.get('/:id',
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
  * @apiParam name Actor's name.
- * @apiParam picture Actor's picture.
  * @apiSuccess {Object} actor Actor's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Actor not found.

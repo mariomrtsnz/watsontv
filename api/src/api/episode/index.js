@@ -53,11 +53,28 @@ router.get('/',
 router.get('/:id',
   show)
 
-
+/**
+ * @api {get} /episodes/updateWatched/:id Update Logged User's WatchedEpisodes list by Episode Id
+ * @apiName UpdateWatchedEpisodes
+ * @apiGroup Episode
+ * @apiPermission token
+ * @apiParam {String} id Episode id
+ * @apiUse listParams
+ * @apiSuccess {Object} User.
+ */
 router.put('/updateWatched/:id',
   token({ required: true }),
   updateWatchedEpisodes)
 
+  /**
+ * @api {get} /episodes/updateWatchlisted/:id Update Logged User's WatchlistedEpisodes list by Episode Id
+ * @apiName UpdateWatchlistedEpisodes
+ * @apiGroup Episode
+ * @apiPermission token
+ * @apiParam {String} id Episode id
+ * @apiUse listParams
+ * @apiSuccess {Object} User.
+ */
 router.put('/updateWatchlisted/:id',
   token({ required: true }),
   updateWatchlistedEpisodes)
