@@ -3,6 +3,8 @@ import _ from 'lodash';
 import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { Genre } from '../genre'
+import { Episode } from '../episode'
+import { Season } from '../season'
 import { sign } from '../../services/jwt'
 
 export const index = ({ querymen: { query, select, cursor }, user }, res, next) =>
@@ -242,33 +244,23 @@ export const getTotalWatchedTime = ({ params }, res, next) => {
     })
 }
 
-export const getDashboardMedia = ({ params }, req, res) => {
-  const totalWatchedTime = {
-    episodes: {
-      totalNumber: 0,
-      totalTime: 0
-    },
-    movies: {
-      totalNumber: 0,
-      totalTime: 0
-    }
-  }
-  User.findById(params.id).select('watched').populate({path: 'watched', model: 'Media', select: 'seasons runtime', populate: {path: 'seasons', model: 'Season', select: 'episodes', populate: {path: 'episodes', model: 'Episode', select: 'duration'}}})
-    .then((foundUserWatched) => {
-      foundUserWatched.watched.forEach(media => {
-        if (media.__t === 'Series') {
-          media.seasons.forEach(season => {
-            season.episodes.forEach(episode => {
-              totalWatchedTime.episodes.totalNumber += 1;
-              totalWatchedTime.episodes.totalTime += episode.duration;
-            })
-          })
-        } else {
-          totalWatchedTime.movies.totalNumber += 1;
-          totalWatchedTime.movies.totalTime += media.runtime
-        }
-        return totalWatchedTime;
-      })
-      res.send(totalWatchedTime);
+export const getDashboardMedia = ({ params, user }, res, next) => {
+  console.log(user.watchedEpisodes);
+  Episode.find({'_id': {$in: user.watchedEpisodes}}).limit(10).populate({path: 'season', model: 'Season', select: 'series', populate: { path: 'series', model: 'Series' }}).then(episodes => {
+    // Si hay dos o mas capitulos de una misma serie, devolver un capitulo de esa serie que no este en la lista del usuario user.watchedEpisodes.
+    let count = 0;
+    let previousSeriesId;
+    episodes.forEach(episode => {
+      if (episode.season.series.id === previousSeriesId) {
+        count += 1
+      } else {
+        previousSeriesId = episode.season.series.id;
+      }
     })
+    if (count >= 2) {
+      
+    }
+    return episodes;
+  })
+  .then(success(res)).catch(next);
   }
