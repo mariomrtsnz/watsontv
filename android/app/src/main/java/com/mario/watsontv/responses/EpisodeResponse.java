@@ -11,6 +11,8 @@ public class EpisodeResponse {
     String synopsis;
     int duration;
     int number;
+    boolean isWatched;
+    boolean isWatchlisted;
     String airTime;
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 
@@ -66,5 +68,21 @@ public class EpisodeResponse {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public boolean isWatched() {
+        return isWatched;
+    }
+
+    public void setWatched(boolean watched) {
+        isWatched = watched;
+    }
+
+    public boolean isWatchlisted() {
+        return isWatchlisted;
+    }
+
+    public void setWatchlisted(boolean watchlisted) {
+        isWatchlisted = watchlisted;
     }
 }

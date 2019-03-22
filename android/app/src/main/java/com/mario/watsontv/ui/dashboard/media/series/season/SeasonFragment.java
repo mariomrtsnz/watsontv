@@ -1,5 +1,6 @@
 package com.mario.watsontv.ui.dashboard.media.series.season;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,9 +21,13 @@ import android.widget.Toast;
 
 import com.mario.watsontv.R;
 import com.mario.watsontv.responses.SeasonDetailsResponse;
+import com.mario.watsontv.responses.UserResponse;
 import com.mario.watsontv.retrofit.generator.AuthType;
 import com.mario.watsontv.retrofit.generator.ServiceGenerator;
+import com.mario.watsontv.retrofit.services.EpisodeService;
 import com.mario.watsontv.retrofit.services.SeasonService;
+import com.mario.watsontv.retrofit.services.UserService;
+import com.mario.watsontv.ui.dashboard.media.collections.addTo.AddToCollectionDialog;
 import com.mario.watsontv.util.UtilToken;
 
 public class SeasonFragment extends Fragment implements SeasonListener {
@@ -118,5 +123,54 @@ public class SeasonFragment extends Fragment implements SeasonListener {
         seasonNumber.setText(String.valueOf(season.getNumber()));
         adapter = new SeasonAdapter(ctx, season.getEpisodes(), mListener, season.getNumber());
         recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void updateWatched(String id) {
+        EpisodeService service = ServiceGenerator.createService(EpisodeService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatched(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    listEpisodes();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void updateWatchlisted(String id) {
+        EpisodeService service = ServiceGenerator.createService(EpisodeService.class, jwt, AuthType.JWT);
+        Call<UserResponse> call = service.updateWatchlisted(id);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    listEpisodes();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void updateCollected(String id) {
+
     }
 }
